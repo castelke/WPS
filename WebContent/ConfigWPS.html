@@ -6,16 +6,85 @@
 <script src="js/deps.wps-js.min.js"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
 <script src="wps-js-all.min.js"></script>
+    <script src="lib/jquery/jquery-ui-1.10.3.custom.min.js"></script>
+    
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <link rel="stylesheet" href="/resources/demos/style.css">
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
-
+    <script src="lib/jquery/jquery-1.9.1.js"></script>
+    <script src="lib/ol.js"></script>
+    <script src="lib/jquery/jquery-ui-1.10.3.custom.min.js"></script>
+    <link rel="stylesheet" href="lib/jquery/jquery-ui-1.10.3.custom.min.css" />
+    <script src="http://www.openlayers.org/api/OpenLayers.js"></script>
 <title>wps-js example</title>
 <link rel="shortcut icon" href="favicon.ico" />
+
+  <script>
+  $( function() {
+	    $( "#slider" ).slider({
+	      value:100,
+	      min: document.getElementById("min").value,
+	      max: document.getElementById("max").value,
+	      step: document.getElementById("step").value,
+	      slide: function( event, ui ) {
+	        $( "#amount" ).val( "$" + ui.value );
+	      }
+	    });
+	    $( "#amount" ).val( "$" + $( "#slider" ).slider( "value" ) );
+	  } );
+  
+  function initSlider() {
+	  $('#slider').rangeslider({polyfill: false});
+	  $('#slider').attr('max', 100).change();
+	  $('#slider').rangeslider('destroy');
+	}
+
+  
+  
+  </script>
+
 </head>
 <body>
+<form id="variable" style="display:none">
+min:
+<input type="text" id="min" name="min" style="width: 400px; height: 15px;" value="0" /><br>
+max:
+<input type="text" id="max" name="max" style="width: 400px; height: 15px;" value="500" /><br>
+step:
+<input type="text" id="step" name="step" style="width: 400px; height: 15px;" value="50" /><br>
+
+  <label for="amount"> amount :</label>
+  <input type="text" id="amount" readonly style="border:0; color:#f6931f; font-weight:bold;">
+
+
+        <div id="slider"></div>  
+        <input type="button" value="Enregistrer"
+           onclick="initSlider();" />
+    <input type="button" value="Enregistrer"
+           onclick="initConfig(7);" />
+               <br>
+               </form>
+               
+    <form id="fixe" style="display:none">
+    min:
+    max:
+    step:
+    <input type="button" value="Enregistrer"
+           onclick="initConfig(7);" />
+           <br>
+               </form>           
+
 		<form id="choix" style="display:none">
+		
         <input type="button" value="Retour choix process"
                onclick="initConfig(3);" />
                </form>
+
+
+
+
 
 	<form id="map" style="display:block">
         <input type="button" value="Retour Map"
@@ -98,14 +167,14 @@
 			
 						<!-- réponse Describeprocess-->
 			
-			<div class="wps-container">
-				<textarea rows="20" cols="100" id="processDescriptionText">empty</textarea>
-			</div>
+			
+
+			
+			
 		</div>
 		<div>
 		<div class="divName" id="divName" name="divName"></div>
 					<!--liste déroulante execute process -->
-		 <input type="button" id="processes_execute" value="Execute Process" onclick="executeLaunch();" />
                 
                 <!-- 
                 
@@ -127,6 +196,12 @@
 
 			
 		</div>
+					<form id="processDescription" style="display:none">
+			 <input type="button" id="processes_execute" value="Execute Process" onclick="executeLaunch();" />
+			<div class="wps-container">
+				<textarea rows="20" cols="100" id="processDescriptionText">empty</textarea>
+			</div>
+			</form>
 	</div>
 	
 	

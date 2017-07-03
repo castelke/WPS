@@ -9,8 +9,6 @@ var versionWps;
 function setProcessDescription(p) {
 	processDescription = p;
 }
-//test
-
 
 function getProcessDescription() {
     return processDescription;
@@ -49,6 +47,7 @@ function getVersionWps() {
 }
 
 //version
+
 
 
 
@@ -136,8 +135,8 @@ function executeLaunch() {
 		}
 	y=y+1;
 	}
-	alert(processDescription.processOffering.process.title);
-	alert(processId);
+	//alert(processDescription.processOffering.process.title);
+	//alert(processId);
 	wpsService.setUrl(adresseWps);
 	wpsService.execute(executeCallback, processDescription.processOffering.process.identifier, "document", "sync", false, inputTab, outputTab); //inputGenerator, outputGenerator);
 
@@ -203,17 +202,19 @@ var wpsService = new WpsService({
 		var x=0;
 		inputs = 'Inputs: \n';
 		newdiv =document.createElement('divForm');
-		newdiv.innerHTML = "Inputs <br>";
+		newdiv.innerHTML = "<form id='formulaire' style='display:block'>";
+		newdiv.innerHTML += "Inputs <br>";
 		
-		for (var input in response.processOffering.process.inputs[x].literalData)	{
-		for (var property in response.processOffering.process.inputs[x].literalData) {
+		/*
+		for (var input in response.processOffering.process.inputs[x].literalData[x])	{
+		for (var property in response.processOffering.process.inputs[x].literalData[x]) {
 			outputOffering += property + ': ' + response.processOffering.process.inputs[x].literalData[property]+'; \n';		
 		}	
 		x=x+1;
 		}
 		outputOffering += "\n";
 		x=0;
-		for (var input in response.processOffering.process.inputs[x].literalData.literalDataDomains)	{
+		for (var input in response.processOffering.process.inputs[x].literalData.literalDataDomains[x])	{
 			for (var property in response.processOffering.process.inputs[x].literalData.literalDataDomains[0]) {
 				outputOffering += property + ': ' + response.processOffering.process.inputs[x].literalData.literalDataDomains[0][property]+'; \n';		
 			}	
@@ -221,7 +222,7 @@ var wpsService = new WpsService({
 			}
 		x=1;
 		outputOffering += "\n";
-		for (var input in response.processOffering.process.inputs[x].literalData.literalDataDomains)	{
+		for (var input in response.processOffering.process.inputs[x].literalData.literalDataDomains[x])	{
 			for (var property in response.processOffering.process.inputs[x].literalData.literalDataDomains[0]) {
 				outputOffering += property + ': ' + response.processOffering.process.inputs[x].literalData.literalDataDomains[0][property]+'; \n';		
 			}	
@@ -230,8 +231,8 @@ var wpsService = new WpsService({
 		
 		x=0;
 		outputOffering += "\n";
-		for (var input in response.processOffering.process.inputs[x].literalData.literalDataDomains)	{
-			for (var property in response.processOffering.process.inputs[x].literalData.literalDataDomains[0].dataType) {
+		for (var input in response.processOffering.process.inputs[x].literalData.literalDataDomains[x])	{
+			for (var property in response.processOffering.process.inputs[x].literalData.literalDataDomains[0].dataType[x]) {
 				outputOffering += property + ': ' + response.processOffering.process.inputs[x].literalData.literalDataDomains[0].dataType[property]+'; \n';		
 			}	
 			x=x+1;
@@ -239,14 +240,15 @@ var wpsService = new WpsService({
 		
 		x=1;
 		outputOffering += "\n";
-		for (var input in response.processOffering.process.inputs[x].literalData.literalDataDomains)	{
-			for (var property in response.processOffering.process.inputs[x].literalData.literalDataDomains[0].dataType) {
+		for (var input in response.processOffering.process.inputs[x].literalData.literalDataDomains[x])	{
+			for (var property in response.processOffering.process.inputs[x].literalData.literalDataDomains[0].dataType[x]) {
 				outputOffering += property + ': ' + response.processOffering.process.inputs[x].literalData.literalDataDomains[0].dataType[property]+'; \n';		
 			}	
 			x=x+1;
 			}
 		
 		outputOffering += "\n";
+		*/
 		x=0;
 		//creation formulaire inputs
 		for (var input in response.processOffering.process.inputs[x])	{
@@ -261,7 +263,10 @@ var wpsService = new WpsService({
 						//alert(response.processOffering.process.inputs[x].literalData.literalData);
 						
 						//outputOffering += "\n";
-				newdiv.innerHTML += " <br><input type='text' name='myInputs[" + x + "]'  id='myInputs[" + x + "]' value='0'>" + "<br>";
+				newdiv.innerHTML += " <br><input type='text' name='myInputs[" + x + "]'  id='myInputs[" + x + "]' value='0'>" ;
+				newdiv.innerHTML += "<input type='submit' value='Fixe' onclick='initConfig(6);'/> " + "<input type='submit' value='Variable' onclick='initConfig(5);'/>" + "<br>";
+				
+				
 				inputs += '\n';
 				}
 				
@@ -302,6 +307,7 @@ var wpsService = new WpsService({
 			y=y+1;
 			}
 		newdiv.innerHTML += "<br>";	
+		newdiv.innerHTML += "</form>";
 		document.getElementById("divName").appendChild(newdiv);	
 		$("textarea#processDescriptionText").val(outputOffering + '\n' + '\n' + inputs + outputs);
 	};
