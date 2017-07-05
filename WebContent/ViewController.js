@@ -66,5 +66,16 @@
 		setCoucheWFS(c2);
 		setFormatWFS(f2);
 	}
+	
+    function checker(id1, id2) {
+    	//alert(id1 + " " + id2);
+        if(document.getElementById(id1).checked)
+        { document.getElementById(id2).checked = false;}
+        else
+        {  document.getElementById(id2).checked = true;}
+      }
 
+    function next() {
+    	alert(" ");
+    }
 

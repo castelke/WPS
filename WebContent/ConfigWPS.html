@@ -22,7 +22,7 @@
 <link rel="shortcut icon" href="favicon.ico" />
 
   <script>
-  $( function() {
+  /*$( function() {
 	    $( "#slider" ).slider({
 	      value:100,
 	      min: document.getElementById("min").value,
@@ -40,8 +40,8 @@
 	  $('#slider').attr('max', 100).change();
 	  $('#slider').rangeslider('destroy');
 	}
+*/
 
-  
   
   </script>
 
@@ -51,9 +51,9 @@
 min:
 <input type="text" id="min" name="min" style="width: 400px; height: 15px;" value="0" /><br>
 max:
-<input type="text" id="max" name="max" style="width: 400px; height: 15px;" value="500" /><br>
+<input type="text" id="max" name="max" style="width: 400px; height: 15px;" value="100" /><br>
 step:
-<input type="text" id="step" name="step" style="width: 400px; height: 15px;" value="50" /><br>
+<input type="text" id="step" name="step" style="width: 400px; height: 15px;" value="1" /><br>
 
   <label for="amount"> amount :</label>
   <input type="text" id="amount" readonly style="border:0; color:#f6931f; font-weight:bold;">
@@ -197,6 +197,7 @@ step:
 			
 		</div>
 					<form id="processDescription" style="display:none">
+			 <input type="button" id="next" value="Next" onclick="next();" />	<br />	
 			 <input type="button" id="processes_execute" value="Execute Process" onclick="executeLaunch();" />
 			<div class="wps-container">
 				<textarea rows="20" cols="100" id="processDescriptionText">empty</textarea>

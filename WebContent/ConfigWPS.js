@@ -1,10 +1,15 @@
-//resultats requetes 		
-var processDescription;
-var value;
-//id du process selectionné
+//id du process selectionnÃ©
 var processId;
 var adresseWps;
 var versionWps;
+// description du processus		
+var processDescription;
+
+var min = new Array();
+var max= new Array();
+var step = new Array();
+
+
 
 function setProcessDescription(p) {
 	processDescription = p;
@@ -12,14 +17,6 @@ function setProcessDescription(p) {
 
 function getProcessDescription() {
     return processDescription;
-}
-
-function setValue(v) {
-	value = v;
-}
-
-function getValue() {
-    return value;
 }
 
 function setProcessId(p) {
@@ -46,11 +43,6 @@ function getVersionWps() {
     return versionWps;
 }
 
-//version
-
-
-
-
 function addOptions()
 {
 	var List = document.getElementById("wps");
@@ -73,7 +65,7 @@ function verificationWPS(){
 	document.getElementById("verificationRunning").style.display = "block";
 	    $.ajax({
 	        type: "GET",
-	        url: document.getElementById("adr").value + "SERVICE=WPS&VERSION=1.0.0&REQUEST=GetCapabilities",
+	        url: document.getElementById("newWpsAdresse").value + "SERVICE=WPS&VERSION=1.0.0&REQUEST=GetCapabilities",
 	        dataType: "script",
 	        cache: false,
 	        success: function () {
@@ -86,60 +78,42 @@ function verificationWPS(){
 	    });
 }
 
-
 function executeLaunch() {
 
 	setProcessId( $('#processes option:selected').text());
-	var x=0;
-	var inputGenerator = new InputGenerator();
-	var inputTab=[''];
-	inputs = "";
-	
-	for (var sumInput in processDescription.processOffering.process.inputs)	{
-		for (var property in processDescription.processOffering.process.inputs[sumInput]) {
-			if (property == "literalData"){	
-				value= document.getElementById("myInputs[" + x + "]").value;
-				inputs += "\n" + processDescription.processOffering.process.inputs[x].title + " value = " + value;
-				inputTab[x] = inputGenerator.createLiteralDataInput_wps_1_0_and_2_0(processDescription.processOffering.process.inputs[x].title, undefined, undefined, value);
-				//alert(processDescription.processOffering.process.inputs[x].title); 
-			}
-			else if (property == "complexData"){
-				value= document.getElementById("myInputs[" + x + "]").value;
-				inputs += "\n" +  processDescription.processOffering.process.inputs[x].title + " value = " + value;
-				inputTab[x] = inputGenerator.createComplexDataInput_wps_1_0_and_2_0(processDescription.processOffering.process.inputs[x].title,undefined, undefined, undefined, undefined, value);
-				//alert(processDescription.processOffering.process.inputs[x].title); 
-			}
-		}
-	x=x+1;	
-	}
-	//alert(inputs);
-	
-	var y=0;
-	var outputGenerator = new OutputGenerator();
-	var outputTab=[''];				
-	for (var output in processDescription.processOffering.process.outputs[y])	{
-		for (var property in processDescription.processOffering.process.outputs[y]) {
-			outputs += property + ': ' + processDescription.processOffering.process.outputs[y][property]+'; \n';
-		
-			if (property == "literalData"){
-				//var asReference = "false";
-				outputTab[y]=outputGenerator.createLiteralOutput_WPS_1_0(processDescription.processOffering.process.outputs[y].title, false);
-				//alert(processDescription.processOffering.process.outputs[y].title);
-			}
-			if (property == "complexData"){
-				outputTab[y] = outputGenerator.createComplexOutput_WPS_1_0(processDescription.processOffering.process.outputs[y].title,undefined, undefined, undefined, undefined);
-				//alert(processDescription.processOffering.process.outputs[y].title);
-			}
-			
-			
-		}
-	y=y+1;
-	}
-	//alert(processDescription.processOffering.process.title);
-	//alert(processId);
-	wpsService.setUrl(adresseWps);
-	wpsService.execute(executeCallback, processDescription.processOffering.process.identifier, "document", "sync", false, inputTab, outputTab); //inputGenerator, outputGenerator);
 
+	var inputGenerator = new InputGenerator();
+	var inputTab= new Array();
+	
+	for (var indexInput in processDescription.processOffering.process.inputs)	{
+		var currentInput = processDescription.processOffering.process.inputs[indexInput];
+		var inputValue = document.getElementById("myInputs[" + indexInput + "]").value;
+		
+		if (currentInput.literalData != null ){	
+			inputTab[indexInput] = inputGenerator.createLiteralDataInput_wps_1_0_and_2_0(currentInput.identifier, 'undefined', 'undefined', inputValue);
+				alert(currentInput.title + inputValue); 
+		}
+		else if (currentInput.complexData != null){
+				inputTab[indexInput] = inputGenerator.createComplexDataInput_wps_1_0_and_2_0(currentInput.identifier,'undefined', 'undefined', 'undefined', false, inputValue);
+				alert(currentInput.title + inputValue); 
+		}
+	}
+
+	var outputGenerator = new OutputGenerator();
+	var outputTab= new Array();;				
+	for (var outputIndex in processDescription.processOffering.process.outputs)	{
+		var currentOutput = processDescription.processOffering.process.outputs[outputIndex];
+		
+		if (currentOutput.literalData != null ){	
+				outputTab[outputIndex]=outputGenerator.createLiteralOutput_WPS_1_0(currentOutput.identifier, false);
+			}
+		else if (currentOutput.complexData != null){
+				outputTab[outputIndex] = outputGenerator.createComplexOutput_WPS_1_0(currentOutput.identifier,false, 'undefined', 'undefined', 'undefined', 'undefined', 'undefined', 'undefined');
+		}
+	}
+	wpsService.setUrl(adresseWps);
+	wpsService.execute(executeCallback, processDescription.processOffering.process.identifier, "document", "sync", false, inputTab, outputTab);
+	
 }
 
 var executeCallback = function(response) {
@@ -150,6 +124,8 @@ var executeCallback = function(response) {
 	}
 	alert(out);
 }
+
+
 	
 
 // initialize wpsService
@@ -183,13 +159,12 @@ var wpsService = new WpsService({
 	var capabilitiesDocument = capabilities.responseDocument;
 	$("textarea#capabilitiesText").val((new XMLSerializer()).serializeToString(capabilitiesDocument));
 	};
-		
+
 		
 	var describeProcessCallback = function(response) {
 		
 		initConfig(4);
 		setProcessDescription(response);
-
 		var outputOffering = '';
 		for (var property in response.processOffering) {
 			outputOffering += property + ': ' + response.processOffering[property]+'; \n';
@@ -200,118 +175,135 @@ var wpsService = new WpsService({
 		}
 		outputOffering += "\n";
 		var x=0;
+		/*for (var x in response.processOffering.process.inputs)	{
+			for (var property in response.processOffering.process.inputs[x]) {
+				for (var lit in response.processOffering.process.inputs[x].literalData[property]) {
+				outputOffering += lit +': ' + response.processOffering.process.inputs[x].literalData[lit][property]+'; \n';
+			}	
+			//	x=x+1;
+			}
+		}*/
+			outputOffering += "\n";
+			x=0;
+			/*for (var input in response.processOffering.process.inputs[x].literalData.literalDataDomains[x])	{
+				for (var property in response.processOffering.process.inputs[x].literalData.literalDataDomains[0]) {
+					outputOffering += property + ': ' + response.processOffering.process.inputs[x].literalData.literalDataDomains[0][property]+'; \n';		
+				}	
+				x=x+1;
+				}
+			x=1;
+			outputOffering += "\n";
+			for (var input in response.processOffering.process.inputs[x].literalData.literalDataDomains[x])	{
+				for (var property in response.processOffering.process.inputs[x].literalData.literalDataDomains[0]) {
+					outputOffering += property + ': ' + response.processOffering.process.inputs[x].literalData.literalDataDomains[0][property]+'; \n';		
+				}	
+				x=x+1;
+				}
+			
+			x=0;
+			outputOffering += "\n";
+			for (var input in response.processOffering.process.inputs[x].literalData.literalDataDomains[x])	{
+				for (var property in response.processOffering.process.inputs[x].literalData.literalDataDomains[0].dataType[x]) {
+					outputOffering += property + ': ' + response.processOffering.process.inputs[x].literalData.literalDataDomains[0].dataType[property]+'; \n';		
+				}	
+				x=x+1;
+				}
+			
+			x=1;
+			outputOffering += "\n";
+			for (var input in response.processOffering.process.inputs[x].literalData.literalDataDomains[x])	{
+				for (var property in response.processOffering.process.inputs[x].literalData.literalDataDomains[0].dataType[x]) {
+					outputOffering += property + ': ' + response.processOffering.process.inputs[x].literalData.literalDataDomains[0].dataType[property]+'; \n';		
+				}	
+				x=x+1;
+				}
+			
+			outputOffering += "\n";
+
+			*/
+			
+		
 		inputs = 'Inputs: \n';
 		newdiv =document.createElement('divForm');
 		newdiv.innerHTML = "<form id='formulaire' style='display:block'>";
 		newdiv.innerHTML += "Inputs <br>";
+	//	newdiv.innerHTML += "fixed  <input type='checkbox' name='check1' id='check1' onclick='checker('check1', 'check1');' />";
+		//document.getElementById("newWpsAdresse").value
 		
-		/*
-		for (var input in response.processOffering.process.inputs[x].literalData[x])	{
-		for (var property in response.processOffering.process.inputs[x].literalData[x]) {
-			outputOffering += property + ': ' + response.processOffering.process.inputs[x].literalData[property]+'; \n';		
-		}	
-		x=x+1;
-		}
-		outputOffering += "\n";
-		x=0;
-		for (var input in response.processOffering.process.inputs[x].literalData.literalDataDomains[x])	{
-			for (var property in response.processOffering.process.inputs[x].literalData.literalDataDomains[0]) {
-				outputOffering += property + ': ' + response.processOffering.process.inputs[x].literalData.literalDataDomains[0][property]+'; \n';		
-			}	
-			x=x+1;
-			}
-		x=1;
-		outputOffering += "\n";
-		for (var input in response.processOffering.process.inputs[x].literalData.literalDataDomains[x])	{
-			for (var property in response.processOffering.process.inputs[x].literalData.literalDataDomains[0]) {
-				outputOffering += property + ': ' + response.processOffering.process.inputs[x].literalData.literalDataDomains[0][property]+'; \n';		
-			}	
-			x=x+1;
-			}
-		
-		x=0;
-		outputOffering += "\n";
-		for (var input in response.processOffering.process.inputs[x].literalData.literalDataDomains[x])	{
-			for (var property in response.processOffering.process.inputs[x].literalData.literalDataDomains[0].dataType[x]) {
-				outputOffering += property + ': ' + response.processOffering.process.inputs[x].literalData.literalDataDomains[0].dataType[property]+'; \n';		
-			}	
-			x=x+1;
-			}
-		
-		x=1;
-		outputOffering += "\n";
-		for (var input in response.processOffering.process.inputs[x].literalData.literalDataDomains[x])	{
-			for (var property in response.processOffering.process.inputs[x].literalData.literalDataDomains[0].dataType[x]) {
-				outputOffering += property + ': ' + response.processOffering.process.inputs[x].literalData.literalDataDomains[0].dataType[property]+'; \n';		
-			}	
-			x=x+1;
-			}
-		
-		outputOffering += "\n";
-		*/
-		x=0;
-		//creation formulaire inputs
-		for (var input in response.processOffering.process.inputs[x])	{
-			for (var property in response.processOffering.process.inputs[x]) {
-				inputs += property + ': ' + response.processOffering.process.inputs[x][property]+'; \n';
+		for (var inputIndex in response.processOffering.process.inputs)	{
+			
+			for (var property in response.processOffering.process.inputs[inputIndex]) {
+				inputs += property +': ' + response.processOffering.process.inputs[inputIndex][property]+'; \n';
 				
 				if (property == "literalData"){	
-					newdiv.innerHTML += response.processOffering.process.inputs[x].title;
-						if( response.processOffering.process.inputs[x].minOccurs==1){
+					newdiv.innerHTML += response.processOffering.process.inputs[inputIndex].title;
+						if( response.processOffering.process.inputs[inputIndex].minOccurs==1){
 						newdiv.innerHTML += "*";
-					}
-						//alert(response.processOffering.process.inputs[x].literalData.literalData);
-						
-						//outputOffering += "\n";
-				newdiv.innerHTML += " <br><input type='text' name='myInputs[" + x + "]'  id='myInputs[" + x + "]' value='0'>" ;
-				newdiv.innerHTML += "<input type='submit' value='Fixe' onclick='initConfig(6);'/> " + "<input type='submit' value='Variable' onclick='initConfig(5);'/>" + "<br>";
+						}
+						var char = "onclick='checker('check1" + inputIndex + "','check2" + inputIndex + "');";
+				newdiv.innerHTML += " <br><input type='text' name='myInputs[" + inputIndex + "]'  id='myInputs[" + inputIndex + "]' value='0'>" ;
+			//	newdiv.innerHTML += "<input type='submit' value='Fixe' onclick='initConfig(6);'/> " + "<input type='submit' value='Variable' onclick='initConfig(5);'/>" + "<br>";
+				newdiv.innerHTML += "fixed  <input type='checkbox' checked='checked' name='1" + inputIndex + "' " +"' id='1" + inputIndex + "' onclick='checker(1" + inputIndex + ",2" + inputIndex + ");' />" + " user <input type='checkbox' name='2" + inputIndex + "' id='2" + inputIndex + "' onclick='checker(2" + inputIndex + " ,1" + inputIndex + ");' />";
 				
+				newdiv.innerHTML += 'min: <input type="text" id="min' + processDescription.processOffering.process.title + inputIndex + '" name="min' + processDescription.processOffering.process.title + inputIndex +'" style="width: 50px; height: 15px;" value="0" />';
+				newdiv.innerHTML += 'max: <input type="text" id="max' + processDescription.processOffering.process.title + inputIndex + '" name="max' + processDescription.processOffering.process.title + inputIndex +'" style="width: 50px; height: 15px;" value="100" />';
+				newdiv.innerHTML += 'step: <input type="text" id="step' + processDescription.processOffering.process.title + inputIndex + '" name="step' + processDescription.processOffering.process.title + inputIndex +'" style="width: 50px; height: 15px;" value="1" /><br>';
 				
 				inputs += '\n';
 				}
 				
 				else if (property == "complexData"){
 					newdiv.innerHTML += response.processOffering.process.inputs[x].title;
-					/*for (var property in response.processOffering.process.inputs[x].complexData.complexData) {
-						outputOffering += property + ': ' + response.processOffering.process.inputs[x].complexData.complexData[property]+'; \n';
-					}*/
-					
-					if( response.processOffering.process.inputs[x].minOccurs==1){
+
+					if( response.processOffering.process.inputs[inputIndex].minOccurs==1){
 						newdiv.innerHTML += "*";
 					}
-				newdiv.innerHTML += " <br><input type='text' name='myInputs[" + x + "]' id='myInputs[" + x + "]' value='0'>" + "<br>";
+				newdiv.innerHTML += " <br><input type='text' name='myInputs[" + inputIndex + "]' id='myInputs[" + inputIndex + "]' value='0'>" + "<br>";
+				var char = "onclick='checker('check1" + inputIndex + "','check2" + inputIndex + "');";
+				newdiv.innerHTML += " <br><input type='text' name='myInputs[" + inputIndex + "]'  id='myInputs[" + inputIndex + "]' value='0'>" ;
+				
+				
+				
+				
+			//	newdiv.innerHTML += "<input type='submit' value='Fixe' onclick='initConfig(6);'/> " + "<input type='submit' value='Variable' onclick='initConfig(5);'/>" + "<br>";
+				newdiv.innerHTML += "fixed  <input type='checkbox' checked='checked' name='1" + inputIndex + "' " +"' id='1" + inputIndex + "' onclick='checker(1" + inputIndex + ",2" + inputIndex + ");' />" + " user <input type='checkbox' name='2" + inputIndex + "' id='2" + inputIndex + "' onclick='checker(2" + inputIndex + " ,1" + inputIndex + ");' />";
+				newdiv.innerHTML += 'min: <input type="text" id="min' + processDescription.processOffering.process.title + inputIndex + '" name="min' + processDescription.processOffering.process.title + inputIndex +'" style="width: 50px; height: 15px;" value="0" />';
+				newdiv.innerHTML += 'max: <input type="text" id="max' + processDescription.processOffering.process.title + inputIndex + '" name="max' + processDescription.processOffering.process.title + inputIndex +'" style="width: 50px; height: 15px;" value="100" />';
+				newdiv.innerHTML += 'step: <input type="text" id="step' + processDescription.processOffering.process.title + inputIndex + '" name="step' + processDescription.processOffering.process.title + inputIndex +'" style="width: 50px; height: 15px;" value="1" /><br>';
+					
 				inputs += '\n';
 				}
 			}
-		x=x+1;
 		}
 			
 		//creation formulaire outputs
-		var y=0;
+
 		outputs = '\nOutputs: \n';
 		newdiv.innerHTML += "<br>Outputs <br>";	
 		
-		for (var output in response.processOffering.process.outputs[y])	{
-			for (var property in response.processOffering.process.outputs[y]) {
-				outputs += property + ': ' + response.processOffering.process.outputs[y][property]+'; \n';
+		for (var indexOutput in response.processOffering.process.outputs)	{
+			for (var property in response.processOffering.process.outputs[indexOutput]) {
+				outputs += property + ': ' + response.processOffering.process.outputs[indexOutput][property]+'; \n';
 				
 				if (property == "literalData"){
-					newdiv.innerHTML += response.processOffering.process.outputs[y].title +  " <br><input type='text' name='myInputs[]'>"+ "<br>";
+					newdiv.innerHTML += response.processOffering.process.outputs[indexOutput].title +  " <br><input type='text' name='myInputs[]'>";
+					newdiv.innerHTML += "web  <input type='checkbox' checked='checked' name='3" + indexOutput + "' " +"' id='3" + indexOutput + "' onclick='checker(3" + indexOutput + ",4" + indexOutput + ");' />" + " file <input type='checkbox' name='4" + indexOutput + "' id='4" + indexOutput + "' onclick='checker(4" + indexOutput + " ,3" + indexOutput + ");' />";
+					newdiv.innerHTML += 'directory: <input type="text" id="directory" name="directory" style="width: 300px; height: 15px;" value="C:\" /> fileName: <input type="text" id="fileName" name="fileName" style="width: 100px; height: 15px;" value="Truc.txt" /> <br />';
 					outputs += '\n';
 				}
 				if (property == "complexData"){
-					newdiv.innerHTML += response.processOffering.process.outputs[y].title + " <br><input type='text' name='myInputs[]'>"+ "<br>";
+					newdiv.innerHTML += response.processOffering.process.outputs[indexOutput].title + " <br><input type='text' name='myInputs[]'>";
+					newdiv.innerHTML += "web  <input type='checkbox' checked='checked' name='3" + indexOutput + "' " +"' id='3" + indexOutput + "' onclick='checker(3" + indexOutput + ",4" + indexOutput + ");' />" + " file <input type='checkbox' name='4" + indexOutput + "' id='4" + indexOutput + "' onclick='checker(4" + indexOutput + " ,3" + indexOutput + ");' />";
+					newdiv.innerHTML += 'directory: <input type="text" id="directory" name="directory" style="width: 300px; height: 15px;" value="C:\" /> fileName: <input type="text" id="fileName" name="fileName" style="width: 100px; height: 15px;" value="Truc.txt" /> <br />';
 					outputs += '\n';
 				}
 			}
-			y=y+1;
 			}
 		newdiv.innerHTML += "<br>";	
 		newdiv.innerHTML += "</form>";
 		document.getElementById("divName").appendChild(newdiv);	
 		$("textarea#processDescriptionText").val(outputOffering + '\n' + '\n' + inputs + outputs);
 	};
-	
 	
 		
 	var clearForms = function(){
@@ -329,7 +321,6 @@ var wpsService = new WpsService({
 		$("textarea#processDescriptionText").val("empty");
 	};
 	
-		
 	$(document).ready(function() {
 			$("#wps").change(function() {
 			//clear old textarea values
