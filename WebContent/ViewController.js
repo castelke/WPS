@@ -36,23 +36,15 @@
 			document.getElementById("processDescription").style.display = "block";
 		}
 		else if (a==5){
-			document.getElementById("variable").style.display = "block";
-			document.getElementById("fixe").style.display = "none";
-			//document.getElementById("processDescription").style.display = "none";
-			document.getElementById("formulaire").style.display = "none";
-
-		}
-		else if (a==6){
-			document.getElementById("fixe").style.display = "block";
-			document.getElementById("variable").style.display = "none";
-			//document.getElementById("processDescription").style.display = "none";
-			document.getElementById("formulaire").style.display = "none";
-		}
-		else if (a==7){
-			document.getElementById("fixe").style.display = "none";
-			document.getElementById("variable").style.display = "none";
-			//document.getElementById("processDescription").style.display = "block";
-			document.getElementById("formulaire").style.display = "block";
+	    	document.getElementById("processDescription").style.display = "none";
+	    	document.getElementById("execute").style.display = "block";
+	    	document.getElementById("slider").style.display = "block";
+	    	document.getElementById('divName').style.visibility='hidden';
+	    	
+	    	 document.getElementById("min").value = document.getElementById("minAdd0").value;
+	    	 document.getElementById("max").value = document.getElementById("maxAdd0").value;	    	
+	    	 document.getElementById("step").value = document.getElementById("stepAdd0").value;	    
+	    	  window.location.href = "ConfigExecute.html" + "?min=" +  document.getElementById("minAdd0").value + "&max=" + document.getElementById("maxAdd0").value + "&step="+ document.getElementById("stepAdd0").value;
 		}
 
 		
@@ -75,7 +67,4 @@
         {  document.getElementById(id2).checked = true;}
       }
 
-    function next() {
-    	alert(" ");
-    }
 

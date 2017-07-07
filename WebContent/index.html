@@ -255,6 +255,7 @@
         // Example functionality to demonstrate programmatic attribute changes
         $document.on('click', '#js-example-change-attributes button', function(e) {
             var $inputRange = $(selector, e.target.parentNode);
+            alert(e.target.parentNode);
             var attributes = {
                     min: $('input[name="min"]', e.target.parentNode)[0].value,
                     max: $('input[name="max"]', e.target.parentNode)[0].value,
