@@ -39,12 +39,26 @@
  <script>
  
  var test;
+ //alert(window.location.search); 
+ var adresse = window.location.search
+ 
+ var partsArray = adresse.split('&');
+var vmin =parseInt(partsArray[0].substr(5));
+var vmax = parseInt(partsArray[1].substr(4));
+var vstep = parseInt(partsArray[2].substr(5));
+alert(vmin +" "+ vmax + " " +vstep);
+ 
   $(function() {
 
       var $document = $(document);
       var selector = '[data-rangeslider]';
       var $element = $(selector);
-
+      
+      document.getElementById("min").value = vmin;
+      document.getElementById("max").value = vmax;
+      document.getElementById("step").value = vstep;
+     
+      
       // For ie8 support
       var textContent = ('textContent' in document) ? 'textContent' : 'innerText';
 
@@ -83,7 +97,8 @@
       // Example functionality to demonstrate programmatic attribute changes
       $document.on('click', '#js-example-change-attributes button', function(e) {
           var $inputRange = $(selector, e.target.parentNode);
-          test=e.target.parentNode;
+          //test=e.target.parentNode;
+         
           
           var attributes = {
                   min: $('input[name="min"]', e.target.parentNode)[0].value,
@@ -134,7 +149,7 @@
               console.log('position: ' + position, 'value: ' + value);
           }
       });
-
+      change();
   });
   
   function change() {
@@ -142,7 +157,7 @@
       var $document = $(document);
       var selector = '[data-rangeslider]';
       var $element = $(selector);
-	  
+
       var $inputRange = $(selector, test);
       var attributes = {
               min: $('input[name="min"]', test)[0].value,
@@ -165,9 +180,9 @@
         <input type="range" min="10" max="100" step="5" data-rangeslider>
         <output></output>
        <br><br>
-        <label><input type="number" name="min" id="min" value=minAdd0> <code>min</code></label><br>
-        <label><input type="number" name="max" id="max" value=maxAdd0> <code>max</code></label><br>
-        <label><input type="number" name="step" id="step" value=stepAdd0> <code>step</code></label>
+        <label><input type="number" name="min" id="min" value=vmin> <code>min</code></label><br>
+        <label><input type="number" name="max" id="max" value=vmax> <code>max</code></label><br>
+        <label><input type="number" name="step" id="step" value=vstep> <code>step</code></label>
         <br><br>
         
          <input type="button" value="Modif"

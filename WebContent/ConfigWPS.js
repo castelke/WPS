@@ -4,6 +4,8 @@ var adresseWps;
 var versionWps;
 // description du processus		
 var processDescription;
+var identifier;
+
 
 var min = new Array();
 var max= new Array();
@@ -41,6 +43,14 @@ function setVersionWps(v) {
 
 function getVersionWps() {
     return versionWps;
+}
+
+function setIdentifier(i) {
+	identifier = i;
+}
+
+function getIdentifier() {
+    return identifier;
 }
 
 function addOptions()
@@ -165,6 +175,7 @@ var wpsService = new WpsService({
 		
 		initConfig(4);
 		setProcessDescription(response);
+		setIdentifier(response.processOffering.process.identifier);
 		var outputOffering = '';
 		for (var property in response.processOffering) {
 			outputOffering += property + ': ' + response.processOffering[property]+'; \n';
@@ -273,10 +284,11 @@ var wpsService = new WpsService({
 			}
 		newdiv.innerHTML += "<br>";	
 		document.getElementById("divName").appendChild(newdiv);	
+		
 		$("textarea#processDescriptionText").val(outputOffering + '\n' + '\n' + inputs + outputs);
 	};
 	
-		
+
 	var clearForms = function(){
 		
 		//clear select

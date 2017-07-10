@@ -41,6 +41,24 @@
 	    	document.getElementById("slider").style.display = "block";
 	    	document.getElementById('divName').style.visibility='hidden';
 	    	
+	    	
+	    	
+	    	var n=0;
+	    	var newWindow = "ConfigExecute.html?";
+	    	/*while (document.getElementById("min" + processDescription.processOffering.process.identifier + n)){
+	    		newWindow += "min" +/* processDescription.processOffering.process.identifier + */n + "=" + document.getElementById("min" + processDescription.processOffering.process.identifier + n).value;
+	    		/*newWindow += "&";
+	    		newWindow += "max" +/* processDescription.processOffering.process.identifier +*/ n +"=" + document.getElementById("max" + processDescription.processOffering.process.identifier + n).value;
+	    		/*newWindow += "&";
+	    		newWindow += "step" + /*processDescription.processOffering.process.identifier + */n +"=" + document.getElementById("step" + processDescription.processOffering.process.identifier + n).value;
+	    		
+	    	/*	n=n+1;
+	    		
+	    	}
+	    	alert(n);
+	    	window.location.href = newWindow;*/
+	    		
+	    		
 	    	 document.getElementById("min").value = document.getElementById("minAdd0").value;
 	    	 document.getElementById("max").value = document.getElementById("maxAdd0").value;	    	
 	    	 document.getElementById("step").value = document.getElementById("stepAdd0").value;	    
