@@ -53,6 +53,37 @@ function getIdentifier() {
     return identifier;
 }
 
+function chargerFichier(idInputFile, idSortie) {
+    "use strict";
+    var entree, fichier, fr;
+
+    if (typeof window.FileReader !== "function") {
+        alert("L'API file n'est pas encore supportée par votre navigateur.");
+        return;
+    }
+    entree= document.getElementById(idInputFile);
+    if (!entree.files[0]) {
+        alert("S'il vous plaît sélectionnez un fichier avant de cliquer sur «Chargement».");
+    } else {
+        fichier = entree.files[0];
+        fr = new FileReader();
+        
+        fr.onload = function () {
+            document.getElementById(idSortie).innerHTML = fr.result;
+        };
+        fr.readAsText(fichier);
+    }
+}
+window.onload = function () {
+    "use strict";
+    document.getElementById("boutonCharger").onkeyup = function () {
+        chargerFichier("fichierEntre", "sortie");
+    };
+    document.getElementById("boutonCharger").onclick = function () {
+        chargerFichier("fichierEntre", "sortie");
+    };
+};
+
 function addOptions()
 {
 	var List = document.getElementById("wps");
@@ -277,7 +308,8 @@ var wpsService = new WpsService({
 				if ((property == "literalData")||(property == "complexData")){
 					newdiv.innerHTML += response.processOffering.process.outputs[indexOutput].title + "<dd>";  //+  " <br><input type='text' name='myInputs[]'>";
 					newdiv.innerHTML += "web  <input type='checkbox' checked='checked' name='3" + indexOutput + "' " +"' id='3" + indexOutput + "' onclick='checker(3" + indexOutput + ",4" + indexOutput + ");' />" + " file <input type='checkbox' name='4" + indexOutput + "' id='4" + indexOutput + "' onclick='checker(4" + indexOutput + " ,3" + indexOutput + ");' />";
-					newdiv.innerHTML += 'directory: <input type="text" id="directory" name="directory" style="width: 300px; height: 15px;" value="C:\" /> fileName: <input type="text" id="fileName" name="fileName" style="width: 100px; height: 15px;" value="Truc.txt" /> <br />';
+					newdiv.innerHTML += 'directory: <input type="text" id="directory" name="directory" style="width: 300px; height: 15px;" value="C:\" /> fileName: <input type="text" id="fileName" name="fileName" style="width: 100px; height: 15px;" value="Truc.txt" />';
+					newdiv.innerHTML += "<input type='file' id='fichierEntre"+ processDescription.processOffering.process.title + inputIndex +"'/><br />"
 					outputs += '\n';
 				}
 			}

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="ISO-8859-1">
+<meta charset="UTF8">
 
 
 <script src="js/deps.wps-js.min.js"></script>
@@ -43,10 +43,30 @@
  var adresse = window.location.search
  
  var partsArray = adresse.split('&');
-var vmin =parseInt(partsArray[0].substr(5));
-var vmax = parseInt(partsArray[1].substr(4));
-var vstep = parseInt(partsArray[2].substr(5));
-alert(vmin +" "+ vmax + " " +vstep);
+var vmin =parseInt(partsArray[4].substr(5));
+var vmax = parseInt(partsArray[5].substr(5));
+var vstep = parseInt(partsArray[6].substr(6));
+
+alert(partsArray[0].substr(1));
+alert(partsArray[4].substr(5));
+alert(partsArray[5].substr(5));
+alert(partsArray[6].substr(6));
+
+//alert(vmin +" "+ vmax + " " +vstep);
+ var slider;
+ var nb=0;
+ while (nb<partsArray[0].substr(1)){
+	 newdiv =document.createElement('divForm');
+	 
+	 
+	 if (partsArray[1].substr(0) == "fixed"){
+	newdiv.innerHTML += "partsArray["+ (2+4)  +"].substr(0)";
+	 }
+	 nb=nb+1;
+ }
+	
+	
+	//document.getElementById("divName").appendChild(newdiv);
  
   $(function() {
 
@@ -168,8 +188,38 @@ alert(vmin +" "+ vmax + " " +vstep);
       $inputRange.attr(attributes);
       $inputRange.rangeslider('update', true);
   }
-  
-  
+
+  function chargerFichier(idInputFile, idSortie) {
+	    "use strict";
+	    var entree, fichier, fr;
+
+	    if (typeof window.FileReader !== "function") {
+	        alert("L'API file n'est pas encore supportée par votre navigateur.");
+	        return;
+	    }
+	    entree= document.getElementById(idInputFile);
+	    if (!entree.files[0]) {
+	        alert("S'il vous plaît sélectionnez un fichier avant de cliquer sur «Chargement».");
+	    } else {
+	        fichier = entree.files[0];
+	        fr = new FileReader();
+	        
+	        fr.onload = function () {
+	            document.getElementById(idSortie).innerHTML = fr.result;
+	        };
+	        fr.readAsText(fichier);
+	    }
+	}
+	window.onload = function () {
+	    "use strict";
+	    document.getElementById("boutonCharger").onkeyup = function () {
+	        chargerFichier("fichierEntre", "sortie");
+	    };
+	    document.getElementById("boutonCharger").onclick = function () {
+	        chargerFichier("fichierEntre", "sortie");
+	    };
+	};
+
   </script>
 
 </head>
@@ -187,9 +237,18 @@ alert(vmin +" "+ vmax + " " +vstep);
         
          <input type="button" value="Modif"
                onclick="change();" />
-               </form>
+               
+<input type='file' id='fichierEntre'/>
+<input type="button" id='boutonCharger'>Afficher</button>
+<div id="sortie"></div>
+
+               
+  </form>
+
+  
                
     </div>
+      		<div class="divName" id="divName" name="divName"></div>
          </form>
          
 </body>
