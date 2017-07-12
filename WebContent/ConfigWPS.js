@@ -292,7 +292,6 @@ var wpsService = new WpsService({
 				
 				inputs += '\n';
 				}
-
 			}
 		}
 			

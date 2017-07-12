@@ -44,7 +44,7 @@
 	    	var n=0;
 	    	var newWindow = "";
 	    	while (document.getElementById("min" + processDescription.processOffering.process.identifier + n)){
-	    		
+	    	
 	    		if(n!=0){
 	    			newWindow += "&";	
 	    		}

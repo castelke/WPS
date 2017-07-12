@@ -12,7 +12,6 @@ alert(partsArray[0].substr(1));
 alert(partsArray[5].substr(5));
 alert(partsArray[6].substr(5));
 alert(partsArray[7].substr(6));*/
-
 //alert(vmin +" "+ vmax + " " +vstep);
  var slider;
  var nb=0;
