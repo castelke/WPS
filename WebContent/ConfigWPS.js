@@ -283,12 +283,12 @@ var wpsService = new WpsService({
 						if( response.processOffering.process.inputs[inputIndex].minOccurs==1){
 						newdiv.innerHTML += "*";
 						}
-						var char = "onclick='checker('check1" + inputIndex + "','check2" + inputIndex + "');";
-				newdiv.innerHTML += " <br><input type='text' name='myInputs[" + inputIndex + "]'  id='myInputs[" + inputIndex + "]' value='0'>" ;
-				newdiv.innerHTML += "fixed  <input type='checkbox' checked='checked' name='1" + inputIndex + "' " +"' id='1" + inputIndex + "' onclick='checker(1" + inputIndex + ",2" + inputIndex + ");' />" + " user <input type='checkbox' name='2" + inputIndex + "' id='2" + inputIndex + "' onclick='checker(2" + inputIndex + " ,1" + inputIndex + ");' />";
-				newdiv.innerHTML += 'min: <input type="text" id="min' + processDescription.processOffering.process.title + inputIndex + '" name="min' + processDescription.processOffering.process.title + inputIndex +'" style="width: 50px; height: 15px;" value="0" />';
-				newdiv.innerHTML += 'max: <input type="text" id="max' + processDescription.processOffering.process.title + inputIndex + '" name="max' + processDescription.processOffering.process.title + inputIndex +'" style="width: 50px; height: 15px;" value="100" />';
-				newdiv.innerHTML += 'step: <input type="text" id="step' + processDescription.processOffering.process.title + inputIndex + '" name="step' + processDescription.processOffering.process.title + inputIndex +'" style="width: 50px; height: 15px;" value="1" /><br>';
+					var char = "onclick='checker('check1" + inputIndex + "','check2" + inputIndex + "');";
+					newdiv.innerHTML += " <br><input type='text' name='myInputs[" + inputIndex + "]'  id='myInputs[" + inputIndex + "]' value='0'>" ;
+					newdiv.innerHTML += "fixed  <input type='checkbox' checked='checked' name='1" + inputIndex + "' " +"' id='1" + inputIndex + "' onclick='checker(1" + inputIndex + ",2" + inputIndex + ");' />" + " user <input type='checkbox' name='2" + inputIndex + "' id='2" + inputIndex + "' onclick='checker(2" + inputIndex + " ,1" + inputIndex + ");' />";
+					newdiv.innerHTML += 'min: <input type="text" id="min' + processDescription.processOffering.process.title + inputIndex + '" name="min' + processDescription.processOffering.process.title + inputIndex +'" style="width: 50px; height: 15px;" value="0" />';
+					newdiv.innerHTML += 'max: <input type="text" id="max' + processDescription.processOffering.process.title + inputIndex + '" name="max' + processDescription.processOffering.process.title + inputIndex +'" style="width: 50px; height: 15px;" value="100" />';
+					newdiv.innerHTML += 'step: <input type="text" id="step' + processDescription.processOffering.process.title + inputIndex + '" name="step' + processDescription.processOffering.process.title + inputIndex +'" style="width: 50px; height: 15px;" value="1" /><br>';
 				
 				inputs += '\n';
 				}
