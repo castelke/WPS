@@ -1,4 +1,6 @@
  
+var inputValue = new Array();
+
  var test;
  //alert(window.location.search); 
  var adresse = window.location.search
@@ -19,7 +21,6 @@ alert(partsArray[7].substr(6));*/
  newdivS =document.createElement('divSlider');
  divS =document.createElement('divS');
 
- 
  while (nb<partsArray[0].substr(1)){
 	// alert(partsArray[5+(6*nb)].substr(0));
 	 
@@ -28,30 +29,32 @@ alert(partsArray[7].substr(6));*/
 	document.getElementById("max").value = parseInt(partsArray[6+(6*nb)].substr(5));
 	document.getElementById("step").value =  parseInt(partsArray[7+(6*nb)].substr(6));*/
 
+	 //if (==fixed)
 	 var vmin =parseInt(partsArray[5+(6*nb)].substr(5));
 	 var vmax = parseInt(partsArray[6+(6*nb)].substr(5));
 	 var vstep = parseInt(partsArray[7+(6*nb)].substr(6));
+	 
+
+	 if (partsArray[2+(6*nb)].substr(0) == "fixed"){
+		 inputValue[nb]=partsArray[4+(6*nb)].substr(7);
+		 //alert(inputValue[nb]);
+		 newdiv.innerHTML += partsArray[3+(6*nb)].substr(0) + "<br>";	 
+		 newdiv.innerHTML += inputValue[nb];
+		 document.getElementById("slider").style.display = "none" + "<br>";
+	 }
+	 
 
 	 if (partsArray[2+(6*nb)].substr(0) == "user"){
 		//alert( partsArray[3+(6*nb)].substr(0));
-	 newdivS.innerHTML += partsArray[3+(6*nb)].substr(0) + "<br>";
-	//alert( parseInt(partsArray[6+(6*nb)].substr(5)));
-	// divS.innerHTML += '<form id="slider' + nb +   '" style="display:block"> <div id="' + nb + '"><h2> </h2> <input type="range" min="' +  parseInt(partsArray[5+(6*nb)].substr(5))   +'" max="'  + parseInt(partsArray[6+(6*nb)].substr(5)) + '" step="' +  parseInt(partsArray[7+(6*nb)].substr(5))   +'" data-rangeslider><output></output> <br><br> </div> </form>';
-	 document.getElementById("slider").style.display = "block";
+		 newdivS.innerHTML += partsArray[3+(6*nb)].substr(0) + "<br>";
+		 //alert( parseInt(partsArray[6+(6*nb)].substr(5)));
+		 //divS.innerHTML += '<form id="slider' + nb +   '" style="display:block"> <div id="' + nb + '"><h2> </h2> <input type="range" min="' +  parseInt(partsArray[5+(6*nb)].substr(5))   +'" max="'  + parseInt(partsArray[6+(6*nb)].substr(5)) + '" step="' +  parseInt(partsArray[7+(6*nb)].substr(5))   +'" data-rangeslider><output></output> <br><br> </div> </form>';
+		 document.getElementById("slider").style.display = "block";
 	 }
-	 
-	 
-	 if (partsArray[2+(6*nb)].substr(0) == "fixed"){
-		 newdiv.innerHTML += partsArray[3+(6*nb)].substr(0) + "<br>";	 
-	newdiv.innerHTML += partsArray[4+(6*nb)].substr(7);
-	document.getElementById("slider").style.display = "none" + "<br>";
-	 }
-	 
-	 
-	 
+
 	 nb=nb+1;
 	 newdiv.innerHTML += "<br><br>";
-	// alert(nb);
+	//alert(nb);
  }
 	
 	document.getElementById("divName").appendChild(newdiv);

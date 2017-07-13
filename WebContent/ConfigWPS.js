@@ -6,11 +6,12 @@ var versionWps;
 var processDescription;
 var identifier;
 
-
 var min = new Array();
 var max= new Array();
 var step = new Array();
 
+var inputValue = new Array();
+var idInputs =new Array();
 
 
 function setProcessDescription(p) {
@@ -125,18 +126,20 @@ function executeLaunch() {
 
 	var inputGenerator = new InputGenerator();
 	var inputTab= new Array();
+	setIdentifier(processDescription.processOffering.process.identifier);
 	
 	for (var indexInput in processDescription.processOffering.process.inputs)	{
-		var currentInput = processDescription.processOffering.process.inputs[indexInput];
-		var inputValue = document.getElementById("myInputs[" + indexInput + "]").value;
+		//var currentInput = processDescription.processOffering.process.inputs[indexInput];
+		inputValue[indexInput] = document.getElementById("myInputs[" + indexInput + "]").value;
+		idInputs[indexInput] = processDescription.processOffering.process.inputs[indexInput].identifier;
 		
-		if (currentInput.literalData != null ){	
-			inputTab[indexInput] = inputGenerator.createLiteralDataInput_wps_1_0_and_2_0(currentInput.identifier, 'undefined', 'undefined', inputValue);
-				alert(currentInput.title + inputValue); 
+		if (processDescription.processOffering.process.inputs[indexInput].literalData != null ){	
+			inputTab[indexInput] = inputGenerator.createLiteralDataInput_wps_1_0_and_2_0(idInputs[indexInput], 'undefined', 'undefined', inputValue[indexInput]);
+				alert(idInputs[indexInput] + " "+ inputValue[indexInput]); 
 		}
-		else if (currentInput.complexData != null){
-				inputTab[indexInput] = inputGenerator.createComplexDataInput_wps_1_0_and_2_0(currentInput.identifier,'undefined', 'undefined', 'undefined', false, inputValue);
-				alert(currentInput.title + inputValue); 
+		else if (processDescription.processOffering.process.inputs[indexInput].complexData != null){
+				inputTab[indexInput] = inputGenerator.createComplexDataInput_wps_1_0_and_2_0(idInputs[indexInput],'undefined', 'undefined', 'undefined', false, inputValue[indexInput]);
+				alert(idInputs[indexInput] +" " +inputValue[indexInput]); 
 		}
 	}
 
@@ -153,21 +156,56 @@ function executeLaunch() {
 		}
 	}
 	wpsService.setUrl(adresseWps);
-	wpsService.execute(executeCallback, processDescription.processOffering.process.identifier, "document", "sync", false, inputTab, outputTab);
+	//wpsService.execute(executeCallback, processDescription.processOffering.process.identifier, "document", "sync", false, inputTab, outputTab);
 	
+	var idA = processDescription.processOffering.process.inputs[0].identifier;
+	var idB = processDescription.processOffering.process.inputs[1].identifier;
+	var valueA = document.getElementById("myInputs[" + 0 + "]").value;
+	var valueB = document.getElementById("myInputs[" + 1 + "]").value;
+	
+	
+	var listeInputs = ""; //= "idInput[0]+"="+valueInput[0]";
+	
+	for (var i in processDescription.processOffering.process.inputs){
+		listeInputs +=  idInputs[i]  +"=" + inputValue[i] +";" ;
+	}
+	
+	alert(listeInputs);
+	
+	    $.ajax({
+	        type: "GET",
+	        url: adresseWps,
+	        data : {
+	        	Service:"WPS",
+	        	Version: versionWps,
+	        	Request:"Execute",
+	        	Identifier : identifier,
+	        	DataInputs : listeInputs
+	        },
+	        dataType: "script",
+	        cache: false,
+	        success: function(data) {
+	        	alert(data);
+	        	executeCallback(data);
+	        },
+	        error: function () {
+	        	setTimeout(timeout, 2000);
+	        },
+	        async: true
+	    });
 }
+
+
 
 var executeCallback = function(response) {
 		
 	var out;
-	for (var property in response) {
+	/*for (var property in response) {
 		out += property + ': ' + response[property]+'; \n';
 	}
-	alert(out);
+	alert(out);*/
 }
 
-
-	
 
 // initialize wpsService
 var wpsService = new WpsService({
@@ -346,9 +384,13 @@ var wpsService = new WpsService({
 				// only eexecute if wpsUrl is a http url
 			if(wpsUrl.startsWith("http")){
 				if($("#wps-version").prop("checked"))
-					wps = new WpsService({url : wpsUrl, version : "2.0.0"});
-				else
+					{wps = new WpsService({url : wpsUrl, version : "2.0.0"});
+					setVersionWps("2.0.0");
+					}
+				else {
 					wps = new WpsService({url : wpsUrl, version : "1.0.0"});
+					setVersionWps("1.0.0");
+				}
 			
 				wps.getCapabilities_GET(capabilitiesCallback);
 			}
