@@ -16,6 +16,7 @@
     <script src="lib/jquery/jquery-1.9.1.js"></script>
     <script src="lib/ol.js"></script>
     <script src="lib/jquery/jquery-ui-1.10.3.custom.min.js"></script>
+     <script src="js/xmlToJSON.js"></script>
     <link rel="stylesheet" href="lib/jquery/jquery-ui-1.10.3.custom.min.css" />
     <script src="http://www.openlayers.org/api/OpenLayers.js"></script>
     
@@ -130,7 +131,7 @@
 
 </head>
 <body>
-
+<!-- 
 		<form id="slider" style="display:none">
     <div id="js-example-change-attributes">
        <h2> </h2>
@@ -143,8 +144,31 @@
         <br><br>
     </div>
          </form>
+     -->    
          
-         
+ <div class="valeur" id="valeur"></div>
+
+<div class="divS" id="divS" ></div>
+<div class="divSlider" id="divSlider" ></div>
+
+		<form id="slider" style="display:none">
+    <div id="js-example-change-attributes">
+       <h2> </h2>
+        <input type="range" min="10" max="100" step="5" data-rangeslider>
+        <output></output>
+       <br><br>
+       </div>
+      </form>
+     
+      <form id="label" style="display:none">
+        <label><input type="number" name="min" id="min" value=vmin> <code>min</code></label><br>
+        <label><input type="number" name="max" id="max" value=vmax> <code>max</code></label><br>
+        <label><input type="number" name="step" id="step" value=vstep> <code>step</code></label>
+        <br><br>
+                 <input type="button" value="Modif"
+               onclick="change();" />
+        </form>
+        
 
 		<form id="choix" style="display:none">
 		
@@ -152,6 +176,11 @@
                onclick="initConfig(3);" />
                </form>
 
+
+				<form id="retour" style="display:none">
+        <input type="button" value="Retour process"
+               onclick="initConfig(7);" />
+               </form>
 
 
 
@@ -180,13 +209,9 @@
 		    <form id="verificationRunning" style="display:none">
         verification
     </form>
-    
-		
+ 
 		<form id="capabilities" style="display:block">
-		
-		
-		
-		
+
 		<div>
 			<h3>
 				Capabilities
@@ -211,8 +236,6 @@
 					use version '2.0.0'?
 				</label>
 			</div>
-			
-			
 			<!-- réponse getCapabilities -->
 			
 			<h1></h1>
@@ -236,11 +259,6 @@
 			<h1></h1>
 			
 						<!-- réponse Describeprocess-->
-			
-			
-
-			
-			
 		</div>
 		<div>
 		<div class="divName" id="divName" name="divName"></div>
@@ -262,9 +280,6 @@
 				
 			</div>
 			-->
-			
-
-			
 		</div>
 					<form id="processDescription" style="display:none">
 			 <input type="button" id="next" value="Next" onclick="initConfig(5);" />	<br />	
@@ -272,34 +287,25 @@
 				<textarea rows="20" cols="100" id="processDescriptionText">empty</textarea>
 			</div>
 			 </form>
-			 
-					<form id="execute" style="display:none">
-			 <input type="button" id="processes_execute" value="Execute Process" onclick="executeLaunch();" />
-		
-			</form>
-			
+
 			<form id="affiche" style="display:none">
 			<input type="button" id='boutonCharger'>Afficher</button>
 			 </form>
-			
 	</div>
-	
-<!-- 
-	<div>
-	<p class="infotext">wps-js - version 0.1.2 - build at 2017-04-25 16:48</p>
-	</div>
-	-->
-	    <!-- import du code javascript fichiers config et WSAPI-->
+
+
+  <form id="execute" style="display:none">
+			 <input type="button" id="processes_execute" value="Execute Process" onclick="executeLaunch();" />
+			</form>
 	   
+	   	    <!-- import du code javascript fichiers config et WSAPI-->
     <script type="text/javascript" src="WSAPI.js"></script>
     <script type="text/javascript" src="ViewController.js"></script>
-   
     <script type="text/javascript" src="config.js"></script>
-    
-
-    
-    <script type="text/javascript" src="ConfigWPS.js"></script>
+    <script type="text/javascript" src="ConfigWPS.js"></script>   
+        
     <!-- 
+            <script type="text/javascript" src="ConfigExecute.js"></script>
     <script type="text/javascript" src="MapView.js"></script>-->
   
 	

@@ -1,8 +1,8 @@
 //id du process selectionnÃ©
-var processId;
 var adresseWps;
 var versionWps;
 // description du processus		
+var processId;
 var processDescription;
 var identifier;
 
@@ -10,8 +10,15 @@ var min = new Array();
 var max= new Array();
 var step = new Array();
 
+var defaultValue = new Array();
+var typeValue = new Array();
+var usedValue = new Array();
+var isFixed = new Array();
+var isLiteral = new Array();
 var inputValue = new Array();
 var idInputs =new Array();
+
+
 
 
 function setProcessDescription(p) {
@@ -123,23 +130,31 @@ function verificationWPS(){
 function executeLaunch() {
 
 	setProcessId( $('#processes option:selected').text());
-
+	var inputnbr = 0;
 	var inputGenerator = new InputGenerator();
 	var inputTab= new Array();
 	setIdentifier(processDescription.processOffering.process.identifier);
 	
 	for (var indexInput in processDescription.processOffering.process.inputs)	{
-		//var currentInput = processDescription.processOffering.process.inputs[indexInput];
-		inputValue[indexInput] = document.getElementById("myInputs[" + indexInput + "]").value;
-		idInputs[indexInput] = processDescription.processOffering.process.inputs[indexInput].identifier;
-		
-		if (processDescription.processOffering.process.inputs[indexInput].literalData != null ){	
-			inputTab[indexInput] = inputGenerator.createLiteralDataInput_wps_1_0_and_2_0(idInputs[indexInput], 'undefined', 'undefined', inputValue[indexInput]);
-				alert(idInputs[indexInput] + " "+ inputValue[indexInput]); 
-		}
-		else if (processDescription.processOffering.process.inputs[indexInput].complexData != null){
+		var n=0;
+
+		while ((n < processDescription.processOffering.process.inputs[indexInput].maxOccurs) && document.getElementById("notused" +indexInput + n).checked){
+		//	alert(processDescription.processOffering.process.inputs[indexInput].identifier + " " + processDescription.processOffering.process.inputs[indexInput].maxOccurs + " " + n);
+		//	alert(indexInput + " " + n);
+			inputValue[inputnbr] = document.getElementById("myInputs[" + indexInput + n+ "]").value;
+			idInputs[inputnbr] = processDescription.processOffering.process.inputs[indexInput].identifier;
+			
+			
+			inputnbr = inputnbr +1;
+			if (processDescription.processOffering.process.inputs[indexInput].literalData != null ){	
+				inputTab[indexInput] = inputGenerator.createLiteralDataInput_wps_1_0_and_2_0(idInputs[indexInput], 'undefined', 'undefined', inputValue[indexInput]);
+			//	alert(idInputs[indexInput] + " "+ inputValue[indexInput]); 
+			}
+			else if (processDescription.processOffering.process.inputs[indexInput].complexData != null){
 				inputTab[indexInput] = inputGenerator.createComplexDataInput_wps_1_0_and_2_0(idInputs[indexInput],'undefined', 'undefined', 'undefined', false, inputValue[indexInput]);
-				alert(idInputs[indexInput] +" " +inputValue[indexInput]); 
+			//	alert(idInputs[indexInput] +" " +inputValue[indexInput]); 
+			}
+		n=n+1;
 		}
 	}
 
@@ -156,18 +171,15 @@ function executeLaunch() {
 		}
 	}
 	wpsService.setUrl(adresseWps);
-	//wpsService.execute(executeCallback, processDescription.processOffering.process.identifier, "document", "sync", false, inputTab, outputTab);
+	//wpsService.execute(executeCallback, processDescription.processOffering.process.identifier, "document", "async", false, inputTab, outputTab);
+
+	var listeInputs = ""; 
 	
-	var idA = processDescription.processOffering.process.inputs[0].identifier;
-	var idB = processDescription.processOffering.process.inputs[1].identifier;
-	var valueA = document.getElementById("myInputs[" + 0 + "]").value;
-	var valueB = document.getElementById("myInputs[" + 1 + "]").value;
+	var i=0;
 	
-	
-	var listeInputs = ""; //= "idInput[0]+"="+valueInput[0]";
-	
-	for (var i in processDescription.processOffering.process.inputs){
+	while (i<inputnbr){
 		listeInputs +=  idInputs[i]  +"=" + inputValue[i] +";" ;
+		i=i+1;
 	}
 	
 	alert(listeInputs);
@@ -182,10 +194,10 @@ function executeLaunch() {
 	        	Identifier : identifier,
 	        	DataInputs : listeInputs
 	        },
-	        dataType: "script",
+	 //       dataType: "xml",
 	        cache: false,
+	      //  success : executeCallback,
 	        success: function(data) {
-	        	alert(data);
 	        	executeCallback(data);
 	        },
 	        error: function () {
@@ -195,15 +207,56 @@ function executeLaunch() {
 	    });
 }
 
-
-
-var executeCallback = function(response) {
+/*
+var executeCallback =function(response) {
 		
-	var out;
-	/*for (var property in response) {
-		out += property + ': ' + response[property]+'; \n';
+	var xmlResponse = (new XMLSerializer()).serializeToString(response);
+	
+	alert(xmlResponse);
+	
+	var parser = new DOMParser();
+	var xml = parser.parseFromString(response, "text/xml");
+	wpsResponse = xmlToJson(xml) ;
+	alert (JSON.stringify(wpsResponse));
+	alert(wpsResponse["wps:ExecuteResponse"]["@attributes"].version);
+	
+
+}*/
+
+
+
+function executeCallback (data) {
+	response = (new XMLSerializer()).serializeToString(data);
+	//alert(response);
+	var parser = new DOMParser();
+	var xml = parser.parseFromString(response, "text/xml");
+	wpsResponse = xmlToJson(xml) ;
+	alert (JSON.stringify(wpsResponse));
+	//wpsResponse["wps:ExecuteResponse"]["wps:ProcessOutputs"]["wps:Output"][0]["ows:Identifier"]["#text"] 
+	
+	try {wpsResponse["wps:ExecuteResponse"]["wps:ProcessOutputs"]["wps:Output"][0]["wps:Data"]["wps:LiteralData"]["#text"]
+} catch(err) {	alert(wpsResponse["ExceptionReport"]["Exception"]["ExceptionText"]["#text"]);
 	}
-	alert(out);*/
+	
+	var i=0;
+	while (isLiteral[i] != null)
+	{
+	
+	if (isLiteral[i]==1){
+		alert(wpsResponse["wps:ExecuteResponse"]["wps:ProcessOutputs"]["wps:Output"][i]["wps:Data"]["wps:LiteralData"]["#text"]);
+	}
+	else if (isLiteral[i]==0){
+		alert(wpsResponse["wps:ExecuteResponse"]["wps:ProcessOutputs"]["wps:Output"][i]["wps:Data"]["wps:ComplexData"]["#text"]);
+	}
+	
+/*	alert(wpsResponse["wps:ExecuteResponse"]["wps:ProcessOutputs"]["wps:Output"][0]["wps:Data"]["wps:LiteralData"]["#text"]);
+	alert(wpsResponse["wps:ExecuteResponse"]["wps:ProcessOutputs"]["wps:Output"][1]["wps:Data"]["wps:ComplexData"]["#text"]);*/
+	i=i+1;
+	}
+	
+	initConfig(6);
+	
+	
 }
 
 
@@ -242,68 +295,44 @@ var wpsService = new WpsService({
 		
 	var describeProcessCallback = function(response) {
 		
+		
+	/*    $.ajax({
+	        type: "GET",
+	        url: adresseWps,
+	        data : {
+	        	Service:"WPS",
+	        	Version: versionWps,
+	        	Request:"DescribeProcess",
+	        	Identifier : "Add",
+	        },
+	 //       dataType: "xml",
+	        cache: false,
+	      //  success : executeCallback,
+	        success: function(data) {
+	        	executeCallback(data);
+	        },
+	        error: function () {
+	        	setTimeout(timeout, 2000);
+	        },
+	        async: true
+	    });*/
+		/*
+	    for (var prop in response.processOffering.process.inputs[0].literalData){
+	    	alert(prop);
+	    	}*/
+	    
+	    
 		initConfig(4);
 		setProcessDescription(response);
 		setIdentifier(response.processOffering.process.identifier);
 		var outputOffering = '';
-		for (var property in response.processOffering) {
-			outputOffering += property + ': ' + response.processOffering[property]+'; \n';
+		
+		if (response.processOffering.version != null){
+			outputOffering += "version : " + response.processOffering.version+'; \n';
 		}
-		outputOffering += "\n";
-		for (var property in response.processOffering.process) {
-			outputOffering += property + ': ' + response.processOffering.process[property]+'; \n';
-		}
-		outputOffering += "\n";
-		var x=0;
-	/*	for (var x in response.processOffering.process.inputs)	{
-			for (var property in response.processOffering.process.inputs[x]) {
-				for (var lit in response.processOffering.process.inputs[x].literalData[property]) {
-				outputOffering += lit +': ' + response.processOffering.process.inputs[x].literalData[lit][property]+'; \n';
-			}	
-			//	x=x+1;
-			}
-		}*/
-		/*	outputOffering += "\n";
-			x=0;
-				for (var i in response.processOffering.process.inputs) {
-					for (var property in response.processOffering.process.inputs[i].literalData) {
-					
-					outputOffering += property + ': ' + response.processOffering.process.inputs[i].literalData[0][property]+'; \n';		
-				}	
-				}
-				*/
-				/*
-			x=1;
-			outputOffering += "\n";
-			for (var input in response.processOffering.process.inputs.literalData.literalDataDomains)	{
-				for (var property in response.processOffering.process.inputs[x].literalData.literalDataDomains[0]) {
-					outputOffering += property + ': ' + response.processOffering.process.inputs[x].literalData.literalDataDomains[0][property]+'; \n';		
-				}	
-				x=x+1;
-				}
-			
-			x=0;*/
-			outputOffering += "\n";
-			/*for (var input in response.processOffering.process.inputs[x].literalData.literalDataDomains[x])	{
-				for (var property in response.processOffering.process.inputs[x].literalData.literalDataDomains[0].dataType[x]) {
-					outputOffering += property + ': ' + response.processOffering.process.inputs[x].literalData.literalDataDomains[0].dataType[property]+'; \n';		
-				}	
-				x=x+1;
-				}
-			
-			x=1;
-			outputOffering += "\n";
-			for (var input in response.processOffering.process.inputs[x].literalData.literalDataDomains[x])	{
-				for (var property in response.processOffering.process.inputs[x].literalData.literalDataDomains[0].dataType[x]) {
-					outputOffering += property + ': ' + response.processOffering.process.inputs[x].literalData.literalDataDomains[0].dataType[property]+'; \n';		
-				}	
-				x=x+1;
-				}
-			
-			outputOffering += "\n";*/
-
-			
-			
+		
+		outputOffering += "process : " + response.processOffering.process.title+'; \n';
+		outputOffering += "description : " + response.processOffering.process.abstractValue+'; \n';
 		
 		inputs = 'Inputs: \n';
 		newdiv =document.createElement('divForm');
@@ -317,17 +346,34 @@ var wpsService = new WpsService({
 				inputs += property +': ' + response.processOffering.process.inputs[inputIndex][property]+'; \n';
 				
 				if ((property == "literalData")||(property == "complexData")){
+					
+
 					newdiv.innerHTML += response.processOffering.process.inputs[inputIndex].title;
 						if( response.processOffering.process.inputs[inputIndex].minOccurs==1){
 						newdiv.innerHTML += "*";
 						}
-					var char = "onclick='checker('check1" + inputIndex + "','check2" + inputIndex + "');";
-					newdiv.innerHTML += " <br><input type='text' name='myInputs[" + inputIndex + "]'  id='myInputs[" + inputIndex + "]' value='0'>" ;
-					newdiv.innerHTML += "fixed  <input type='checkbox' checked='checked' name='1" + inputIndex + "' " +"' id='1" + inputIndex + "' onclick='checker(1" + inputIndex + ",2" + inputIndex + ");' />" + " user <input type='checkbox' name='2" + inputIndex + "' id='2" + inputIndex + "' onclick='checker(2" + inputIndex + " ,1" + inputIndex + ");' />";
-					newdiv.innerHTML += 'min: <input type="text" id="min' + processDescription.processOffering.process.title + inputIndex + '" name="min' + processDescription.processOffering.process.title + inputIndex +'" style="width: 50px; height: 15px;" value="0" />';
-					newdiv.innerHTML += 'max: <input type="text" id="max' + processDescription.processOffering.process.title + inputIndex + '" name="max' + processDescription.processOffering.process.title + inputIndex +'" style="width: 50px; height: 15px;" value="100" />';
-					newdiv.innerHTML += 'step: <input type="text" id="step' + processDescription.processOffering.process.title + inputIndex + '" name="step' + processDescription.processOffering.process.title + inputIndex +'" style="width: 50px; height: 15px;" value="1" /><br>';
-				
+						var n=0;
+				//	for (var n in response.processOffering.process.inputs[inputIndex].maxOccurs){
+						var m=0;
+						
+						while (n < response.processOffering.process.inputs[inputIndex].maxOccurs){
+							//alert(n + " " + response.processOffering.process.inputs[inputIndex].maxOccurs);
+							var char = "onclick='checker('check1" + inputIndex + "','check2" + inputIndex + "');";
+							newdiv.innerHTML += " <br><input type='text' name='myInputs[" + inputIndex + n + "]'  id='myInputs[" + inputIndex + n + "]' value='0'>" ;
+							newdiv.innerHTML += "fixed  <input type='checkbox' checked='checked' name='1" + inputIndex + "' " +"' id='1" + inputIndex + "' onclick='checker(1" + inputIndex + ",2" + inputIndex + ");' />" + " user <input type='checkbox' name='2" + inputIndex + "' id='2" + inputIndex + "' onclick='checker(2" + inputIndex + " ,1" + inputIndex + ");' />";
+							newdiv.innerHTML += 'min: <input type="text" id="min' + processDescription.processOffering.process.title + inputIndex + '" name="min' + processDescription.processOffering.process.title + inputIndex +'" style="width: 50px; height: 15px;" value="0" />';
+							newdiv.innerHTML += 'max: <input type="text" id="max' + processDescription.processOffering.process.title + inputIndex + '" name="max' + processDescription.processOffering.process.title + inputIndex +'" style="width: 50px; height: 15px;" value="100" />';
+							newdiv.innerHTML += 'step: <input type="text" id="step' + processDescription.processOffering.process.title + inputIndex + '" name="step' + processDescription.processOffering.process.title + inputIndex +'" style="width: 50px; height: 15px;" value="1" />';
+							 
+						//	if (response.processOffering.process.inputs[inputIndex].minOccurs==0){
+								newdiv.innerHTML += "used: <input type='checkbox' checked='unchecked' name='notused" + inputIndex +  n +"' " +"' id='notused" + inputIndex + n +"' /> <br>";
+						//	}
+							
+						
+						n=n+1;	
+						
+						}
+					
 				inputs += '\n';
 				}
 			}
@@ -343,6 +389,15 @@ var wpsService = new WpsService({
 				outputs += property + ': ' + response.processOffering.process.outputs[indexOutput][property]+'; \n';
 				
 				if ((property == "literalData")||(property == "complexData")){
+					
+					if (property == "literalData"){
+						isLiteral[indexOutput] = 1;
+					}
+						else {
+						isLiteral[indexOutput] = 0;
+						}
+					
+					
 					newdiv.innerHTML += response.processOffering.process.outputs[indexOutput].title + "<dd>";  //+  " <br><input type='text' name='myInputs[]'>";
 					newdiv.innerHTML += "web  <input type='checkbox' checked='checked' name='3" + indexOutput + "' " +"' id='3" + indexOutput + "' onclick='checker(3" + indexOutput + ",4" + indexOutput + ");' />" + " file <input type='checkbox' name='4" + indexOutput + "' id='4" + indexOutput + "' onclick='checker(4" + indexOutput + " ,3" + indexOutput + ");' />";
 					newdiv.innerHTML += 'directory: <input type="text" id="directory" name="directory" style="width: 300px; height: 15px;" value="C:\" /> fileName: <input type="text" id="fileName" name="fileName" style="width: 100px; height: 15px;" value="Truc.txt" />';

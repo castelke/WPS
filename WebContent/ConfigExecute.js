@@ -1,4 +1,6 @@
  
+
+
 var inputValue = new Array();
 
  var test;
@@ -9,27 +11,20 @@ var inputValue = new Array();
 var vmin =parseInt(partsArray[5].substr(5));
 var vmax = parseInt(partsArray[6].substr(5));
 var vstep = parseInt(partsArray[7].substr(6));
-/*
-alert(partsArray[0].substr(1));
-alert(partsArray[5].substr(5));
-alert(partsArray[6].substr(5));
-alert(partsArray[7].substr(6));*/
-//alert(vmin +" "+ vmax + " " +vstep);
+
+
+
+
  var slider;
  var nb=0;
  newdiv =document.createElement('divForm');
  newdivS =document.createElement('divSlider');
  divS =document.createElement('divS');
 
+ alert(getProcessId());
+ 
  while (nb<partsArray[0].substr(1)){
-	// alert(partsArray[5+(6*nb)].substr(0));
-	 
-	 
-/*	document.getElementById("min").value = parseInt(partsArray[5+(6*nb)].substr(5));
-	document.getElementById("max").value = parseInt(partsArray[6+(6*nb)].substr(5));
-	document.getElementById("step").value =  parseInt(partsArray[7+(6*nb)].substr(6));*/
 
-	 //if (==fixed)
 	 var vmin =parseInt(partsArray[5+(6*nb)].substr(5));
 	 var vmax = parseInt(partsArray[6+(6*nb)].substr(5));
 	 var vstep = parseInt(partsArray[7+(6*nb)].substr(6));
@@ -165,6 +160,8 @@ alert(partsArray[7].substr(6));*/
       change();
   });
   
+  
+  
   function change() {
 	  
       var $document = $(document);
@@ -181,6 +178,8 @@ alert(partsArray[7].substr(6));*/
       $inputRange.attr(attributes);
       $inputRange.rangeslider('update', true);
   }
+  
+  
 
   function chargerFichier(idInputFile, idSortie) {
 	    "use strict";
