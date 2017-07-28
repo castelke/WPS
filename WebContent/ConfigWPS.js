@@ -138,9 +138,12 @@ function executeLaunch() {
 	for (var indexInput in processDescription.processOffering.process.inputs)	{
 		var n=0;
 
-		while ((n < processDescription.processOffering.process.inputs[indexInput].maxOccurs) && document.getElementById("notused" +indexInput + n).checked){
+		while ((n < processDescription.processOffering.process.inputs[indexInput].maxOccurs)){
 		//	alert(processDescription.processOffering.process.inputs[indexInput].identifier + " " + processDescription.processOffering.process.inputs[indexInput].maxOccurs + " " + n);
 		//	alert(indexInput + " " + n);
+			
+			if(document.getElementById("notused" +indexInput + n).checked){
+			
 			inputValue[inputnbr] = document.getElementById("myInputs[" + indexInput + n+ "]").value;
 			idInputs[inputnbr] = processDescription.processOffering.process.inputs[indexInput].identifier;
 			
@@ -153,6 +156,7 @@ function executeLaunch() {
 			else if (processDescription.processOffering.process.inputs[indexInput].complexData != null){
 				inputTab[indexInput] = inputGenerator.createComplexDataInput_wps_1_0_and_2_0(idInputs[indexInput],'undefined', 'undefined', 'undefined', false, inputValue[indexInput]);
 			//	alert(idInputs[indexInput] +" " +inputValue[indexInput]); 
+			}
 			}
 		n=n+1;
 		}
@@ -192,6 +196,7 @@ function executeLaunch() {
 	        	Version: versionWps,
 	        	Request:"Execute",
 	        	Identifier : identifier,
+	        //	contentType: "application/json; charset=utf-8",
 	        	DataInputs : listeInputs
 	        },
 	 //       dataType: "xml",
@@ -234,27 +239,100 @@ function executeCallback (data) {
 	alert (JSON.stringify(wpsResponse));
 	//wpsResponse["wps:ExecuteResponse"]["wps:ProcessOutputs"]["wps:Output"][0]["ows:Identifier"]["#text"] 
 	
-	try {wpsResponse["wps:ExecuteResponse"]["wps:ProcessOutputs"]["wps:Output"][0]["wps:Data"]["wps:LiteralData"]["#text"]
+	//alert("?" + isLiteral[0]);
+	
+	try {wpsResponse["wps:ExecuteResponse"]["wps:ProcessOutputs"]["wps:Output"]
+	
+	} catch(err) {	alert(wpsResponse["ExceptionReport"]["Exception"]["ExceptionText"]["#text"]);
+		}
+	
+	if(isLiteral.length == 1){
+
+		if(isLiteral[0] == 1){
+			
+		/*	try {wpsResponse["wps:ExecuteResponse"]["wps:ProcessOutputs"]["wps:Output"]["wps:Data"]["wps:LiteralData"]["#text"]
+			
+			} catch(err) {	alert(wpsResponse["ExceptionReport"]["Exception"]["ExceptionText"]["#text"]);
+				}
+			*/
+			alert(wpsResponse["wps:ExecuteResponse"]["wps:ProcessOutputs"]["wps:Output"]["wps:Data"]["wps:LiteralData"]["#text"]);
+		}
+		
+		else {
+			alert(wpsResponse["wps:ExecuteResponse"]["wps:ProcessOutputs"]["wps:Output"]["wps:Data"]["wps:ComplexData"]["#text"]);
+	/*		try {wpsResponse["wps:ExecuteResponse"]["wps:ProcessOutputs"]["wps:Output"]["wps:Data"]["wps:ComplexData"]["#text"]
+			
+			} catch(err) {	alert(wpsResponse["ExceptionReport"]["Exception"]["ExceptionText"]["#text"]);
+				}*/
+		}
+		
+		
+		initConfig(8);
+		
+	}
+	
+	
+	if(isLiteral.length > 1){
+		
+	
+	//alert(wpsResponse["wps:ExecuteResponse"]["wps:ProcessOutputs"]["wps:Output"]["wps:Data"]["wps:ComplexlData"]["#text"]);
+/*	try {wpsResponse["wps:ExecuteResponse"]["wps:ProcessOutputs"]["wps:Output"][0]["wps:Data"]["wps:ComplexData"]["#text"]
+	
 } catch(err) {	alert(wpsResponse["ExceptionReport"]["Exception"]["ExceptionText"]["#text"]);
-	}
+	}*/
 	
-	var i=0;
-	while (isLiteral[i] != null)
-	{
-	
-	if (isLiteral[i]==1){
-		alert(wpsResponse["wps:ExecuteResponse"]["wps:ProcessOutputs"]["wps:Output"][i]["wps:Data"]["wps:LiteralData"]["#text"]);
+
+
+/*
+ * 
+ * 
+ * <?xml version="1.0" encoding="utf-8" ?>
+<ogr:FeatureCollection
+     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+     xsi:schemaLocation=""
+     xmlns:ogr="http://ogr.maptools.org/"
+     xmlns:gml="http://www.opengis.net/gml">
+  <gml:boundedBy>
+    <gml:Box>
+      <gml:coord><gml:X>143607.9471074699</gml:X><gml:Y>6824632.306583629</gml:Y></gml:coord>
+      <gml:coord><gml:X>143607.9471074699</gml:X><gml:Y>6824632.306583629</gml:Y></gml:coord>
+    </gml:Box>
+  </gml:boundedBy>
+                                                                                          
+  <gml:featureMember>
+    <ogr:point fid="point.0">
+      <ogr:geometryProperty><gml:Point srsName="EPSG:2154"><gml:coordinates>143607.94710747,6824632.30658363</gml:coordinates></gml:Point></ogr:geometryProperty>
+      <ogr:gml_id>qt_temp.0</ogr:gml_id>
+      <ogr:Id>1</ogr:Id>
+      <ogr:surface_ha>668918.103277</ogr:surface_ha>
+      <ogr:km>6689</ogr:km>
+      <ogr:km2>6689.181033</ogr:km2>
+      <ogr:ha2>668918</ogr:ha2>
+    </ogr:point>
+  </gml:featureMember>
+</ogr:FeatureCollection>
+
+ */
+
+
+		var i=0;
+		while (isLiteral[i] != null)
+		{
+		
+			if (isLiteral[i]==1){
+				alert(wpsResponse["wps:ExecuteResponse"]["wps:ProcessOutputs"]["wps:Output"][i]["wps:Data"]["wps:LiteralData"]["#text"]);
+			}
+			else if (isLiteral[i]==0){
+				alert(wpsResponse["wps:ExecuteResponse"]["wps:ProcessOutputs"]["wps:Output"][i]["wps:Data"]["wps:ComplexData"]["#text"]);
+			}
+			
+		/*	alert(wpsResponse["wps:ExecuteResponse"]["wps:ProcessOutputs"]["wps:Output"][0]["wps:Data"]["wps:LiteralData"]["#text"]);
+			alert(wpsResponse["wps:ExecuteResponse"]["wps:ProcessOutputs"]["wps:Output"][1]["wps:Data"]["wps:ComplexData"]["#text"]);*/
+			i=i+1;
+		}
+		initConfig(6);
 	}
-	else if (isLiteral[i]==0){
-		alert(wpsResponse["wps:ExecuteResponse"]["wps:ProcessOutputs"]["wps:Output"][i]["wps:Data"]["wps:ComplexData"]["#text"]);
-	}
-	
-/*	alert(wpsResponse["wps:ExecuteResponse"]["wps:ProcessOutputs"]["wps:Output"][0]["wps:Data"]["wps:LiteralData"]["#text"]);
-	alert(wpsResponse["wps:ExecuteResponse"]["wps:ProcessOutputs"]["wps:Output"][1]["wps:Data"]["wps:ComplexData"]["#text"]);*/
-	i=i+1;
-	}
-	
-	initConfig(6);
+		
 	
 	
 }
@@ -359,14 +437,15 @@ var wpsService = new WpsService({
 						while (n < response.processOffering.process.inputs[inputIndex].maxOccurs){
 							//alert(n + " " + response.processOffering.process.inputs[inputIndex].maxOccurs);
 							var char = "onclick='checker('check1" + inputIndex + "','check2" + inputIndex + "');";
-							newdiv.innerHTML += " <br><input type='text' name='myInputs[" + inputIndex + n + "]'  id='myInputs[" + inputIndex + n + "]' value='0'>" ;
-							newdiv.innerHTML += "fixed  <input type='checkbox' checked='checked' name='1" + inputIndex + "' " +"' id='1" + inputIndex + "' onclick='checker(1" + inputIndex + ",2" + inputIndex + ");' />" + " user <input type='checkbox' name='2" + inputIndex + "' id='2" + inputIndex + "' onclick='checker(2" + inputIndex + " ,1" + inputIndex + ");' />";
+							newdiv.innerHTML += " <br><input type='checkbox' checked='unchecked' name='notused" + inputIndex +  n +"' " +"' id='notused" + inputIndex + n +"' /> ";
+							newdiv.innerHTML += "<input type='text' name='myInputs[" + inputIndex + n + "]'  id='myInputs[" + inputIndex + n + "]' value='0'>" ;
+							newdiv.innerHTML += "fixed  <input type='checkbox' checked='checked' name='1" + inputIndex + n + "' " +"' id='1" + inputIndex + n + "' onclick='checker(1" + inputIndex + n + ",2" + inputIndex + n + ");' />" + " user <input type='checkbox' name='2" + inputIndex + n + "' id='2" + inputIndex + n + "' onclick='checker(2" + inputIndex + n + " ,1" + inputIndex + n + ");' />";
 							newdiv.innerHTML += 'min: <input type="text" id="min' + processDescription.processOffering.process.title + inputIndex + '" name="min' + processDescription.processOffering.process.title + inputIndex +'" style="width: 50px; height: 15px;" value="0" />';
 							newdiv.innerHTML += 'max: <input type="text" id="max' + processDescription.processOffering.process.title + inputIndex + '" name="max' + processDescription.processOffering.process.title + inputIndex +'" style="width: 50px; height: 15px;" value="100" />';
-							newdiv.innerHTML += 'step: <input type="text" id="step' + processDescription.processOffering.process.title + inputIndex + '" name="step' + processDescription.processOffering.process.title + inputIndex +'" style="width: 50px; height: 15px;" value="1" />';
+							newdiv.innerHTML += 'step: <input type="text" id="step' + processDescription.processOffering.process.title + inputIndex + '" name="step' + processDescription.processOffering.process.title + inputIndex +'" style="width: 50px; height: 15px;" value="1" /><br>';
 							 
 						//	if (response.processOffering.process.inputs[inputIndex].minOccurs==0){
-								newdiv.innerHTML += "used: <input type='checkbox' checked='unchecked' name='notused" + inputIndex +  n +"' " +"' id='notused" + inputIndex + n +"' /> <br>";
+							//	newdiv.innerHTML += "used: <input type='checkbox' checked='unchecked' name='notused" + inputIndex +  n +"' " +"' id='notused" + inputIndex + n +"' /> <br>";
 						//	}
 							
 						

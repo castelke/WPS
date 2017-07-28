@@ -49,12 +49,12 @@
 	    		var inputnbr = 0;
 	    	for (var indexInput in processDescription.processOffering.process.inputs)	{
 	    		var n=0;
-	 		while ((n < processDescription.processOffering.process.inputs[indexInput].maxOccurs) && document.getElementById("notused" +indexInput + n).checked){
-	 			inputValue[inputnbr] = document.getElementById("myInputs[" + indexInput + n+ "]").value;
-	 			idInputs[inputnbr] = processDescription.processOffering.process.inputs[indexInput].identifier;
-	 			inputnbr = inputnbr +1;
-			n=n+1;
-			}
+	    		while ((n < processDescription.processOffering.process.inputs[indexInput].maxOccurs) && document.getElementById("notused" +indexInput + n).checked){
+	    			inputValue[inputnbr] = document.getElementById("myInputs[" + indexInput + n+ "]").value;
+	    			idInputs[inputnbr] = processDescription.processOffering.process.inputs[indexInput].identifier;
+	    			inputnbr = inputnbr +1;
+	    			n=n+1;
+	    		}
 	    	}
 	    	var i=0;
 	    	var listeInputs = "";
@@ -126,9 +126,9 @@
 	    		}
 	    		
 	    		document.getElementById("divSlider").innerHTML  += "<br>";
-	   //	document.getElementById("divSlider").appendChild(newdivS);
-    	i=i+1;
-		}
+	    		//	document.getElementById("divSlider").appendChild(newdivS);
+	    		i=i+1;
+	    	 }
 		
 	}
 		
@@ -138,7 +138,36 @@
 	    	document.getElementById('divName').style.visibility='visible';
 	    	document.getElementById("retour").style.display = "none";
 	    	document.getElementById("divSlider").style.display = "none";
+	    	document.getElementById("choix").style.display = "block";
 	    	document.getElementById("slider").style.display = "none";
+		}
+		
+		else if (a==8){
+			
+	    	document.getElementById("processDescription").style.display = "none";
+	    	document.getElementById("execute").style.display = "none";
+	    	document.getElementById("choix").style.display = "none";
+	    	document.getElementById("retour").style.display = "block";
+	    	document.getElementById('divName').style.visibility='hidden';
+	    	document.getElementById("divSlider").style.display = "block";
+		if(isLiteral[0] == 1){
+			
+			/*	try {wpsResponse["wps:ExecuteResponse"]["wps:ProcessOutputs"]["wps:Output"]["wps:Data"]["wps:LiteralData"]["#text"]
+				
+				} catch(err) {	alert(wpsResponse["ExceptionReport"]["Exception"]["ExceptionText"]["#text"]);
+					}
+				*/
+				alert(wpsResponse["wps:ExecuteResponse"]["wps:ProcessOutputs"]["wps:Output"]["wps:Data"]["wps:LiteralData"]["#text"]);
+			}
+			
+			else {
+				alert(wpsResponse["wps:ExecuteResponse"]["wps:ProcessOutputs"]["wps:Output"]["wps:Data"]["wps:ComplexData"]["#text"]);
+		/*		try {wpsResponse["wps:ExecuteResponse"]["wps:ProcessOutputs"]["wps:Output"]["wps:Data"]["wps:ComplexData"]["#text"]
+				
+				} catch(err) {	alert(wpsResponse["ExceptionReport"]["Exception"]["ExceptionText"]["#text"]);
+					}*/
+			}
+		
 		}
 		
 	}

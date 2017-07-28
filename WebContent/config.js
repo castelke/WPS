@@ -97,7 +97,7 @@ function verificationAdresseWFS() {
 
 //fonction timeout si url invalide
 function timeout() {
-	verif.innerHTML = "url invalide";
+//	verif.innerHTML = "url invalide";
 }
 
 
