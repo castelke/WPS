@@ -150,6 +150,8 @@
 	    	document.getElementById("retour").style.display = "block";
 	    	document.getElementById('divName').style.visibility='hidden';
 	    	document.getElementById("divSlider").style.display = "block";
+
+	    	
 		if(isLiteral[0] == 1){
 			
 			/*	try {wpsResponse["wps:ExecuteResponse"]["wps:ProcessOutputs"]["wps:Output"]["wps:Data"]["wps:LiteralData"]["#text"]
@@ -169,7 +171,17 @@
 			}
 		
 		}
-		
+
+		else if (a==9){
+	    	document.getElementById("processDescription").style.display = "none";
+	    	//document.getElementById("execute").style.display = "block";
+	    //	document.getElementById("slider").style.display = "block";
+	    	document.getElementById('divName').style.visibility='hidden';
+	    //	document.getElementById("divSlider").style.display = "block";
+	    	//document.getElementById("retour").style.display = "block";
+	    	document.getElementById("choix").style.display = "none";
+	    	document.getElementById("wfsConfig").style.display = "none";
+		}
 	}
 	//ff
 	function initMap(a, c, f, a2,c2,f2) {
@@ -182,11 +194,15 @@
 	}
 	
     function checker(id1, id2) {
-    	//alert(id1 + " " + id2);
+
+    	
+    	
         if(document.getElementById(id1).checked)
-        { document.getElementById(id2).checked = false;}
+        { document.getElementById(id2).checked = false;
+        }
         else
-        {  document.getElementById(id2).checked = true;}
+        {  document.getElementById(id2).checked = true;
+        }
       }
 
 

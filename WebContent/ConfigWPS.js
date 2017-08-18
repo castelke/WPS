@@ -394,10 +394,10 @@ var wpsService = new WpsService({
 	        },
 	        async: true
 	    });*/
-		/*
-	    for (var prop in response.processOffering.process.inputs[0].literalData){
-	    	alert(prop);
-	    	}*/
+		
+	    for (var prop in response.processOffering.process.inputs[0].literalData){//.literalDataDomain){
+	    	//alert(prop);
+	    	}
 	    
 	    
 		initConfig(4);
@@ -439,7 +439,13 @@ var wpsService = new WpsService({
 							var char = "onclick='checker('check1" + inputIndex + "','check2" + inputIndex + "');";
 							newdiv.innerHTML += " <br><input type='checkbox' checked='unchecked' name='notused" + inputIndex +  n +"' " +"' id='notused" + inputIndex + n +"' /> ";
 							newdiv.innerHTML += "<input type='text' name='myInputs[" + inputIndex + n + "]'  id='myInputs[" + inputIndex + n + "]' value='0'>" ;
-							newdiv.innerHTML += "fixed  <input type='checkbox' checked='checked' name='1" + inputIndex + n + "' " +"' id='1" + inputIndex + n + "' onclick='checker(1" + inputIndex + n + ",2" + inputIndex + n + ");' />" + " user <input type='checkbox' name='2" + inputIndex + n + "' id='2" + inputIndex + n + "' onclick='checker(2" + inputIndex + n + " ,1" + inputIndex + n + ");' />";
+							newdiv.innerHTML += "fixed  <input type='checkbox' checked='checked' name='1" + inputIndex + n + "' " +"' id='1" + inputIndex + n + "' onclick='checker(1" + inputIndex + n + ",2" + inputIndex + n + ");' />";
+							//newdiv.innerHTML += "<form id='2" +inputIndex + n + "' style='display:none'>";
+							
+							
+							
+							newdiv.innerHTML +=  "user <input type='checkbox' name='2" + inputIndex + n + "' id='2" + inputIndex + n + "' onclick='checker(2" + inputIndex + n + " ,1" + inputIndex + n + ");' />";
+							//newdiv.innerHTML += "</form>";
 							newdiv.innerHTML += 'min: <input type="text" id="min' + processDescription.processOffering.process.title + inputIndex + '" name="min' + processDescription.processOffering.process.title + inputIndex +'" style="width: 50px; height: 15px;" value="0" />';
 							newdiv.innerHTML += 'max: <input type="text" id="max' + processDescription.processOffering.process.title + inputIndex + '" name="max' + processDescription.processOffering.process.title + inputIndex +'" style="width: 50px; height: 15px;" value="100" />';
 							newdiv.innerHTML += 'step: <input type="text" id="step' + processDescription.processOffering.process.title + inputIndex + '" name="step' + processDescription.processOffering.process.title + inputIndex +'" style="width: 50px; height: 15px;" value="1" /><br>';
@@ -455,11 +461,12 @@ var wpsService = new WpsService({
 					
 				inputs += '\n';
 				}
+
 			}
 		}
 			
 		//creation formulaire outputs
-
+		newdiv.innerHTML += "<br><input type='button' value='wfsConfig'  id='wfsConfig' onclick='initConfig(9);'><br>";
 		outputs = '\nOutputs: \n';
 		newdiv.innerHTML += "<br>Outputs <br>";	
 		
@@ -476,7 +483,7 @@ var wpsService = new WpsService({
 						isLiteral[indexOutput] = 0;
 						}
 					
-					
+					//$("textarea#processDescriptionText").val(newdiv.innerHTML);
 					newdiv.innerHTML += response.processOffering.process.outputs[indexOutput].title + "<dd>";  //+  " <br><input type='text' name='myInputs[]'>";
 					newdiv.innerHTML += "web  <input type='checkbox' checked='checked' name='3" + indexOutput + "' " +"' id='3" + indexOutput + "' onclick='checker(3" + indexOutput + ",4" + indexOutput + ");' />" + " file <input type='checkbox' name='4" + indexOutput + "' id='4" + indexOutput + "' onclick='checker(4" + indexOutput + " ,3" + indexOutput + ");' />";
 					newdiv.innerHTML += 'directory: <input type="text" id="directory" name="directory" style="width: 300px; height: 15px;" value="C:\" /> fileName: <input type="text" id="fileName" name="fileName" style="width: 100px; height: 15px;" value="Truc.txt" />';
