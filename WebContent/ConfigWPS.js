@@ -466,7 +466,7 @@ var wpsService = new WpsService({
 		}
 			
 		//creation formulaire outputs
-		newdiv.innerHTML += "<br><input type='button' value='wfsConfig'  id='wfsConfig' onclick='initConfig(9);'><br>";
+		newdiv.innerHTML += "<br><input type='button' value='wfsConf'  id='wfsConf' onclick='initConfig(9);'><br>";
 		outputs = '\nOutputs: \n';
 		newdiv.innerHTML += "<br>Outputs <br>";	
 		

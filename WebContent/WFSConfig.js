@@ -7,7 +7,7 @@
 	    document.location.href = 'ConfigView.html';
 	    document.getElementById('adresseWMS').value = adresse;//getAdresse();
 	    document.getElementById('adresseWFS').value = adressewfs; //getAdresseWFS();
-	    document.getElementById('coucheWMS').value = couche; // getCouche();
+	    document.getElementById('coucheWMS').value = couchewms; // getCouche();
 	    document.getElementById('coucheWFS').value = couchewfs; //getCoucheWFS();
 	}
 		
@@ -174,23 +174,14 @@
 
 		else if (a==9){
 	    	document.getElementById("processDescription").style.display = "none";
-	    	document.getElementById("execute").style.display = "none";
+	    	//document.getElementById("execute").style.display = "block";
 	    //	document.getElementById("slider").style.display = "block";
 	    	document.getElementById('divName').style.visibility='hidden';
 	    //	document.getElementById("divSlider").style.display = "block";
 	    	//document.getElementById("retour").style.display = "block";
 	    	document.getElementById("choix").style.display = "none";
-	    	//document.getElementById("wfsConfig").style.display = "block";
-	    	document.getElementById("listeWFS").style.display = "block";
-	    	document.getElementById('mapid').style.visibility='visible';
-	    	document.getElementById("retour").style.display = "block";
-	    	//document.getElementById('reinit').style.display = "block";;
+	    	document.getElementById("wfsConfig").style.display = "block";
 		}
-		
-		
-		
-		
-		
 	}
 	//ff
 	function initMap(a, c, f, a2,c2,f2) {

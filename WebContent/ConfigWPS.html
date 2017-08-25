@@ -27,9 +27,27 @@
     <script src="js/rangeslider.js"></script>
     
     
+        <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css" />
+    <link rel="stylesheet" href="MapView.css" />
+    <script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css" />
+    <script src="Leaflet-WFST-master/dist/Leaflet-WFST.src.js"></script>
+
+        <script src="http://www.openlayers.org/api/OpenLayers.js"></script>
+    <script src="lib/ol.js"></script>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.4.2/leaflet.draw.css"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.4.2/leaflet.draw.js"></script>
+    
+        <link rel="stylesheet" href="lib/opacity/Control.Opacity.css" />
+    <script src="lib/opacity/Control.Opacity.js"></script>
+    
+    
+    <script type="text/javascript" src="example.js"></script>
+        <script type="text/javascript" src="ConfigWFS.js"></script>
 <title>wps-js example</title>
 <link rel="shortcut icon" href="favicon.ico" />
-
+</head>
   <script>
   $(function() {
 
@@ -281,21 +299,9 @@
 				
 			</div>
 			-->
-		</div>
-					<form id="processDescription" style="display:none">
-			 <input type="button" id="next" value="Next" onclick="initConfig(5);" />	<br />	
-			 	<div class="wps-container">
-				<textarea rows="20" cols="100" id="processDescriptionText">empty</textarea>
-			</div>
-			 </form>
+			
+				  <form id="wfsConfig" style="display:none">
 
-			<form id="affiche" style="display:none">
-			<input type="button" id='boutonCharger'>Afficher</button>
-			 </form>
-	</div>
-	
-	  <form id="wfsConfig" style="display:none">
-	  xvx
 		<div class="wps-container">
 				<select id="wps">
 					<option>Select a WPS</option>
@@ -312,6 +318,60 @@
 				</select>
 				</div>
 			</form>
+			
+			
+		</div>
+					<form id="processDescription" style="display:none">
+			 <input type="button" id="next" value="Next" onclick="initConfig(5);" />	<br />	
+			 	<div class="wps-container">
+				<textarea rows="20" cols="100" id="processDescriptionText">empty</textarea>
+			</div>
+			 </form>
+
+			<form id="affiche" style="display:none">
+			<input type="button" id='boutonCharger'>Afficher</button>
+			 </form>
+	</div>
+	
+
+
+
+
+	<form name="formu" id="listeWFS" style="display:none"> 
+	Choisir un url 
+	<select name="listeurl" id="listeurl" onChange='document.getElementById("couche").style.visibility="visible"; recuperationUrl(this.value); filltheselect(this.name, this.value)'>
+	   <script language="javascript">
+	  
+	   //setTimeout(function(){
+		   for (i=0; i<url.length; i++)
+			      document.write("<option value=\"" +url[i][0]+ "\">" +url[i][1]);
+	//	}, 1000);
+	   
+	   </script>
+	</select>
+	<br>
+	<div id="couche" name="couche" style="visibility:hidden"> 
+	 Choisir une couche
+	<select name="listecouche" id="listecouche" onChange='document.getElementById("listecouche").value;recuperationCouche(this.value);filltheselect(this.name, this.value)'>
+	   <script language="javascript">
+	   for (i=0; i<couche["http://geoserver.ics.perm.ru/geoserver/topp/ows?"].length; i++){
+		   
+	      document.write("<option value=\"" +couche["http://geoserver.ics.perm.ru/geoserver/topp/ows?"][i][0]+ "\">" +couche["http://geoserver.ics.perm.ru/geoserver/topp/ows?"][i][1]);}
+	   </script>
+	</select>
+
+	</div>
+	  </form>
+
+
+    <div id="mapid" style="visibility:hidden">
+    </div>
+
+  <form id="reinit" style="display:none">
+ <input type="button" value="reinitialiser map OSM"
+           onclick="printFond();" />
+</form>
+
 
 
   <form id="execute" style="display:none">
@@ -319,15 +379,16 @@
 			</form>
 	   
 	   	    <!-- import du code javascript fichiers config et WSAPI-->
+	    <script type="text/javascript" src="MapView.js"></script>   	        
     <script type="text/javascript" src="WSAPI.js"></script>
     <script type="text/javascript" src="ViewController.js"></script>
     <script type="text/javascript" src="config.js"></script>
     <script type="text/javascript" src="ConfigWPS.js"></script>   
-        
+
     <!-- 
             <script type="text/javascript" src="ConfigExecute.js"></script>
     <script type="text/javascript" src="MapView.js"></script>-->
-  
+
 	
 </body>
 </html>

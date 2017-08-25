@@ -2,7 +2,17 @@
     var wmsLayer;
     var wfsLayer;
     var fond;
-    var map = L.map('mapid').setView([48.39975, -4.49938], 12);
+    var map = L.map('mapid',{drawControl: true}).setView([48.39975, -4.49938], 12);
+    var drawnItems = new L.FeatureGroup();
+   // map.addLayer(drawnItems);
+    var drawControl = new L.Control.Draw({
+        edit: {
+            featureGroup: drawnItems
+        }
+    });
+   //map.addControl(drawControl);
+    
+    
     printFond();
 
     //reglage de l'opacite

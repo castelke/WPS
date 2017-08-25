@@ -2,7 +2,7 @@
 //valeur par défaut
 var adresse = "https://portail.indigeo.fr/geoserver/LETG-BREST/wfs?";
 var adressewfs = "http://geoserver.ics.perm.ru/geoserver/topp/ows?";
-var couche = 'Activites_maritimes_2010_06_16_18h_L93';//'ne:ne';
+var couchewms= 'Activites_maritimes_2010_06_16_18h_L93';//'ne:ne';
 var couchewfs = 'states';
 var formatwms = 'jpeg';
 var formatwfs = 'json';
@@ -29,11 +29,11 @@ function getAdresseWFS() {
 }
 
 function setCouche(layer) {
-    couche = layer;
+    couchewms= layer;
 }
 
 function getCouche() {
-    return couche;
+    return couchewms;
 }
 
 function setCoucheWFS(layerwfs) {
@@ -102,10 +102,10 @@ function timeout() {
 
 
 $(document).ready(function () {
-    $('select[name="couche"]').change(function () { // lorsqu'on change de valeur 
-        couche = $('select[name="couche"]').val(); // valeur sélectionnée
+ /*   $('select[name="couche"]').change(function () { // lorsqu'on change de valeur 
+        couchewms= $('select[name="couche"]').val(); // valeur sélectionnée
         printWMS();
-    });
+    });*/
 });
 
 // fonction d'affichage du panneau de configuration
@@ -168,7 +168,12 @@ function telecharger() {
 
 }
 
-    
+map.on('click', function(e) {
+    alert("Lat, Lon : " + e.latlng.lat + ", " + e.latlng.lng)
+});
+
+
+
     function charger(){
  
         // Fetch the geojson file
