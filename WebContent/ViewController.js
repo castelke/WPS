@@ -34,12 +34,14 @@
 			document.getElementById("adresse").style.display = "none";
 			document.getElementById("verificationRunning").style.display = "none";
 			document.getElementById("processDescription").style.display = "block";
-			document.getElementById("execute").style.display = "block";
+			document.getElementById("execute").style.display = "none";
+			document.getElementById("info").style.display = "block";
 		}
 		else if (a==5){
+			document.getElementById("info").style.display = "none";
 	    	document.getElementById("processDescription").style.display = "none";
 	    	document.getElementById("execute").style.display = "block";
-	    	document.getElementById("slider").style.display = "block";
+	    	document.getElementById("slider").style.display = "none";
 	    	document.getElementById('divName').style.visibility='hidden';
 	    	document.getElementById("divSlider").style.display = "block";
 	    	document.getElementById("retour").style.display = "block";
@@ -109,6 +111,9 @@
 		
 	    	var i=0;
 	    	
+	    	
+	    	
+	    	
 	 //   	 newdivS =document.createElement('divSlider');
 	    	
 	    	 document.getElementById("divSlider").innerHTML  = "<br> Outputs: <br><br>";
@@ -133,13 +138,17 @@
 	}
 		
 		else if (a==7){
-	    	document.getElementById("processDescription").style.display = "block";
-	    	document.getElementById("execute").style.display = "block";
+	    	//document.getElementById("processDescription").style.display = "block";
+	    	document.getElementById("execute").style.display = "none";
 	    	document.getElementById('divName').style.visibility='visible';
 	    	document.getElementById("retour").style.display = "none";
 	    	document.getElementById("divSlider").style.display = "none";
 	    	document.getElementById("choix").style.display = "block";
 	    	document.getElementById("slider").style.display = "none";
+	    	document.getElementById('mapid').style.visibility='hidden';
+	    	document.getElementById("zone").style.display = "none";
+	    	document.getElementById("listeWFS").style.display = "none";
+	    	document.getElementById("info").style.display = "none";
 		}
 		
 		else if (a==8){
@@ -173,6 +182,7 @@
 		}
 
 		else if (a==9){
+			l=0;
 	    	document.getElementById("processDescription").style.display = "none";
 	    	document.getElementById("execute").style.display = "none";
 	    //	document.getElementById("slider").style.display = "block";
@@ -185,6 +195,7 @@
 	    	document.getElementById('mapid').style.visibility='visible';
 	    	document.getElementById("retour").style.display = "block";
 	    	//document.getElementById('reinit').style.display = "block";;
+	    	document.getElementById("zone").style.display = "block";
 		}
 		
 		

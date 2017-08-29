@@ -43,7 +43,7 @@
     <script src="lib/opacity/Control.Opacity.js"></script>
     
     
-    <script type="text/javascript" src="example.js"></script>
+    <script type="text/javascript" src="js/example.js"></script>
         <script type="text/javascript" src="ConfigWFS.js"></script>
 <title>wps-js example</title>
 <link rel="shortcut icon" href="favicon.ico" />
@@ -166,6 +166,12 @@
          
  <div class="valeur" id="valeur"></div>
 
+				<form id="retour" style="display:none">
+        <input type="button" value="Retour process"
+               onclick="initConfig(7);" />
+               </form>
+
+
 <div class="divS" id="divS" ></div>
 <div class="divSlider" id="divSlider" ></div>
 
@@ -195,10 +201,7 @@
                </form>
 
 
-				<form id="retour" style="display:none">
-        <input type="button" value="Retour process"
-               onclick="initConfig(7);" />
-               </form>
+
 
 
 
@@ -280,6 +283,12 @@
 						<!-- réponse Describeprocess-->
 		</div>
 		<div>
+				  <form id="execute" style="display:none">
+			 <input type="button" id="processes_execute" value="Execute Process" onclick="executeLaunch();" />
+			</form>
+		
+		
+		
 		<div class="divName" id="divName" name="divName"></div>
 					<!--liste déroulante execute process -->
                 
@@ -321,10 +330,15 @@
 			
 			
 		</div>
+			  <form id="info" style="display:none">
+   				<input type="button" id="infob" value="Info" onclick="document.getElementById('processDescriptionDiv').style.visibility='visible'; document.getElementById('info').style.display = 'none' " />
+  		</form>
+
 					<form id="processDescription" style="display:none">
 			 <input type="button" id="next" value="Next" onclick="initConfig(5);" />	<br />	
-			 	<div class="wps-container">
+			 	<div class="wps-container" id="processDescriptionDiv" style="visibility:hidden">
 				<textarea rows="20" cols="100" id="processDescriptionText">empty</textarea>
+				
 			</div>
 			 </form>
 
@@ -332,14 +346,15 @@
 			<input type="button" id='boutonCharger'>Afficher</button>
 			 </form>
 	</div>
-	
 
+    
+    
 
 
 
 	<form name="formu" id="listeWFS" style="display:none"> 
 	Choisir un url 
-	<select name="listeurl" id="listeurl" onChange='document.getElementById("couche").style.visibility="visible"; recuperationUrl(this.value); filltheselect(this.name, this.value)'>
+	<select name="listeurl" id="listeurl" onChange='sleep(1000);document.getElementById("couche").style.visibility="visible"; recuperationUrl(this.value); filltheselect(this.name, this.value)'>
 	   <script language="javascript">
 	  
 	   //setTimeout(function(){
@@ -361,11 +376,29 @@
 	</select>
 
 	</div>
+	
+	
+	<INPUT type="checkbox" id="checktelecharger" name="checktelecharger" > telecharger?
+	
 	  </form>
+	  
+  <form id="zone" style="display:none">
+  
+  </form>
 
+  <form id="resultat" style="display:block">
+  <!--  <input type="button" value="Execute"
+           onclick="reqwfs();" />-->
+  </form>
+  
 
+  
     <div id="mapid" style="visibility:hidden">
+
     </div>
+    
+
+    
 
   <form id="reinit" style="display:none">
  <input type="button" value="reinitialiser map OSM"
@@ -374,9 +407,6 @@
 
 
 
-  <form id="execute" style="display:none">
-			 <input type="button" id="processes_execute" value="Execute Process" onclick="executeLaunch();" />
-			</form>
 	   
 	   	    <!-- import du code javascript fichiers config et WSAPI-->
 	    <script type="text/javascript" src="MapView.js"></script>   	        

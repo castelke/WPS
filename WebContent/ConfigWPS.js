@@ -186,7 +186,7 @@ function executeLaunch() {
 		i=i+1;
 	}
 	
-	alert(listeInputs);
+//	alert(listeInputs);
 	
 	    $.ajax({
 	        type: "GET",
@@ -236,10 +236,12 @@ function executeCallback (data) {
 	var parser = new DOMParser();
 	var xml = parser.parseFromString(response, "text/xml");
 	wpsResponse = xmlToJson(xml) ;
-	alert (JSON.stringify(wpsResponse));
+	//alert (JSON.stringify(wpsResponse));
 	//wpsResponse["wps:ExecuteResponse"]["wps:ProcessOutputs"]["wps:Output"][0]["ows:Identifier"]["#text"] 
-	
+	 document.getElementById("divSlider").innerHTML  = "Output : <br>" + JSON.stringify(wpsResponse);
 	//alert("?" + isLiteral[0]);
+	
+	alert(wpsResponse["wps:ProcessOutputs"]["wps:Output"]["wps:Data"]["wps:ComplexData"]["#text"]);
 	
 	try {wpsResponse["wps:ExecuteResponse"]["wps:ProcessOutputs"]["wps:Output"]
 	
@@ -362,13 +364,24 @@ var wpsService = new WpsService({
 			        );
 		});
 		
-	$('#processes').append(_select.html());
-		$('#processes_execute').append(_select.html());
+		if (capabilities == null){
+			$('#listeurl').append(_select.html());	
+			$('#couche').append(_select.html());
+		}
+		else {
+			$('#processes').append(_select.html());
+			$('#processes_execute').append(_select.html());	
+		}
+		
+
 			
 	// set value of textarea
 	var capabilitiesDocument = capabilities.responseDocument;
 	$("textarea#capabilitiesText").val((new XMLSerializer()).serializeToString(capabilitiesDocument));
 	};
+	
+	
+	
 
 		
 	var describeProcessCallback = function(response) {
@@ -438,7 +451,7 @@ var wpsService = new WpsService({
 							//alert(n + " " + response.processOffering.process.inputs[inputIndex].maxOccurs);
 							var char = "onclick='checker('check1" + inputIndex + "','check2" + inputIndex + "');";
 							newdiv.innerHTML += " <br><input type='checkbox' checked='unchecked' name='notused" + inputIndex +  n +"' " +"' id='notused" + inputIndex + n +"' /> ";
-							newdiv.innerHTML += "<input type='text' name='myInputs[" + inputIndex + n + "]'  id='myInputs[" + inputIndex + n + "]' value='0'>" ;
+							newdiv.innerHTML += "<textarea type='text' name='myInputs[" + inputIndex + n + "]'  id='myInputs[" + inputIndex + n + "]'  style='width:250px;height:15px;'></textarea>" ;
 							newdiv.innerHTML += "fixed  <input type='checkbox' checked='checked' name='1" + inputIndex + n + "' " +"' id='1" + inputIndex + n + "' onclick='checker(1" + inputIndex + n + ",2" + inputIndex + n + ");' />";
 							//newdiv.innerHTML += "<form id='2" +inputIndex + n + "' style='display:none'>";
 							
@@ -487,7 +500,12 @@ var wpsService = new WpsService({
 					newdiv.innerHTML += response.processOffering.process.outputs[indexOutput].title + "<dd>";  //+  " <br><input type='text' name='myInputs[]'>";
 					newdiv.innerHTML += "web  <input type='checkbox' checked='checked' name='3" + indexOutput + "' " +"' id='3" + indexOutput + "' onclick='checker(3" + indexOutput + ",4" + indexOutput + ");' />" + " file <input type='checkbox' name='4" + indexOutput + "' id='4" + indexOutput + "' onclick='checker(4" + indexOutput + " ,3" + indexOutput + ");' />";
 					newdiv.innerHTML += 'directory: <input type="text" id="directory" name="directory" style="width: 300px; height: 15px;" value="C:\" /> fileName: <input type="text" id="fileName" name="fileName" style="width: 100px; height: 15px;" value="Truc.txt" />';
-					newdiv.innerHTML += "<input type='file' id='fichierEntre"+ processDescription.processOffering.process.title + inputIndex +"'/><br />"
+					
+					
+					newdiv.innerHTML += "<input type='file' id='fichierEntre"+ processDescription.processOffering.process.title + inputIndex +"'/>"
+					
+					newdiv.innerHTML += "<br />"
+					
 					outputs += '\n';
 				}
 			}
@@ -498,6 +516,36 @@ var wpsService = new WpsService({
 		$("textarea#processDescriptionText").val(outputOffering + '\n' + '\n' + inputs + outputs);
 	};
 	
+	function reqwfs(){
+	
+	  /*  $.ajax({
+	        type: "GET",
+	        url: url,
+	        data : {
+	        	Service:"WFS",
+	        	Version: wfs,
+	        	Request:"Execute",
+	        	Identifier : identifier,
+	        //	contentType: "application/json; charset=utf-8",
+	        	DataInputs : listeInputs
+	        },
+	 //       dataType: "xml",
+	        cache: false,
+	      //  success : executeCallback,
+	        success: function(data) {
+	        	executeCallback(data);
+	        },
+	        error: function () {
+	        	setTimeout(timeout, 2000);
+	        },
+	        async: true
+	    });*/
+	    
+	    
+	}
+
+		
+		
 
 	var clearForms = function(){
 		
@@ -554,4 +602,15 @@ var wpsService = new WpsService({
 					wpsService.version = "1.0.0";
 			}		
 		});
+		
+		
+		$("#listeurl").change(function() {
+			// get selected wps (url)
+			var coucheId = $('#couche option:selected').text();
+			
+			// only eexecute if id != default value "Select a Process"
+			if(! coucheId.startsWith(" "))
+				wps.describeProcess_GET(capabilitiesCallback, coucheId);
+			});
+		
 	});

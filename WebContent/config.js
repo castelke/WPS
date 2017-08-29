@@ -7,7 +7,7 @@ var couchewfs = 'states';
 var formatwms = 'jpeg';
 var formatwfs = 'json';
 var serviceError;
-
+var l=0;
 
 
 //fonction getters et setters des variables adresse et couche
@@ -141,8 +141,12 @@ var ie_writeFile = function (fname, data) {
 
 //fonction de telechargement des données
 function telecharger() {
-    var url = adresseWFS.value + "REQUEST=getFeature&service=wfs&outputFormat=" + formatwfs + "&typename=" + coucheWFS.value;
-
+	
+  //  var url = adresseWFS.value + "REQUEST=getFeature&service=wfs&outputFormat=" + "shape-zip" /*formatwfs*/ + "&typename=" + coucheWFS.value;
+    var url = adressewfs + "REQUEST=getFeature&service=wfs&outputFormat=" + "shape-zip" + "&typename=" + couchewfs;
+    
+    
+    window.open(url);
     //si le format est un zip j'ouvre la fenêtre qui propose le téléchargement
     if (formatwfs == "shape-zip") {
         window.open(url);
@@ -169,7 +173,17 @@ function telecharger() {
 }
 
 map.on('click', function(e) {
-    alert("Lat, Lon : " + e.latlng.lat + ", " + e.latlng.lng)
+	l=l+1;
+   // alert("Lat, Lon : " + e.latlng.lat + ", " + e.latlng.lng)
+    document.getElementById("zone").innerHTML += "Point " + l + " Latitude: " + e.latlng.lat + " Longitude: " + e.latlng.lng + "<br>";
+    
+    if (l>2){
+    	l=1;
+    	document.getElementById("zone").innerHTML = "Point " + l + " Latitude: " + e.latlng.lat + " Longitude: " + e.latlng.lng + "<br>";
+    }
+    
+    
+    
 });
 
 
