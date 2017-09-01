@@ -149,6 +149,8 @@
 	    	document.getElementById("zone").style.display = "none";
 	    	document.getElementById("listeWFS").style.display = "none";
 	    	document.getElementById("info").style.display = "none";
+	    	document.getElementById("reinit").style.display = "none";
+	    	document.getElementById("processDescription").style.display = "block";
 		}
 		
 		else if (a==8){
@@ -183,6 +185,7 @@
 
 		else if (a==9){
 			l=0;
+
 	    	document.getElementById("processDescription").style.display = "none";
 	    	document.getElementById("execute").style.display = "none";
 	    //	document.getElementById("slider").style.display = "block";
@@ -194,8 +197,12 @@
 	    	document.getElementById("listeWFS").style.display = "block";
 	    	document.getElementById('mapid').style.visibility='visible';
 	    	document.getElementById("retour").style.display = "block";
-	    	//document.getElementById('reinit').style.display = "block";;
+	    	document.getElementById('reinit').style.display = "block";;
 	    	document.getElementById("zone").style.display = "block";
+	    	document.getElementById("info").style.display = "none";
+	    	
+	    	
+	    	
 		}
 		
 		

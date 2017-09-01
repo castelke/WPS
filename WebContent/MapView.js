@@ -2,6 +2,8 @@
     var wmsLayer;
     var wfsLayer;
     var fond;
+
+    
     var map = L.map('mapid',{drawControl: true}).setView([48.39975, -4.49938], 12);
     var drawnItems = new L.FeatureGroup();
    // map.addLayer(drawnItems);

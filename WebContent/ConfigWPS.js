@@ -5,7 +5,7 @@ var versionWps;
 var processId;
 var processDescription;
 var identifier;
-
+var currentIndex;
 var min = new Array();
 var max= new Array();
 var step = new Array();
@@ -60,6 +60,24 @@ function setIdentifier(i) {
 function getIdentifier() {
     return identifier;
 }
+
+function setCurrentIndex(i) {
+	currentIndex = i;
+}
+
+function getCurrentIndex() {
+    return currentIndex;
+}
+
+
+
+
+
+
+
+
+
+
 
 function chargerFichier(idInputFile, idSortie) {
     "use strict";
@@ -241,37 +259,37 @@ function executeCallback (data) {
 	 document.getElementById("divSlider").innerHTML  = "Output : <br>" + JSON.stringify(wpsResponse);
 	//alert("?" + isLiteral[0]);
 	
-	alert(wpsResponse["wps:ProcessOutputs"]["wps:Output"]["wps:Data"]["wps:ComplexData"]["#text"]);
+	//alert(wpsResponse["wps:ProcessOutputs"]["wps:Output"]["wps:Data"]["wps:ComplexData"]["#text"]);
 	
 	try {wpsResponse["wps:ExecuteResponse"]["wps:ProcessOutputs"]["wps:Output"]
 	
 	} catch(err) {	alert(wpsResponse["ExceptionReport"]["Exception"]["ExceptionText"]["#text"]);
 		}
 	
-	if(isLiteral.length == 1){
+/*	if(isLiteral.length == 1){
 
 		if(isLiteral[0] == 1){
 			
-		/*	try {wpsResponse["wps:ExecuteResponse"]["wps:ProcessOutputs"]["wps:Output"]["wps:Data"]["wps:LiteralData"]["#text"]
+			try {wpsResponse["wps:ExecuteResponse"]["wps:ProcessOutputs"]["wps:Output"]["wps:Data"]["wps:LiteralData"]["#text"]
 			
 			} catch(err) {	alert(wpsResponse["ExceptionReport"]["Exception"]["ExceptionText"]["#text"]);
 				}
-			*/
+			
 			alert(wpsResponse["wps:ExecuteResponse"]["wps:ProcessOutputs"]["wps:Output"]["wps:Data"]["wps:LiteralData"]["#text"]);
 		}
 		
 		else {
 			alert(wpsResponse["wps:ExecuteResponse"]["wps:ProcessOutputs"]["wps:Output"]["wps:Data"]["wps:ComplexData"]["#text"]);
-	/*		try {wpsResponse["wps:ExecuteResponse"]["wps:ProcessOutputs"]["wps:Output"]["wps:Data"]["wps:ComplexData"]["#text"]
+			try {wpsResponse["wps:ExecuteResponse"]["wps:ProcessOutputs"]["wps:Output"]["wps:Data"]["wps:ComplexData"]["#text"]
 			
 			} catch(err) {	alert(wpsResponse["ExceptionReport"]["Exception"]["ExceptionText"]["#text"]);
-				}*/
+				}
 		}
 		
 		
 		initConfig(8);
 		
-	}
+	}*/
 	
 	
 	if(isLiteral.length > 1){
@@ -317,7 +335,7 @@ function executeCallback (data) {
  */
 
 
-		var i=0;
+		/*var i=0;
 		while (isLiteral[i] != null)
 		{
 		
@@ -328,10 +346,10 @@ function executeCallback (data) {
 				alert(wpsResponse["wps:ExecuteResponse"]["wps:ProcessOutputs"]["wps:Output"][i]["wps:Data"]["wps:ComplexData"]["#text"]);
 			}
 			
-		/*	alert(wpsResponse["wps:ExecuteResponse"]["wps:ProcessOutputs"]["wps:Output"][0]["wps:Data"]["wps:LiteralData"]["#text"]);
-			alert(wpsResponse["wps:ExecuteResponse"]["wps:ProcessOutputs"]["wps:Output"][1]["wps:Data"]["wps:ComplexData"]["#text"]);*/
+			//alert(wpsResponse["wps:ExecuteResponse"]["wps:ProcessOutputs"]["wps:Output"][0]["wps:Data"]["wps:LiteralData"]["#text"]);
+			//alert(wpsResponse["wps:ExecuteResponse"]["wps:ProcessOutputs"]["wps:Output"][1]["wps:Data"]["wps:ComplexData"]["#text"]);
 			i=i+1;
-		}
+		}*/
 		initConfig(6);
 	}
 		
@@ -363,15 +381,9 @@ var wpsService = new WpsService({
 			            $('<option></option>').val(process.identifier).html(process.identifier)
 			        );
 		});
-		
-		if (capabilities == null){
-			$('#listeurl').append(_select.html());	
-			$('#couche').append(_select.html());
-		}
-		else {
+
 			$('#processes').append(_select.html());
 			$('#processes_execute').append(_select.html());	
-		}
 		
 
 			
@@ -417,6 +429,7 @@ var wpsService = new WpsService({
 		setProcessDescription(response);
 		setIdentifier(response.processOffering.process.identifier);
 		var outputOffering = '';
+		setInnermap(document.getElementById("mapid").innerHTML);
 		
 		if (response.processOffering.version != null){
 			outputOffering += "version : " + response.processOffering.version+'; \n';
@@ -459,14 +472,18 @@ var wpsService = new WpsService({
 							
 							newdiv.innerHTML +=  "user <input type='checkbox' name='2" + inputIndex + n + "' id='2" + inputIndex + n + "' onclick='checker(2" + inputIndex + n + " ,1" + inputIndex + n + ");' />";
 							//newdiv.innerHTML += "</form>";
+							if (property == "literalData"){
 							newdiv.innerHTML += 'min: <input type="text" id="min' + processDescription.processOffering.process.title + inputIndex + '" name="min' + processDescription.processOffering.process.title + inputIndex +'" style="width: 50px; height: 15px;" value="0" />';
 							newdiv.innerHTML += 'max: <input type="text" id="max' + processDescription.processOffering.process.title + inputIndex + '" name="max' + processDescription.processOffering.process.title + inputIndex +'" style="width: 50px; height: 15px;" value="100" />';
 							newdiv.innerHTML += 'step: <input type="text" id="step' + processDescription.processOffering.process.title + inputIndex + '" name="step' + processDescription.processOffering.process.title + inputIndex +'" style="width: 50px; height: 15px;" value="1" /><br>';
-							 
+							}
+							else if (property == "complexData"){
+							newdiv.innerHTML += "<input type='button' value='WFS'  id='"+inputIndex+n+"' onclick='initConfig(9);setCurrentIndex(this.id);'><br>";
+							}
 						//	if (response.processOffering.process.inputs[inputIndex].minOccurs==0){
 							//	newdiv.innerHTML += "used: <input type='checkbox' checked='unchecked' name='notused" + inputIndex +  n +"' " +"' id='notused" + inputIndex + n +"' /> <br>";
 						//	}
-							
+							idInputs[inputIndex] = processDescription.processOffering.process.inputs[inputIndex].identifier;
 						
 						n=n+1;	
 						
@@ -479,7 +496,7 @@ var wpsService = new WpsService({
 		}
 			
 		//creation formulaire outputs
-		newdiv.innerHTML += "<br><input type='button' value='wfsConf'  id='wfsConf' onclick='initConfig(9);'><br>";
+
 		outputs = '\nOutputs: \n';
 		newdiv.innerHTML += "<br>Outputs <br>";	
 		

@@ -11,11 +11,12 @@
 	
 	// url0
 	couche["http://geoserver.ics.perm.ru/geoserver/topp/ows?"] = [];
-	couche["http://geoserver.ics.perm.ru/geoserver/topp/ows?"][0] = ["tasmania_state_boundaries", "tasmania_state_boundaries"];
-	couche["http://geoserver.ics.perm.ru/geoserver/topp/ows?"][1] = ["states", "states"];
-	couche["http://geoserver.ics.perm.ru/geoserver/topp/ows?"][2] = ["tasmania_roads", "tasmania_roads"];
-	couche["http://geoserver.ics.perm.ru/geoserver/topp/ows?"][3] = ["tasmania_water_bodies", "tasmania_water_bodies"];
-	couche["http://geoserver.ics.perm.ru/geoserver/topp/ows?"][4] = ["tasmania_cities", "tasmania_cities"];
+	couche["http://geoserver.ics.perm.ru/geoserver/topp/ows?"][0] =  ["", ""];
+	couche["http://geoserver.ics.perm.ru/geoserver/topp/ows?"][1] = ["tasmania_state_boundaries", "tasmania_state_boundaries"];
+	couche["http://geoserver.ics.perm.ru/geoserver/topp/ows?"][2] = ["states", "states"];
+	couche["http://geoserver.ics.perm.ru/geoserver/topp/ows?"][3] = ["tasmania_roads", "tasmania_roads"];
+	couche["http://geoserver.ics.perm.ru/geoserver/topp/ows?"][4] = ["tasmania_water_bodies", "tasmania_water_bodies"];
+	couche["http://geoserver.ics.perm.ru/geoserver/topp/ows?"][5] = ["tasmania_cities", "tasmania_cities"];
 	 //typeNS = topp
 	//typeNS:'topp'
 	
@@ -25,7 +26,8 @@
 	//https://geobretagne.fr/geoserver/ows?
 	//couche["https://geobretagne.fr/geoserver/dreal_b/ows?"][12] = ["",""];
 	couche["https://geobretagne.fr/geoserver/dreal_b/ows?"]=[];
-	couche["https://geobretagne.fr/geoserver/dreal_b/ows?"][0] = ["route_accidents_mortels","route_accidents_mortels"];
+	
+	couche["https://geobretagne.fr/geoserver/dreal_b/ows?"][0] =  ["", ""];
 	couche["https://geobretagne.fr/geoserver/dreal_b/ows?"][1] = ["stationnement_littoral", "stationnement_littoral"];
 	couche["https://geobretagne.fr/geoserver/dreal_b/ows?"][2] = ["atlaslitt_3_alea_biblio_lin", "atlaslitt_3_alea_biblio_lin"];
 	couche["https://geobretagne.fr/geoserver/dreal_b/ows?"][3] = ["l_article_302_5_cch", "l_article_302_5_cch"];
@@ -72,7 +74,7 @@
 	couche["https://geobretagne.fr/geoserver/dreal_b/ows?"][44] = ["paot_ctxt_contrats_territoriaux","paot_ctxt_contrats_territoriaux"];
 	couche["https://geobretagne.fr/geoserver/dreal_b/ows?"][45] = ["n_cucs","n_cucs"];
 	couche["https://geobretagne.fr/geoserver/dreal_b/ows?"][46] = ["hydrometrie_stations_cote_historique","hydrometrie_stations_cote_historique"];
-	
+	couche["https://geobretagne.fr/geoserver/dreal_b/ows?"][47] = ["route_accidents_mortels","route_accidents_mortels"];
 	
 	
 	//url2

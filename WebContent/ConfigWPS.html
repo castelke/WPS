@@ -222,7 +222,7 @@
 		
 		   <form id="adresse" style="display:block">
 		Adresse:
-		<input type='text' name='newWpsAdresse'  id='newWpsAdresse' value="http://envision-wps.brgm-rec.fr/WPS.NET/WPService.asmx/WPS?">
+		<input type='text' name='newWpsAdresse'  id='newWpsAdresse' value="http://envision-wps.brgm-rec.fr/WPS.NET/WPService.asmx/WPS?" style="width:500px;">
 		<input type="button" id="verifadd" value="Verification Adresse" onclick="verificationWPS();" />
 				 
 		</form>	 
@@ -353,10 +353,52 @@
 
 
 	<form name="formu" id="listeWFS" style="display:none"> 
+		Ajouter site
+		<input type='text' name='newWfsAdresse'  id='newWfsAdresse' value="https://geobretagne.fr/geoserver/dreal_b/ows?" style="width:500px;" >
+		<input type="button" id="verifaddwfs" value="Verification Adresse" onclick="verificationWFS();" />
+		    <div id="verificationRunningWfs" style="visibility:hidden">
+        verification
+    	</div>
+    	
+    	<br>
+ <SELECT NAME="wfsformat" id="wfsformat" onChange='setFormatWFS(this.value);'>
+	<OPTION VALUE="application/json">application/json
+	<OPTION VALUE="text/xml">text/xml
+	<OPTION VALUE="text/javascript">text/javascript
+	</SELECT>
+	
+	
+<br>
+<SELECT NAME="wfs" id="wfs" onChange="addwfs();">
+	<OPTION VALUE="">Choisir un site
+	<OPTION VALUE="http://geoserver.ics.perm.ru/geoserver/topp/ows?">http://geoserver.ics.perm.ru/geoserver/ows?
+	<OPTION VALUE="https://geobretagne.fr/geoserver/dreal_b/ows?">https://geobretagne.fr/geoserver/ows?
+</SELECT>
+<br>
+
+<SELECT NAME="wfscouche" id="wfscouche" onChange='recuperationCouche(this.value);'>
+<OPTION VALUE="">Choisir une couche
+</SELECT>
+
+	 <input type="button" value="Ajouter favoris"
+           onclick="addfavwfs();" />
+           
+           
+           
+   <SELECT NAME="wfsfav" id="wfsfav" onChange='wfsFav();'>
+<OPTION VALUE="">Choisir un favori
+</SELECT>  
+     
+
+
+	
+	<!-- 
+
 	Choisir un url 
 	<select name="listeurl" id="listeurl" onChange='sleep(1000);document.getElementById("couche").style.visibility="visible"; recuperationUrl(this.value); filltheselect(this.name, this.value)'>
 	   <script language="javascript">
-	  
+	   
+	   
 	   //setTimeout(function(){
 		   for (i=0; i<url.length; i++)
 			      document.write("<option value=\"" +url[i][0]+ "\">" +url[i][1]);
@@ -376,7 +418,7 @@
 	</select>
 
 	</div>
-	
+	-->
 	
 	<INPUT type="checkbox" id="checktelecharger" name="checktelecharger" > telecharger?
 	
@@ -392,17 +434,14 @@
   </form>
   
 
-  
     <div id="mapid" style="visibility:hidden">
-
     </div>
     
-
     
 
   <form id="reinit" style="display:none">
  <input type="button" value="reinitialiser map OSM"
-           onclick="printFond();" />
+           onclick="reinit();" />
 </form>
 
 
