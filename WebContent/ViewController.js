@@ -16,7 +16,13 @@
 		}
 		
 		else if (a==2){
-			document.location.href = 'MapView.html';
+			//document.location.href = 'MapView.html';
+			document.getElementById('accueil').style.display = 'block';
+			
+			//tout le reste = none ou hidden
+			document.getElementById('wrapper').style.visibility = 'hidden';
+			document.getElementById('map').style.display = 'none';
+			
 		}
 		
 		
@@ -27,7 +33,6 @@
 		}
 		else if (a==4){
 			document.getElementById("capabilities").style.display = "none";
-			document.getElementById("intro").style.display = "none";
 			document.getElementById("map").style.display = "none";
 			document.getElementById("describe").style.display = "none";
 			document.getElementById("choix").style.display = "block";
@@ -124,16 +129,25 @@
 	    			
 	    			document.getElementById("divSlider").innerHTML  +=  wpsResponse["wps:ExecuteResponse"]["wps:ProcessOutputs"]["wps:Output"][i]["ows:Identifier"]["#text"] + "<br>";
 	    			document.getElementById("divSlider").innerHTML  += wpsResponse["wps:ExecuteResponse"]["wps:ProcessOutputs"]["wps:Output"][i]["wps:Data"]["wps:LiteralData"]["#text"] + "<br><br>";
+	    			
+	    			
+	    			
 	    		}
 	    		else if (isLiteral[i]==0){
 	    			document.getElementById("divSlider").innerHTML  +=  wpsResponse["wps:ExecuteResponse"]["wps:ProcessOutputs"]["wps:Output"][i]["ows:Identifier"]["#text"] + "<br>";
 	    			document.getElementById("divSlider").innerHTML  += wpsResponse["wps:ExecuteResponse"]["wps:ProcessOutputs"]["wps:Output"][i]["wps:Data"]["wps:ComplexData"]["#text"] + "<br>";
+	    			
+	    			
+	    			
+	    			
 	    		}
 	    		
 	    		document.getElementById("divSlider").innerHTML  += "<br>";
 	    		//	document.getElementById("divSlider").appendChild(newdivS);
 	    		i=i+1;
 	    	 }
+	    	 
+	    	 
 		
 	}
 		
@@ -197,14 +211,18 @@
 	    	document.getElementById("listeWFS").style.display = "block";
 	    	document.getElementById('mapid').style.visibility='visible';
 	    	document.getElementById("retour").style.display = "block";
-	    	document.getElementById('reinit').style.display = "block";;
+	    	document.getElementById('reinit').style.display = "block";
 	    	document.getElementById("zone").style.display = "block";
 	    	document.getElementById("info").style.display = "none";
-	    	
-	    	
-	    	
 		}
-		
+		else if (a==10){
+	    	document.getElementById("zone").style.display = "block";
+	    	document.getElementById("zone").style.display = "block";
+	    	document.getElementById("zone").style.display = "block";
+	    	document.getElementById("zone").style.display = "block";
+	    	document.getElementById("zone").style.display = "block";
+	    	document.getElementById("zone").style.display = "block";
+		}
 		
 		
 		
@@ -219,6 +237,10 @@
 		setCoucheWFS(c2);
 		setFormatWFS(f2);
 	}
+	
+
+	
+	
 	
     function checker(id1, id2) {
 

@@ -256,7 +256,41 @@ function executeCallback (data) {
 	wpsResponse = xmlToJson(xml) ;
 	//alert (JSON.stringify(wpsResponse));
 	//wpsResponse["wps:ExecuteResponse"]["wps:ProcessOutputs"]["wps:Output"][0]["ows:Identifier"]["#text"] 
-	 document.getElementById("divSlider").innerHTML  = "Output : <br>" + JSON.stringify(wpsResponse);
+	
+	
+	//alert(formatwfs);
+	
+	
+	//if (formatwfs.indexOf("json") >= 0){
+	 document.getElementById("divSlider").innerHTML  = "<br>Output : <br><br>" +  processDescription.processOffering.process.outputs[0].title + "<br>" +JSON.stringify(wpsResponse);
+/*	}
+	if (formatwfs.indexOf("xml") >= 0){
+		document.getElementById("divSlider").innerHTML  = "<br>Output : <br><br>" +  processDescription.processOffering.process.outputs[0].title + "<br>" +xml;
+	}*/
+
+	 if ($('#40').is(':checked')) {
+		 
+		if (formatwfs.indexOf("json") >= 0){
+		 var content = JSON.stringify(wpsResponse);
+		}
+		if (formatwfs.indexOf("xml") >= 0){
+		var content = xml;
+		}
+		 
+		 uriContent = "data:application/octet-stream," + encodeURIComponent(content);
+		 newWindow = window.open(uriContent, processDescription.processOffering.process.outputs[0].title);
+	 }
+
+	 
+	 
+	/* var hiddenElement = document.createElement('a');
+
+	 hiddenElement.href = 'data:attachment/text,' + encodeURI(textToSave);
+	 hiddenElement.target = '_blank';
+	 hiddenElement.download = 'myFile.txt';
+	 hiddenElement.click();*/
+	
+	 
 	//alert("?" + isLiteral[0]);
 	
 	//alert(wpsResponse["wps:ProcessOutputs"]["wps:Output"]["wps:Data"]["wps:ComplexData"]["#text"]);
@@ -399,35 +433,19 @@ var wpsService = new WpsService({
 	var describeProcessCallback = function(response) {
 		
 		
-	/*    $.ajax({
-	        type: "GET",
-	        url: adresseWps,
-	        data : {
-	        	Service:"WPS",
-	        	Version: versionWps,
-	        	Request:"DescribeProcess",
-	        	Identifier : "Add",
-	        },
-	 //       dataType: "xml",
-	        cache: false,
-	      //  success : executeCallback,
-	        success: function(data) {
-	        	executeCallback(data);
-	        },
-	        error: function () {
-	        	setTimeout(timeout, 2000);
-	        },
-	        async: true
-	    });*/
+		initConfig(4);
+		setProcessDescription(response);
+		setIdentifier(response.processOffering.process.identifier);
+		
+
+		 
 		
 	    for (var prop in response.processOffering.process.inputs[0].literalData){//.literalDataDomain){
 	    	//alert(prop);
 	    	}
 	    
 	    
-		initConfig(4);
-		setProcessDescription(response);
-		setIdentifier(response.processOffering.process.identifier);
+
 		var outputOffering = '';
 		setInnermap(document.getElementById("mapid").innerHTML);
 		
@@ -452,7 +470,7 @@ var wpsService = new WpsService({
 				if ((property == "literalData")||(property == "complexData")){
 					
 
-					newdiv.innerHTML += response.processOffering.process.inputs[inputIndex].title;
+					newdiv.innerHTML += "<br>" +response.processOffering.process.inputs[inputIndex].title;
 						if( response.processOffering.process.inputs[inputIndex].minOccurs==1){
 						newdiv.innerHTML += "*";
 						}
@@ -464,18 +482,66 @@ var wpsService = new WpsService({
 							//alert(n + " " + response.processOffering.process.inputs[inputIndex].maxOccurs);
 							var char = "onclick='checker('check1" + inputIndex + "','check2" + inputIndex + "');";
 							newdiv.innerHTML += " <br><input type='checkbox' checked='unchecked' name='notused" + inputIndex +  n +"' " +"' id='notused" + inputIndex + n +"' /> ";
-							newdiv.innerHTML += "<textarea type='text' name='myInputs[" + inputIndex + n + "]'  id='myInputs[" + inputIndex + n + "]'  style='width:250px;height:15px;'></textarea>" ;
+							newdiv.innerHTML += "<textarea type='text' name='myInputs[" + inputIndex + n + "]'  id='myInputs[" + inputIndex + n + "]'  style='width:250px;height:15px;' value='"+defaultValue[inputIndex]+"'></textarea>" ;
 							newdiv.innerHTML += "fixed  <input type='checkbox' checked='checked' name='1" + inputIndex + n + "' " +"' id='1" + inputIndex + n + "' onclick='checker(1" + inputIndex + n + ",2" + inputIndex + n + ");' />";
 							//newdiv.innerHTML += "<form id='2" +inputIndex + n + "' style='display:none'>";
 							
 							
 							
+							
+						    $.ajax({
+						        type: "GET",
+						        url: adresseWps + 'service=WPS&version=' + versionWps + '&request=DescribeProcess&identifier='+ identifier,
+						 //       dataType: "xml",
+						        cache: false,
+						      //  success : executeCallback,
+							    success: function(data, status, headers, config) {
+							        // use the tool to parse the data
+							    	
+							    	response2 = (new XMLSerializer()).serializeToString(data);
+							    	//alert(response);
+							    	var parser = new DOMParser();
+							    	var xml = parser.parseFromString(response2, "text/xml");
+							    	//alert(response["wfs:WFS_Capabilities"]["FeatureTypeList"][0]["FeatureType"]["Name"]);
+							    	var i=0;
+							    	 $(xml).find('LiteralData').each( function(){
+							    		//alert($(this).find('DefaultValue').text());
+							    		defaultValue[i]=$(this).find('DefaultValue').text();
+							    		var m = 0;
+							    			while (m < response.processOffering.process.inputs[i].maxOccurs){
+							    					//alert('myInputs[' + i  + m +   ']');
+							    					var myTextArea = document.getElementById('myInputs[' + i  + m +   ']');
+							    					myTextArea.innerHTML = defaultValue[i];
+							    					m=m+1;
+							    			}
+							    		i=i+1;
+							    	});
+						        },
+						        error: function () {
+						        	setTimeout(timeout, 2000);
+						        },
+						        async: true
+						    });
+							
+							
 							newdiv.innerHTML +=  "user <input type='checkbox' name='2" + inputIndex + n + "' id='2" + inputIndex + n + "' onclick='checker(2" + inputIndex + n + " ,1" + inputIndex + n + ");' />";
 							//newdiv.innerHTML += "</form>";
 							if (property == "literalData"){
-							newdiv.innerHTML += 'min: <input type="text" id="min' + processDescription.processOffering.process.title + inputIndex + '" name="min' + processDescription.processOffering.process.title + inputIndex +'" style="width: 50px; height: 15px;" value="0" />';
-							newdiv.innerHTML += 'max: <input type="text" id="max' + processDescription.processOffering.process.title + inputIndex + '" name="max' + processDescription.processOffering.process.title + inputIndex +'" style="width: 50px; height: 15px;" value="100" />';
-							newdiv.innerHTML += 'step: <input type="text" id="step' + processDescription.processOffering.process.title + inputIndex + '" name="step' + processDescription.processOffering.process.title + inputIndex +'" style="width: 50px; height: 15px;" value="1" /><br>';
+								
+							/*	 $(xml).find('integer').each( function(){
+										newdiv.innerHTML += 'min: <input type="text" id="min' + processDescription.processOffering.process.title + inputIndex + '" name="min' + processDescription.processOffering.process.title + inputIndex +'" style="width: 50px; height: 15px;" value="0" />';
+										newdiv.innerHTML += 'max: <input type="text" id="max' + processDescription.processOffering.process.title + inputIndex + '" name="max' + processDescription.processOffering.process.title + inputIndex +'" style="width: 50px; height: 15px;" value="100" />';
+										newdiv.innerHTML += 'step: <input type="text" id="step' + processDescription.processOffering.process.title + inputIndex + '" name="step' + processDescription.processOffering.process.title + inputIndex +'" style="width: 50px; height: 15px;" value="10" /><br>';
+								 });*/
+							//if integer or float
+							//	alert(defaultValue[0]);
+							/*	if (defaultValue[0]){
+									//alert(defaultValue[0]);
+									newdiv.innerHTML += 'min: <input type="text" id="min' + processDescription.processOffering.process.title + inputIndex + '" name="min' + processDescription.processOffering.process.title + inputIndex +'" style="width: 50px; height: 15px;" value="0" />';
+									newdiv.innerHTML += 'max: <input type="text" id="max' + processDescription.processOffering.process.title + inputIndex + '" name="max' + processDescription.processOffering.process.title + inputIndex +'" style="width: 50px; height: 15px;" value="100" />';
+									newdiv.innerHTML += 'step: <input type="text" id="step' + processDescription.processOffering.process.title + inputIndex + '" name="step' + processDescription.processOffering.process.title + inputIndex +'" style="width: 50px; height: 15px;" value="10" /><br>';
+								}*/
+							
 							}
 							else if (property == "complexData"){
 							newdiv.innerHTML += "<input type='button' value='WFS'  id='"+inputIndex+n+"' onclick='initConfig(9);setCurrentIndex(this.id);'><br>";
@@ -494,11 +560,14 @@ var wpsService = new WpsService({
 
 			}
 		}
+		
+		
+
 			
 		//creation formulaire outputs
 
 		outputs = '\nOutputs: \n';
-		newdiv.innerHTML += "<br>Outputs <br>";	
+		newdiv.innerHTML += "<br><br>Outputs <br>";	
 		
 		for (var indexOutput in response.processOffering.process.outputs)	{
 			for (var property in response.processOffering.process.outputs[indexOutput]) {

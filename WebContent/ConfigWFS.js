@@ -213,7 +213,7 @@ function addfavwfs() {
 	
 	adressewfs =  $('#wfs :selected').text();
 	couchewfs =  $('#wfscouche :selected').text();
-	
+	formatwfs =  $('#wfsformat :selected').text();
 	
 	var d=document.formu.wfsfav;
 

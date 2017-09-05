@@ -200,24 +200,37 @@
                onclick="initConfig(3);" />
                </form>
 
+	<form id="accueil" style="display:block">
+        <input type="button" value="ConfigMap"
+               onclick="document.getElementById('accueil').style.display = 'none'; document.getElementById('map').style.display = 'block';" />
+      <input type="button" value="WPS"
+               onclick="document.getElementById('accueil').style.display = 'none'; document.getElementById('map').style.display = 'block';" />         
+        <input type="button" value="Config Favoris WMS"
+               onclick="document.getElementById('accueil').style.display = 'none'; document.getElementById('map').style.display = 'block';" />      
+      <input type="button" value="Config Favoris WFS"
+               onclick="document.getElementById('accueil').style.display = 'none'; document.getElementById('map').style.display = 'block';" />      
+      <input type="button" value="Config Favoris WPS"
+               onclick="document.getElementById('wrapper').style.visibility = 'visible'; document.getElementById('accueil').style.display = 'none'; document.getElementById('map').style.display = 'block';" />               
+               
+               
+      </form>
 
 
 
 
 
-
-	<form id="map" style="display:block">
+	<form id="map" style="display:none">
         <input type="button" value="Retour Map"
                onclick="initConfig(2);" />
       </form>
           
-	<div id="wrapper">
-	<form id="intro" style="display:block">
+	<div id="wrapper" style="visibility:hidden">
+	<!-- <form id="intro" style="display:block">
 		<div>
-			<h1>wps-js example</h1>
+		<h1>wps-js example</h1>
 			<p>wps-js is an <a href="https://github.com/52North/wps-js/" title="wps-js on GitHub">open source client library</a> for connecting Javascript client to <a href="http://www.opengeospatial.org/standards/wps" title="WPS @ Open Geospatial Consortium">OGC Web Processing</a> services. This page demonstrates how you can use it. More documentation is available in the <a href="https://wiki.52north.org/bin/view/Geoprocessing/Wps-js" title="wps-js wiki page">52&deg;North Wiki</a> and on <a href="https://github.com/52North/wps-js/blob/master/README.md" title="wps-js readme">GitHub</a>.</p>
-		</div>
-		</form>
+		</div> 
+		</form> -->
 		<hl>
 		
 		   <form id="adresse" style="display:block">
@@ -261,9 +274,7 @@
 			<!-- réponse getCapabilities -->
 			
 			<h1></h1>
-			<div class="wps-container">
-				<textarea rows="20" cols="100" id="capabilitiesText">empty</textarea>
-			</div>
+
 		</div>
 		</form>
 		<div>
@@ -335,7 +346,7 @@
   		</form>
 
 					<form id="processDescription" style="display:none">
-			 <input type="button" id="next" value="Next" onclick="initConfig(5);" />	<br />	
+			 <input type="button" id="next" value="Add" onclick="initConfig(5);" />	<br />	
 			 	<div class="wps-container" id="processDescriptionDiv" style="visibility:hidden">
 				<textarea rows="20" cols="100" id="processDescriptionText">empty</textarea>
 				
@@ -442,6 +453,10 @@
   <form id="reinit" style="display:none">
  <input type="button" value="reinitialiser map OSM"
            onclick="reinit();" />
+           
+           			<div class="wps-container"  style="visibility:hidden">
+				<textarea rows="20" cols="100" id="capabilitiesText">empty</textarea>
+			</div>
 </form>
 
 

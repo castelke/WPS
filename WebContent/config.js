@@ -143,7 +143,7 @@ var ie_writeFile = function (fname, data) {
 function telecharger() {
 	
   //  var url = adresseWFS.value + "REQUEST=getFeature&service=wfs&outputFormat=" + "shape-zip" /*formatwfs*/ + "&typename=" + coucheWFS.value;
-    var url = adressewfs + "REQUEST=getFeature&service=wfs&outputFormat=" + "shape-zip" + "&typename=" + couchewfs;
+   // var url = adressewfs + "REQUEST=getFeature&service=wfs&outputFormat=" + "shape-zip" + "&typename=" + couchewfs;
     
     
     window.open(url);
@@ -153,7 +153,7 @@ function telecharger() {
     }
     else {
         //j'affiche l'url à laquelle je doit accéder
-        alert(url);
+        //alert(url);
         var req = new XMLHttpRequest();
         //j'utilise le proxy en localhost pour rediriger vers l'url
         req.open('GET', 'http://localhost:8080/leaflet/proxy.php?url=', false);// + url, false);
@@ -171,6 +171,12 @@ function telecharger() {
     }
 
 }
+/*
+function telechargerwps() {
+	 var url = adressewps + "REQUEST=getFeature&service=wfs&outputFormat=" + "shape-zip" + "&typename=" + couchewps;
+	window.open(url);
+}*/
+
 
 map.on('click', function(e) {
 	l=l+1;
