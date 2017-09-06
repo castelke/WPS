@@ -32,6 +32,8 @@
 			
 			document.getElementById('listeWFS').style.display = 'none';
 			document.getElementById('wfsfavform').style.display = 'none';
+			document.getElementById('wmsfavform').style.display = 'none';
+			document.getElementById('listeWMS').style.display = 'none';
 			document.getElementById('reinit').style.display = 'none';
 		}
 		
@@ -231,6 +233,7 @@
 	    	document.getElementById("zone").style.display = "block";
 	    	document.getElementById("info").style.display = "none";
 	    	document.getElementById("wfsfavform").style.display = "block";
+	    	document.getElementById('mapid').style.visibility='hidden';
 	    	
 		}
 		else if (a==10){

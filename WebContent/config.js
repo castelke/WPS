@@ -45,6 +45,14 @@ function getCouche() {
     return couchewms;
 }
 
+function setCoucheWMS(layer) {
+    couchewms= layer;
+}
+
+function getCoucheWMS() {
+    return couchewms;
+}
+
 function setCoucheWFS(layerwfs) {
     couchewfs = layerwfs;
 }

@@ -170,12 +170,13 @@ function handleJson(data) {
 	var myTextArea = document.getElementById('myInputs[' +currentIndex+   ']');
 	//myTextArea.innerHTML = response;
 	
+	
+	
 	var defaultParameters = {
 		    service: 'WMS',
 		    version: '1.0.0',
 		    request: 'GetMap',
 		    typeName: couchewms,
-		    maxFeatures: 1,
 		    //outputFormat: 'text/javascript',
 		//	outputFormat: formatwfs,
 		//    jsonCallback: 'jsonp'
@@ -259,7 +260,7 @@ function wmsFav(){
 	//alert(adressewfs);
 	adressewms =  adressewms + "/" + strOutNS + "/ows?";
 	setAdresseWMS(adressewms);
-	
+	alert(adressewms);
 	appelWMS();
 	printWMS();
 	
@@ -269,8 +270,8 @@ function wmsFav(){
         data : {
     	    service: 'WMS',
     	    request: 'GetMap',
-    	    typeName: couchewms,
-    	    maxFeatures: 1
+    	    typeName: couchewms
+    	    //maxFeatures: 1
 
         },
         cache: false,
@@ -325,7 +326,7 @@ function addwms() {
 	url = adressewms + 'service=WMS&request=GetCapabilities';
 	
 	
-	alert(adressewms);
+	//alert(adressewms);
 	
 	
     //adressewfs=;
@@ -352,7 +353,7 @@ function addwms() {
 
 	    	d.length=1; 
 	    	 $(xml).find('Layer').each( function(){
-	    		alert($(this).find('Name').text());
+	    	//	alert($(this).find('Name').text());
 	    		d.length++; 
 	    		d.options[d.length-1].text = $(this).find('Name').text();
 	    	});

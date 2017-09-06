@@ -208,10 +208,10 @@
                onclick="document.getElementById('accueil').style.display = 'none'; document.getElementById('map').style.display = 'block'; document.getElementById('wps').style.visibility = 'visible';" />   
                      
         <input type="button" value="Config Favoris WMS"
-               onclick="document.getElementById('listeWMS').style.display = 'block'; document.getElementById('accueil').style.display = 'none'; document.getElementById('map').style.display = 'block'; document.getElementById('htmlfavwms').style.visibility = 'visible';" />   
+               onclick="document.getElementById('listeWMS').style.display = 'block'; document.getElementById('mapid').style.visibility='visible'; document.getElementById('wmsfavform').style.display = 'block'; document.getElementById('accueil').style.display = 'none'; document.getElementById('map').style.display = 'block'; document.getElementById('htmlfavwms').style.visibility = 'visible';" />   
                   
       <input type="button" value="Config Favoris WFS"
-               onclick="initConfig(9);setCurrentIndex(this.id); document.getElementById('retour').style.display = 'none'; document.getElementById('accueil').style.display = 'none'; document.getElementById('map').style.display = 'block';document.getElementById('htmlfavwfs').style.visibility = 'visible';" />     
+               onclick="initConfig(9);setCurrentIndex(this.id);  document.getElementById('retour').style.display = 'none'; document.getElementById('accueil').style.display = 'none'; document.getElementById('map').style.display = 'block';document.getElementById('htmlfavwfs').style.visibility = 'visible';" />     
                
       <input type="button" value="Config Favoris WPS"
                onclick=" document.getElementById('processes').options[0].selected = 'selected'; document.getElementById('wps').style.display = 'block'; document.getElementById('wps').style.visibility = 'visible';document.getElementById('wrapper').style.visibility = 'visible'; document.getElementById('describe').style.display = 'block'; document.getElementById('capabilities').style.display = 'block';document.getElementById('accueil').style.display = 'none'; document.getElementById('map').style.display = 'block';" />               
@@ -225,7 +225,8 @@
       </form>
           
 
-	<div id="htmlfavwms" style="visibility:hidden">
+	<div id="html
+" style="visibility:hidden">
 
 
 
@@ -407,6 +408,12 @@
 		</SELECT>  
     </form>
 
+<form name="wmsfavform" id="wmsfavform" style="display:none">
+     <SELECT NAME="wmsfav" id="wmsfav" onChange='wmsFav();'>
+		<OPTION VALUE="">Choisir un favori
+		<OPTION VALUE="">Choisir un favori
+		</SELECT>  
+    </form>
 
 
 	<form name="formu" id="listeWFS" style="display:none"> 
