@@ -22,13 +22,28 @@
 			//tout le reste = none ou hidden
 			document.getElementById('wrapper').style.visibility = 'hidden';
 			document.getElementById('map').style.display = 'none';
+			document.getElementById('divName').style.visibility = 'hidden';
 			
+			document.getElementById('htmlfavwms').style.visibility = 'hidden';
+			document.getElementById('htmlfavwfs').style.visibility = 'hidden';
+			document.getElementById('wps').style.visibility = 'hidden';
+			document.getElementById('configmap').style.visibility = 'hidden';
+			
+			
+			document.getElementById('listeWFS').style.display = 'none';
+			document.getElementById('wfsfavform').style.display = 'none';
+			document.getElementById('reinit').style.display = 'none';
 		}
 		
 		
 		
 		else if (a==3){
-			document.location.href = 'ConfigWPS.html';
+			//document.location.href = 'ConfigWPS.html';
+			document.getElementById('wrapper').style.visibility = 'hidden';
+			document.getElementById('divName').style.visibility = 'hidden';
+			document.getElementById('accueil').style.display = 'block';
+			document.getElementById('choix').style.display = 'none';
+			
 			
 		}
 		else if (a==4){
@@ -165,6 +180,7 @@
 	    	document.getElementById("info").style.display = "none";
 	    	document.getElementById("reinit").style.display = "none";
 	    	document.getElementById("processDescription").style.display = "block";
+	    	document.getElementById("wfsfavform").style.display = "none";
 		}
 		
 		else if (a==8){
@@ -214,6 +230,8 @@
 	    	document.getElementById('reinit').style.display = "block";
 	    	document.getElementById("zone").style.display = "block";
 	    	document.getElementById("info").style.display = "none";
+	    	document.getElementById("wfsfavform").style.display = "block";
+	    	
 		}
 		else if (a==10){
 	    	document.getElementById("zone").style.display = "block";

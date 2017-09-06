@@ -13,59 +13,42 @@ function getProcessDescription() {
 
 function recuperationUrl(u){
 	//alert(u);
-	setAdresseWFS(u);
+	setAdresseWMS(u);
 } 
 
 
 
-function recuperationCouche(c){
-	//alert(c);
-	//alert(adressewfs);
-	//c=c.substring(5,c.length)
-	setCoucheWFS(c);
-	//var map = L.map('mapid',{drawControl: true}).setView([48.39975, -4.49938], 12);
-	//buildMap();
-	//document.getElementById("map").innerHTML = "<div id='mapid' style='width: 100%; height: 100%;'></div>";
-	//buildMap();
+function recuperationCoucheWms(c){
+
+	setCoucheWMS(c);
+
 	
-	//map.remove();
-	//document.getElementById("mapid").innerHTML = "";
-	//document.getElementById("mapid").innerHTML = "<div id='mapid' style='visibility:hidden'> </div>";
-	
-	//buildMap();
-	/*alert(couchewfs);
-	alert(adressewfs);*/
-	
-	adressewfs =  $('#wfs :selected').text();
-	formatwfs =  $('#wfsformat :selected').text();
+	adressewms =  $('#wms :selected').text();
+	formatwms =  $('#wmsformat :selected').text();
 	
     //get the index of the start of the part of the URL we want to keep
-    index  = couchewfs.indexOf(':');
+    index  = couchewms.indexOf(':');
 
     //then get everything after the found index
-    strOut = couchewfs.substr(index+1);
-    strOutNS = couchewfs.substr(0,index);
+    strOut = couchewms.substr(index+1);
+    strOutNS = couchewms.substr(0,index);
 	
 	//alert(strOut);
-	setCoucheWFS(strOut);
+	setCoucheWMS(strOut);
 	
 	
-	
-	
-	//adressewfs = adressewfs.substr(4);
-	
-	adressewfs = adressewfs.substr(0, adressewfs.length-6)
+	adressewms = adressewms.substr(0, adressewms.length-6)
 	//alert(adressewfs);
-	adressewfs =  adressewfs + "/" + strOutNS + "/ows?";
+	adressewms =  adressewms + "/" + strOutNS + "/ows?";
 //	alert(adressewfs);
-	setAdresseWFS(adressewfs);
+	setAdresseWMS(adressewms);
 	
 	
 	//innermap = document.getElementById("mapid").innerHTML;
 	
 	
-	appelWFS();
-	printWFS();
+	appelWMS();
+	printWMS();
 	//document.getElementById("mapid").innerHTML = "";
 	//alert(document.getElementById("mapid").innerHTML);
 	
@@ -133,12 +116,12 @@ function recuperationCouche(c){
 	
     $.ajax({
         type: "GET",
-        url: adressewfs,
+        url: adressewms,
         data : {
-    	    service: 'WFS',
+    	    service: 'WMS',
     	   // version: '1.0.0',
-    	    request: 'GetFeature',
-    	    typeName: couchewfs,
+    	    request: 'GetMap',
+    	    typeName: couchewms,
     	    maxFeatures: 1
         //	contentType: "application/json; charset=utf-8",
 
@@ -157,10 +140,10 @@ function recuperationCouche(c){
     });
 	
 	
-    if($("#checktelecharger").is(':checked')){
+   /* if($("#checktelecharger").is(':checked')){
     	//alert(adressewfs + "REQUEST=getFeature&service=wfs&outputFormat=" + "shape-zip" + "&typename=" + couchewfs);
         telecharger();
-    }
+    }*/
 	
 } 
 
@@ -188,10 +171,10 @@ function handleJson(data) {
 	//myTextArea.innerHTML = response;
 	
 	var defaultParameters = {
-		    service: 'WFS',
+		    service: 'WMS',
 		    version: '1.0.0',
-		    request: 'GetFeature',
-		    typeName: couchewfs,
+		    request: 'GetMap',
+		    typeName: couchewms,
 		    maxFeatures: 1,
 		    //outputFormat: 'text/javascript',
 		//	outputFormat: formatwfs,
@@ -200,48 +183,48 @@ function handleJson(data) {
 
 		};
 		var parameters = L.Util.extend(defaultParameters);
-		var wfsrequest = adressewfs.substring(0,adressewfs.length-1) + L.Util.getParamString(parameters);
+		var wmsrequest = adressewms.substring(0,adressewms.length-1) + L.Util.getParamString(parameters);
 	//alert(currentIndex);
 		
 		
 	//	alert(currentIndex.substring(0,currentIndex.length-1));
-	myTextArea.innerHTML =  idInputs[currentIndex.substring(0,currentIndex.length-1)] + '=@xlink:href='+wfsrequest+'@method=POST@mimeType=text/xml@encoding=UTF-8@outputFormat='+ formatwfs+ ';';
+	myTextArea.innerHTML =  idInputs[currentIndex.substring(0,currentIndex.length-1)] + '=@xlink:href='+wmsrequest+'@method=POST@mimeType=text/xml@encoding=UTF-8@outputFormat='+ formatwms+ ';';
 }
 
-function addfavwfs() {
+function addfavwms() {
 	
 	
-	adressewfs =  $('#wfs :selected').text();
-	couchewfs =  $('#wfscouche :selected').text();
-	formatwfs =  $('#wfsformat :selected').text();
+	adressewms =  $('#wms :selected').text();
+	couchewms =  $('#wmscouche :selected').text();
+	formatwms =  $('#wmsformat :selected').text();
 	
-	var d=document.wfsfavform.wfsfav;
+	var d=document.wmsfavform.wmsfav;
 
 	
 	//for (i=0;i=i+1;i)
 	// alert($(xml).find("Name",9).text());
-alert(adressewfs + "^" + couchewfs);
+	alert(adressewms + "^" + couchewms);
+	
+	alert(d.options[d.length-1].text);
 
-alert(d.options[d.length-1].text);
-
-	if(!((d.options[d.length-1].text).includes(couchewfs)))
+	if(!((d.options[d.length-1].text).includes(couchewms)))
 	{
 		d.length++; 
-		d.options[d.length-1].text = adressewfs + "^" + couchewfs;
+		d.options[d.length-1].text = adressewms + "^" + couchewms;
 	}
 	
 }
 
 
-function verificationWFS(){
-	document.getElementById("verificationRunningWfs").style.visibility = "visible";
+function verificationWMS(){
+	document.getElementById("verificationRunningWms").style.visibility = "visible";
 	    $.ajax({
 	        type: "GET",
-	        url: document.getElementById("newWfsAdresse").value + "SERVICE=WFS&VERSION=1.0.0&REQUEST=GetCapabilities",
+	        url: document.getElementById("newWmsAdresse").value + "SERVICE=WMS&VERSION=1.0.0&REQUEST=GetCapabilities",
 	        dataType: "script",
 	        cache: false,
 	        success: function () {
-	        	addOptionsWfs();
+	        	addOptionsWms();
 	        },
 	        error: function () {
 	        	setTimeout(timeout, 2000);
@@ -250,43 +233,43 @@ function verificationWFS(){
 	    });
 }
 
-function wfsFav(){
+function wmsFav(){
 
 	
-	adrcouche =  $('#wfsfav :selected').text();
+	adrcouche =  $('#wmsfav :selected').text();
 
 	
 	str =  adrcouche.indexOf('^');
     //alert(str); 
     strOut = adrcouche.substr(str+1);
     strOutNS = adrcouche.substr(0,str);
-    setCoucheWFS(strOut);
-    setAdresseWFS(strOutNS);
+    setCoucheWMS(strOut);
+    setAdresseWMS(strOutNS);
     //get the index of the start of the part of the URL we want to keep
-    index  = couchewfs.indexOf(':');
+    index  = couchewms.indexOf(':');
 
     //then get everything after the found index
-    strOut = couchewfs.substr(index+1);
-    strOutNS = couchewfs.substr(0,index);
+    strOut = couchewms.substr(index+1);
+    strOutNS = couchewms.substr(0,index);
 	
 	//alert(strOut);
-	setCoucheWFS(strOut);
+	setCoucheWMS(strOut);
 
-	adressewfs = adressewfs.substr(0, adressewfs.length-6)
+	adressewms = adressewms.substr(0, adressewms.length-6)
 	//alert(adressewfs);
-	adressewfs =  adressewfs + "/" + strOutNS + "/ows?";
-	setAdresseWFS(adressewfs);
+	adressewms =  adressewms + "/" + strOutNS + "/ows?";
+	setAdresseWMS(adressewms);
 	
-	appelWFS();
-	printWFS();
+	appelWMS();
+	printWMS();
 	
     $.ajax({
         type: "GET",
-        url: adressewfs,
+        url: adressewms,
         data : {
-    	    service: 'WFS',
-    	    request: 'GetFeature',
-    	    typeName: couchewfs,
+    	    service: 'WMS',
+    	    request: 'GetMap',
+    	    typeName: couchewms,
     	    maxFeatures: 1
 
         },
@@ -309,11 +292,11 @@ function wfsFav(){
 	
 }
 
-function addOptionsWfs()
+function addOptionsWms()
 {
-	var List = document.getElementById("wfs");
+	var List = document.getElementById("wms");
 	var elOption = new Array(
-                    new Option(document.getElementById("newWfsAdresse").value, document.getElementById("newWfsAdresse").value, false, false)
+                    new Option(document.getElementById("newWmsAdresse").value, document.getElementById("newWmsAdresse").value, false, false)
                      );
  
 	var i, n;
@@ -323,40 +306,53 @@ function addOptionsWfs()
 	{
 		List.options.add(elOption[i]);
 	}
-	document.getElementById("verificationRunningWfs").style.visibility = "hidden";
+	document.getElementById("verificationRunningWms").style.visibility = "hidden";
 }
 
-function addwfs() {
+function addwms() {
 	//if ($('#wfs option:selected').text() != ""){
 
-	setAdresseWFS($('#wfs option:selected').text());
-
-	alert(adressewms + 'service=WMS&request=GetCapabilities');
+	setAdresseWMS($('#wms option:selected').text());
+	adressewms =adressewms.replace("[\r\n]+", "")
     // async call to geoserver (I'm using angular)
+    index  = adressewms.indexOf('?');
+
+    //then get everything after the found index
+    strOut = adressewms.substr(index+1);
+    adressewms = adressewms.substr(0,index+1);
+    //alert(strOutNS);
     
+	url = adressewms + 'service=WMS&request=GetCapabilities';
+	
+	
+	alert(adressewms);
+	
+	
     //adressewfs=;
     
     $.ajax({
         type: "GET",
-        url: adressewfs + 'service=WFS&request=GetCapabilities',
-        version:'1.1.0',
+        url: adressewms + 'service=WMS&request=GetCapabilities',
+       // version:'1.0.0',
+     //   service: 'WMS',
+    //    request: 'GetCapabilities',
+      //  version:'1.0.0',
  //       dataType: "xml",
         cache: false,
       //  success : executeCallback,
 	    success: function(data, status, headers, config) {
 	        // use the tool to parse the data
-	    	
-	    	response = (new XMLSerializer()).serializeToString(data);
 	    	//alert(response);
+	    	response = (new XMLSerializer()).serializeToString(data);
 	    	var parser = new DOMParser();
 	    	var xml = parser.parseFromString(response, "text/xml");
 	    	//alert(response["wfs:WFS_Capabilities"]["FeatureTypeList"][0]["FeatureType"]["Name"]);
 
-	    	var d=document.formu.wfscouche;
+	    	var d=document.formuwms.wmscouche;
 
 	    	d.length=1; 
-	    	 $(xml).find('FeatureType').each( function(){
-	    		//alert($(this).find('Name').text());
+	    	 $(xml).find('Layer').each( function(){
+	    		alert($(this).find('Name').text());
 	    		d.length++; 
 	    		d.options[d.length-1].text = $(this).find('Name').text();
 	    	});
@@ -396,7 +392,7 @@ function addwfs() {
 //}
 
 
-
+/*
 function sleep(milliseconds) {
 	  var start = new Date().getTime();
 	  for (var i = 0; i < 1e7; i++) {
@@ -430,4 +426,4 @@ function raz(liste)
 {l=document.formu.elements[liste].length;
 for (i=l; i>=0; i--)
  document.formu.elements[liste].options[i]=null;
-}
+}*/

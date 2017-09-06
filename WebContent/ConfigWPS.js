@@ -432,11 +432,26 @@ var wpsService = new WpsService({
 		
 	var describeProcessCallback = function(response) {
 		
-		
+		document.getElementById('divName').style.visibility = 'visible';
 		initConfig(4);
 		setProcessDescription(response);
 		setIdentifier(response.processOffering.process.identifier);
 		
+
+			
+		//alert($("divForm").length);
+		
+		if(($("divForm").length)>0){
+			//$( ".divName" ).remove();
+		//	document.getElementById(divName).innerHTML = "";
+			var x = $("divForm").length - 1;
+			//alert("divId" +  x);
+			document.getElementById("divId" +  x).style.display = 'none';
+			
+			
+			
+		}
+	//document.getElementById("divName").removeChild(divForm);	
 
 		 
 		
@@ -457,8 +472,9 @@ var wpsService = new WpsService({
 		outputOffering += "description : " + response.processOffering.process.abstractValue+'; \n';
 		
 		inputs = 'Inputs: \n';
+		
 		newdiv =document.createElement('divForm');
-		newdiv.innerHTML += "Inputs <br>";
+		newdiv.innerHTML = "Inputs <br>";
 	//	newdiv.innerHTML += "fixed  <input type='checkbox' name='check1' id='check1' onclick='checker('check1', 'check1');' />";
 		//document.getElementById("newWpsAdresse").value
 		
@@ -597,8 +613,10 @@ var wpsService = new WpsService({
 			}
 			}
 		newdiv.innerHTML += "<br>";	
+		newdiv.id = 'divId' + $("divForm").length;
+
 		document.getElementById("divName").appendChild(newdiv);	
-		
+
 		$("textarea#processDescriptionText").val(outputOffering + '\n' + '\n' + inputs + outputs);
 	};
 	

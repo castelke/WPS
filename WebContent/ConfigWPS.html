@@ -202,28 +202,71 @@
 
 	<form id="accueil" style="display:block">
         <input type="button" value="ConfigMap"
-               onclick="document.getElementById('accueil').style.display = 'none'; document.getElementById('map').style.display = 'block';" />
+               onclick="document.getElementById('wfsfavform').style.display = 'block'; document.getElementById('accueil').style.display = 'none'; document.getElementById('map').style.display = 'block'; document.getElementById('configmap').style.visibility = 'visible';" />
+               
       <input type="button" value="WPS"
-               onclick="document.getElementById('accueil').style.display = 'none'; document.getElementById('map').style.display = 'block';" />         
+               onclick="document.getElementById('accueil').style.display = 'none'; document.getElementById('map').style.display = 'block'; document.getElementById('wps').style.visibility = 'visible';" />   
+                     
         <input type="button" value="Config Favoris WMS"
-               onclick="document.getElementById('accueil').style.display = 'none'; document.getElementById('map').style.display = 'block';" />      
+               onclick="document.getElementById('listeWMS').style.display = 'block'; document.getElementById('accueil').style.display = 'none'; document.getElementById('map').style.display = 'block'; document.getElementById('htmlfavwms').style.visibility = 'visible';" />   
+                  
       <input type="button" value="Config Favoris WFS"
-               onclick="document.getElementById('accueil').style.display = 'none'; document.getElementById('map').style.display = 'block';" />      
+               onclick="initConfig(9);setCurrentIndex(this.id); document.getElementById('retour').style.display = 'none'; document.getElementById('accueil').style.display = 'none'; document.getElementById('map').style.display = 'block';document.getElementById('htmlfavwfs').style.visibility = 'visible';" />     
+               
       <input type="button" value="Config Favoris WPS"
-               onclick="document.getElementById('wrapper').style.visibility = 'visible'; document.getElementById('accueil').style.display = 'none'; document.getElementById('map').style.display = 'block';" />               
+               onclick=" document.getElementById('processes').options[0].selected = 'selected'; document.getElementById('wps').style.display = 'block'; document.getElementById('wps').style.visibility = 'visible';document.getElementById('wrapper').style.visibility = 'visible'; document.getElementById('describe').style.display = 'block'; document.getElementById('capabilities').style.display = 'block';document.getElementById('accueil').style.display = 'none'; document.getElementById('map').style.display = 'block';" />               
                
                
       </form>
-
-
-
-
 
 	<form id="map" style="display:none">
         <input type="button" value="Retour Map"
                onclick="initConfig(2);" />
       </form>
           
+
+	<div id="htmlfavwms" style="visibility:hidden">
+
+
+
+
+
+		<input type='button' name='addwms'  id='addwms' value="Add" >
+
+
+</div>
+
+
+
+
+	<div id="htmlfavwfs" style="visibility:hidden">
+
+
+
+</div>
+
+
+	<div id="configmap" style="visibility:hidden">
+
+
+
+		<input type='button' name='affichemap'  id='affichemap' value="Afficher" >
+</div>
+
+
+	<div id="wpsexe" style="visibility:hidden">
+	
+	<!--  affiche divname -->
+	
+				<input type='button' name='wpsexe'  id='wpsexe' value="Executer" >
+</div>
+
+
+
+
+
+
+
 	<div id="wrapper" style="visibility:hidden">
 	<!-- <form id="intro" style="display:block">
 		<div>
@@ -320,7 +363,7 @@
 			</div>
 			-->
 			
-				  <form id="wfsConfig" style="display:none">
+	<form id="wfsConfig" style="display:none">
 
 		<div class="wps-container">
 				<select id="wps">
@@ -358,8 +401,11 @@
 			 </form>
 	</div>
 
-    
-    
+<form name="wfsfavform" id="wfsfavform" style="display:none">
+     <SELECT NAME="wfsfav" id="wfsfav" onChange='wfsFav();'>
+		<OPTION VALUE="">Choisir un favori
+		</SELECT>  
+    </form>
 
 
 
@@ -394,46 +440,47 @@
 	 <input type="button" value="Ajouter favoris"
            onclick="addfavwfs();" />
            
-           
-           
-   <SELECT NAME="wfsfav" id="wfsfav" onChange='wfsFav();'>
-<OPTION VALUE="">Choisir un favori
-</SELECT>  
-     
-
-
-	
-	<!-- 
-
-	Choisir un url 
-	<select name="listeurl" id="listeurl" onChange='sleep(1000);document.getElementById("couche").style.visibility="visible"; recuperationUrl(this.value); filltheselect(this.name, this.value)'>
-	   <script language="javascript">
-	   
-	   
-	   //setTimeout(function(){
-		   for (i=0; i<url.length; i++)
-			      document.write("<option value=\"" +url[i][0]+ "\">" +url[i][1]);
-	//	}, 1000);
-	   
-	   </script>
-	</select>
-	<br>
-	<div id="couche" name="couche" style="visibility:hidden"> 
-	 Choisir une couche
-	<select name="listecouche" id="listecouche" onChange='document.getElementById("listecouche").value;recuperationCouche(this.value);filltheselect(this.name, this.value)'>
-	   <script language="javascript">
-	   for (i=0; i<couche["http://geoserver.ics.perm.ru/geoserver/topp/ows?"].length; i++){
-		   
-	      document.write("<option value=\"" +couche["http://geoserver.ics.perm.ru/geoserver/topp/ows?"][i][0]+ "\">" +couche["http://geoserver.ics.perm.ru/geoserver/topp/ows?"][i][1]);}
-	   </script>
-	</select>
-
-	</div>
-	-->
 	
 	<INPUT type="checkbox" id="checktelecharger" name="checktelecharger" > telecharger?
 	
 	  </form>
+	  
+	  
+	  
+	 	<form name="formuwms" id="listeWMS" style="display:none"> 
+		Ajouter site
+		<input type='text' name='newWmsAdresse'  id='newWmsAdresse' value="https://portail.indigeo.fr/geoserver/LETG-BREST/wfs?" style="width:500px;" >
+		<input type="button" id="verifaddwms" value="Verification Adresse" onclick="verificationWMS();" />
+		    <div id="verificationRunningWms" style="visibility:hidden">
+        verification
+    	</div>
+    	
+    	<br>
+		 <SELECT NAME="wmsformat" id="wmsformat" onChange='setFormatWMS(this.value);'>
+			<OPTION VALUE="jpeg">jpeg
+			<OPTION VALUE="png">png
+			</SELECT>
+			
+			
+		<br>
+		<SELECT NAME="wms" id="wms" onChange="addwms();">
+			<OPTION VALUE="">Choisir un site
+			<OPTION VALUE="http://129.206.228.72/cached/osm?"> http://129.206.228.72/cached/osm?
+			<OPTION VALUE="https://geobretagne.fr/geoserver/ows?">https://geobretagne.fr/geoserver/ows?
+		</SELECT>
+		<br>
+
+		<SELECT NAME="wmscouche" id="wmscouche" onChange='recuperationCoucheWms(this.value);'>
+		<OPTION VALUE="">Choisir une couche
+		</SELECT>
+		
+	 <input type="button" value="Ajouter favoris"
+           onclick="addfavwms();" />
+	  </form>
+	   
+	  
+	  
+	  
 	  
   <form id="zone" style="display:none">
   
@@ -468,7 +515,7 @@
     <script type="text/javascript" src="ViewController.js"></script>
     <script type="text/javascript" src="config.js"></script>
     <script type="text/javascript" src="ConfigWPS.js"></script>   
-
+    <script type="text/javascript" src="ConfigWMS.js"></script>   
     <!-- 
             <script type="text/javascript" src="ConfigExecute.js"></script>
     <script type="text/javascript" src="MapView.js"></script>-->

@@ -1,6 +1,7 @@
 
 //valeur par défaut
 var adresse = "https://portail.indigeo.fr/geoserver/LETG-BREST/wfs?";
+var adressewms = "https://portail.indigeo.fr/geoserver/LETG-BREST/wfs?";
 var adressewfs = "http://geoserver.ics.perm.ru/geoserver/topp/ows?";
 var couchewms= 'Activites_maritimes_2010_06_16_18h_L93';//'ne:ne';
 var couchewfs = 'states';
@@ -18,6 +19,14 @@ function setAdresse(adr) {
 
 function getAdresse() {
     return adresse;
+}
+
+function setAdresseWMS(adr) {
+	adressewms = adr;
+}
+
+function getAdresseWMS() {
+    return adressewms;
 }
 
 function setAdresseWFS(adrwfs) {
