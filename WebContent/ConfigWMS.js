@@ -174,7 +174,7 @@ function handleJson(data) {
 	
 	var defaultParameters = {
 		    service: 'WMS',
-		    version: '1.0.0',
+		//    version: '1.0.0',
 		    request: 'GetMap',
 		    typeName: couchewms,
 		    //outputFormat: 'text/javascript',

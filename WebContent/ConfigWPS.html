@@ -202,7 +202,7 @@
 
 	<form id="accueil" style="display:block">
         <input type="button" value="ConfigMap"
-               onclick="document.getElementById('wfsfavform').style.display = 'block'; document.getElementById('accueil').style.display = 'none'; document.getElementById('map').style.display = 'block'; document.getElementById('configmap').style.visibility = 'visible';" />
+               onclick="document.getElementById('wmsfavform').style.display = 'block'; document.getElementById('wfsfavform').style.display = 'block'; document.getElementById('accueil').style.display = 'none'; document.getElementById('map').style.display = 'block'; document.getElementById('configmap').style.visibility = 'visible';" />
                
       <input type="button" value="WPS"
                onclick="document.getElementById('accueil').style.display = 'none'; document.getElementById('map').style.display = 'block'; document.getElementById('wps').style.visibility = 'visible';" />   
@@ -404,14 +404,22 @@
 
 <form name="wfsfavform" id="wfsfavform" style="display:none">
      <SELECT NAME="wfsfav" id="wfsfav" onChange='wfsFav();'>
-		<OPTION VALUE="">Choisir un favori
+		<OPTION VALUE="">Choisir un favori WFS
 		</SELECT>  
     </form>
 
 <form name="wmsfavform" id="wmsfavform" style="display:none">
      <SELECT NAME="wmsfav" id="wmsfav" onChange='wmsFav();'>
-		<OPTION VALUE="">Choisir un favori
-		<OPTION VALUE="">Choisir un favori
+		<OPTION VALUE="">Choisir un favori WMS
+		<OPTION VALUE="https://portail.indigeo.fr/geoserver/LETG-BREST/wfs?^1950_PAP">https://portail.indigeo.fr/geoserver/LETG-BREST/wfs?^1950_PAP
+		<OPTION VALUE="https://portail.indigeo.fr/geoserver/LETG-BREST/wfs?^30min_Le_conquet_parcelle">https://portail.indigeo.fr/geoserver/LETG-BREST/wfs?^30min_Le_conquet_parcelle
+		<OPTION VALUE="https://portail.indigeo.fr/geoserver/LETG-BREST/wfs?^Activite_maritimes_encadrees_2009_L93">https://portail.indigeo.fr/geoserver/LETG-BREST/wfs?^Activite_maritimes_encadrees_2009_L93
+			<OPTION VALUE="https://portail.indigeo.fr/geoserver/LETG-BREST/wfs?^raster">https://portail.indigeo.fr/geoserver/LETG-BREST/wfs?^raster
+<!-- 		<OPTION VALUE="https://portail.indigeo.fr/geoserver/LETG-BREST/wfs?^Activites_Nautiques_encadrees_RDB">https://portail.indigeo.fr/geoserver/LETG-BREST/wfs?^Activites_Nautiques_encadrees_RDB
+		<OPTION VALUE="https://portail.indigeo.fr/geoserver/LETG-BREST/wfs?^menir281">https://portail.indigeo.fr/geoserver/LETG-BREST/wfs?^menir281 -->
+		
+		
+		
 		</SELECT>  
     </form>
 
