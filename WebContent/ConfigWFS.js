@@ -1,6 +1,6 @@
 
 var innermap;
-
+var status;
 
 function setInnermap(i) {
 	innermap = i;
@@ -10,6 +10,14 @@ function getProcessDescription() {
     return innermap;
 }
 
+
+function setSstatus(s) {
+	status = s;
+}
+
+function getSstatus() {
+    return status;
+}
 
 function recuperationUrl(u){
 	//alert(u);
@@ -63,9 +71,13 @@ function recuperationCouche(c){
 	
 	//innermap = document.getElementById("mapid").innerHTML;
 	
-	
+	if((document.getElementById('wfsfavform').style.display == 'block') && (document.getElementById('wmsfavform').style.display == 'block')){
 	appelWFS();
 	printWFS();
+}
+	
+	
+	
 	//document.getElementById("mapid").innerHTML = "";
 	//alert(document.getElementById("mapid").innerHTML);
 	
@@ -184,7 +196,13 @@ function handleJson(data) {
         }
     }).addTo(map);*/
 	//alert( adressewfs.substring(0,adressewfs.length-1));
+	
+	if((document.getElementById('wfsfavform').style.display == 'none') || (document.getElementById('wmsfavform').style.display == 'none')){
+	
+	
 	var myTextArea = document.getElementById('myInputs[' +currentIndex+   ']');
+	
+	
 	//myTextArea.innerHTML = response;
 	
 	var defaultParameters = {
@@ -206,6 +224,10 @@ function handleJson(data) {
 		
 	//	alert(currentIndex.substring(0,currentIndex.length-1));
 	myTextArea.innerHTML =  idInputs[currentIndex.substring(0,currentIndex.length-1)] + '=@xlink:href='+wfsrequest+'@method=POST@mimeType=text/xml@encoding=UTF-8@outputFormat='+ formatwfs+ ';';
+	
+	}
+	
+	
 }
 
 function addfavwfs() {
@@ -220,9 +242,9 @@ function addfavwfs() {
 	
 	//for (i=0;i=i+1;i)
 	// alert($(xml).find("Name",9).text());
-alert(adressewfs + "^" + couchewfs);
+//alert(adressewfs + "^" + couchewfs);
 
-alert(d.options[d.length-1].text);
+//alert(d.options[d.length-1].text);
 
 	if(!((d.options[d.length-1].text).includes(couchewfs)))
 	{
@@ -277,8 +299,10 @@ function wfsFav(){
 	adressewfs =  adressewfs + "/" + strOutNS + "/ows?";
 	setAdresseWFS(adressewfs);
 	
-	appelWFS();
-	printWFS();
+	if((document.getElementById('wfsfavform').style.display == 'block') && (document.getElementById('wmsfavform').style.display == 'block')){
+		appelWFS();
+		printWFS();
+	}
 	
     $.ajax({
         type: "GET",
@@ -331,7 +355,7 @@ function addwfs() {
 
 	setAdresseWFS($('#wfs option:selected').text());
 
-	alert(adressewms + 'service=WMS&request=GetCapabilities');
+	//alert(adressewms + 'service=WMS&request=GetCapabilities');
     // async call to geoserver (I'm using angular)
     
     //adressewfs=;

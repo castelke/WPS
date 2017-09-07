@@ -46,9 +46,10 @@ function recuperationCoucheWms(c){
 	
 	//innermap = document.getElementById("mapid").innerHTML;
 	
-	
-	appelWMS();
-	printWMS();
+	if((document.getElementById('wfsfavform').style.display == 'block') && (document.getElementById('wmsfavform').style.display == 'block')){
+		appelWMS();
+		printWMS();
+	}
 	//document.getElementById("mapid").innerHTML = "";
 	//alert(document.getElementById("mapid").innerHTML);
 	
@@ -167,6 +168,8 @@ function handleJson(data) {
         }
     }).addTo(map);*/
 	//alert( adressewfs.substring(0,adressewfs.length-1));
+	
+	if((document.getElementById('wfsfavform').style.display == 'none') || (document.getElementById('wmsfavform').style.display == 'none')){
 	var myTextArea = document.getElementById('myInputs[' +currentIndex+   ']');
 	//myTextArea.innerHTML = response;
 	
@@ -191,7 +194,7 @@ function handleJson(data) {
 	//	alert(currentIndex.substring(0,currentIndex.length-1));
 	myTextArea.innerHTML =  idInputs[currentIndex.substring(0,currentIndex.length-1)] + '=@xlink:href='+wmsrequest+'@method=POST@mimeType=text/xml@encoding=UTF-8@outputFormat='+ formatwms+ ';';
 }
-
+}
 function addfavwms() {
 	
 	
@@ -204,9 +207,12 @@ function addfavwms() {
 	
 	//for (i=0;i=i+1;i)
 	// alert($(xml).find("Name",9).text());
-	alert(adressewms + "^" + couchewms);
 	
-	alert(d.options[d.length-1].text);
+	
+	
+	//alert(adressewms + "^" + couchewms);
+	
+	//alert(d.options[d.length-1].text);
 
 	if(!((d.options[d.length-1].text).includes(couchewms)))
 	{
@@ -260,9 +266,16 @@ function wmsFav(){
 	//alert(adressewfs);
 	adressewms =  adressewms + "/" + strOutNS + "/ows?";
 	setAdresseWMS(adressewms);
-	alert(adressewms);
+	//alert(adressewms);
+	
+	
+	if((document.getElementById('wfsfavform').style.display == 'block') && (document.getElementById('wmsfavform').style.display == 'block')){
 	appelWMS();
 	printWMS();
+	}
+	
+	
+	
 	
     $.ajax({
         type: "GET",

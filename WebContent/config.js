@@ -175,10 +175,10 @@ function telecharger() {
         //j'utilise le proxy en localhost pour rediriger vers l'url
         req.open('GET', 'http://localhost:8080/leaflet/proxy.php?url=', false);// + url, false);
         req.send(null);
-        alert("ok");
+       // alert("ok");
         if (req.status == 200) {
             //affichage de la réponse
-            alert(req.responseText);
+           // alert(req.responseText);
             
             
             var s = req.responseText;
@@ -194,7 +194,7 @@ function telechargerwps() {
 	window.open(url);
 }*/
 
-
+/*
 map.on('click', function(e) {
 	l=l+1;
    // alert("Lat, Lon : " + e.latlng.lat + ", " + e.latlng.lng)
@@ -207,7 +207,7 @@ map.on('click', function(e) {
     
     
     
-});
+});*/
 
 
 
@@ -219,6 +219,6 @@ map.on('click', function(e) {
     	    L.geoJson(data).addTo(map);
     	    
     		});
-    	alert("chargé");
+    	//alert("chargé");
     }
     

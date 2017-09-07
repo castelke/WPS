@@ -16,25 +16,45 @@
 		}
 		
 		else if (a==2){
+			//retour map
 			//document.location.href = 'MapView.html';
 			document.getElementById('accueil').style.display = 'block';
 			
 			//tout le reste = none ou hidden
 			document.getElementById('wrapper').style.visibility = 'hidden';
+			
+			document.getElementById('mapid').style.visibility = 'visible';
 			document.getElementById('map').style.display = 'none';
+			
 			document.getElementById('divName').style.visibility = 'hidden';
 			
 			document.getElementById('htmlfavwms').style.visibility = 'hidden';
 			document.getElementById('htmlfavwfs').style.visibility = 'hidden';
+			
+			
 			document.getElementById('wps').style.visibility = 'hidden';
+			document.getElementById('wps').style.display = 'none';
+			
+			
 			document.getElementById('configmap').style.visibility = 'hidden';
 			
+			document.getElementById('wpsexe').style.visibility = 'hidden';
 			
 			document.getElementById('listeWFS').style.display = 'none';
 			document.getElementById('wfsfavform').style.display = 'none';
 			document.getElementById('wmsfavform').style.display = 'none';
+			document.getElementById('wpsfavform').style.display = 'none';
 			document.getElementById('listeWMS').style.display = 'none';
 			document.getElementById('reinit').style.display = 'none';
+			
+			document.getElementById("divSlider").style.display = "none";
+			document.getElementById("retour").style.display = "none";
+			
+			document.getElementById('reinitialiser').style.visibility = 'visible';
+			
+			
+			
+			
 		}
 		
 		
@@ -45,7 +65,7 @@
 			document.getElementById('divName').style.visibility = 'hidden';
 			document.getElementById('accueil').style.display = 'block';
 			document.getElementById('choix').style.display = 'none';
-			
+			document.getElementById('mapid').style.visibility = 'visible';
 			
 		}
 		else if (a==4){
@@ -244,7 +264,40 @@
 	    	document.getElementById("zone").style.display = "block";
 	    	document.getElementById("zone").style.display = "block";
 		}
+		else if (a==11){
+			
+			document.getElementById("info").style.display = "none";
+	    	document.getElementById("processDescription").style.display = "none";
+	    	document.getElementById("execute").style.display = "block";
+	    	document.getElementById('wpsexe').style.visibility = 'visible';
+	    	document.getElementById("slider").style.display = "none";
+	    	document.getElementById('divName').style.visibility='hidden';
+	    	document.getElementById("divSlider").style.display = "block";
+	    	//document.getElementById("retour").style.display = "block";
+	    	document.getElementById("choix").style.display = "none";
+	    	// newdivS =document.createElement('divSlider');
+	    	document.getElementById("divSlider").innerHTML = "<br> Inputs: <br> <br>";
+	    	
+	    		var inputnbr = 0;
+	    	for (var indexInput in processDescription.processOffering.process.inputs)	{
+	    		var n=0;
+	    		while ((n < processDescription.processOffering.process.inputs[indexInput].maxOccurs) && document.getElementById("notused" +indexInput + n).checked){
+	    			inputValue[inputnbr] = document.getElementById("myInputs[" + indexInput + n+ "]").value;
+	    			idInputs[inputnbr] = processDescription.processOffering.process.inputs[indexInput].identifier;
+	    			inputnbr = inputnbr +1;
+	    			n=n+1;
+	    		}
+	    	}
+	    	var i=0;
+	    	var listeInputs = "";
+	    	while (i<inputnbr){
+	    		listeInputs +=  idInputs[i]  +"=" + inputValue[i] +";" ;
+	    		document.getElementById("divSlider").innerHTML += idInputs[i] + "<br>" + inputValue[i] + "<br><br>";
+	    		i=i+1;
+	    	}
 		
+			
+		}
 		
 		
 		

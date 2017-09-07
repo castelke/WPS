@@ -560,6 +560,8 @@ var wpsService = new WpsService({
 							
 							}
 							else if (property == "complexData"){
+								
+							//newdiv.innerHTML += '<form name="wfsfavform" id="wfsfavform" style="display:block"> <SELECT NAME="wfsfav" id="wfsfav" onChange="wfsFav();"><OPTION VALUE="">Choisir un favori WFS<OPTION VALUE="http://geoserver.ics.perm.ru/geoserver/ows?^tasmania_state_boundaries">http://geoserver.ics.perm.ru/geoserver//ows?^topp:tasmania_state_boundaries<OPTION VALUE="http://geoserver.ics.perm.ru/geoserver/ows?^topp:states">http://geoserver.ics.perm.ru/geoserver//ows?^topp:states<OPTION VALUE="https://geobretagne.fr/geoserver/ows?^dreal_b:stationnement_littoral">https://geobretagne.fr/geoserver//ows?^dreal_b:stationnement_littoral</SELECT>  </form>';
 							newdiv.innerHTML += "<input type='button' value='WFS'  id='"+inputIndex+n+"' onclick='initConfig(9);setCurrentIndex(this.id);'><br>";
 							}
 						//	if (response.processOffering.process.inputs[inputIndex].minOccurs==0){
@@ -648,8 +650,27 @@ var wpsService = new WpsService({
 	    
 	}
 
+	function wpsfav(){	
+		initConfig(5);
+	}
 		
+	
+	function addfavwps(){	
+		//initConfig(5);
 		
+		var d=document.wpsfavform.wpsfav;
+		
+		//alert(processDescription.processOffering.process.identifier);
+		//alert(adresseWps);
+		
+		if(!((d.options[d.length-1].text).includes(processDescription.processOffering.process.identifier)))
+		{
+			d.length++; 
+			d.options[d.length-1].text = adresseWps + "^" + processDescription.processOffering.process.identifier;
+		}
+		
+	}
+	
 
 	var clearForms = function(){
 		

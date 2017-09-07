@@ -26,7 +26,7 @@ function appelWFS() {
     adressewfs = getAdresseWFS();
     couchewfs = getCoucheWFS();
     formatwfs = getFormatWFS();
-   alert("adressewfs: " + adressewfs + "\n" + "couchewfs: " + couchewfs + "\n" + "formatwfs: " + formatwfs);
+  // alert("adressewfs: " + adressewfs + "\n" + "couchewfs: " + couchewfs + "\n" + "formatwfs: " + formatwfs);
 
     //construction de l'objet WFS contenu dans boundaries
     boundaries = new L.WFS({

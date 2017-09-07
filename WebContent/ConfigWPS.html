@@ -164,11 +164,17 @@
          </form>
      -->    
          
+   
+	<form id="map" style="display:none">
+        <input type="button" value="Retour Map"
+               onclick="initConfig(2);" />
+      </form>      
+         
  <div class="valeur" id="valeur"></div>
-
+ 
 				<form id="retour" style="display:none">
         <input type="button" value="Retour process"
-               onclick="initConfig(7);" />
+               onclick="initConfig(7); document.getElementById('processDescription').style.display = 'block';document.getElementById('wpsexe').style.visibility='hidden';" />
                </form>
 
 
@@ -196,37 +202,32 @@
 
 		<form id="choix" style="display:none">
 		
-        <input type="button" value="Retour choix process"
-               onclick="initConfig(3);" />
+        <input type="button" value="Retour Map"
+               onclick="initConfig(3); document.getElementById('processDescription').style.display ='form'; initConfig(2);" />
                </form>
 
 	<form id="accueil" style="display:block">
         <input type="button" value="ConfigMap"
-               onclick="document.getElementById('wmsfavform').style.display = 'block'; document.getElementById('wfsfavform').style.display = 'block'; document.getElementById('accueil').style.display = 'none'; document.getElementById('map').style.display = 'block'; document.getElementById('configmap').style.visibility = 'visible';" />
+               onclick="document.getElementById('reinitialiser').style.visibility = 'hidden'; document.getElementById('mapid').style.visibility = 'hidden'; document.getElementById('wmsfavform').style.display = 'block'; document.getElementById('wfsfavform').style.display = 'block'; document.getElementById('accueil').style.display = 'none'; document.getElementById('map').style.display = 'block'; document.getElementById('configmap').style.visibility = 'visible';" />
                
       <input type="button" value="WPS"
-               onclick="document.getElementById('accueil').style.display = 'none'; document.getElementById('map').style.display = 'block'; document.getElementById('wps').style.visibility = 'visible';" />   
+               onclick="document.getElementById('reinitialiser').style.visibility = 'hidden'; document.getElementById('mapid').style.visibility = 'hidden';document.getElementById('retour').style.display = 'none'; document.getElementById('wpsfavform').style.display = 'block'; document.getElementById('accueil').style.display = 'none'; document.getElementById('map').style.display = 'block'; document.getElementById('wps').style.visibility = 'visible';" />   
                      
         <input type="button" value="Config Favoris WMS"
-               onclick="document.getElementById('listeWMS').style.display = 'block'; document.getElementById('mapid').style.visibility='visible'; document.getElementById('wmsfavform').style.display = 'block'; document.getElementById('accueil').style.display = 'none'; document.getElementById('map').style.display = 'block'; document.getElementById('htmlfavwms').style.visibility = 'visible';" />   
+               onclick="document.getElementById('reinitialiser').style.visibility = 'hidden'; document.getElementById('mapid').style.visibility = 'hidden'; document.getElementById('listeWMS').style.display = 'block'; document.getElementById('mapid').style.visibility='hidden'; document.getElementById('wmsfavform').style.display = 'block'; document.getElementById('accueil').style.display = 'none'; document.getElementById('map').style.display = 'block'; document.getElementById('htmlfavwms').style.visibility = 'visible';" />   
                   
       <input type="button" value="Config Favoris WFS"
-               onclick="initConfig(9);setCurrentIndex(this.id);  document.getElementById('retour').style.display = 'none'; document.getElementById('accueil').style.display = 'none'; document.getElementById('map').style.display = 'block';document.getElementById('htmlfavwfs').style.visibility = 'visible';" />     
+               onclick="initConfig(9);document.getElementById('reinitialiser').style.visibility = 'hidden'; document.getElementById('mapid').style.visibility = 'hidden'; setCurrentIndex(this.id);  document.getElementById('retour').style.display = 'none'; document.getElementById('accueil').style.display = 'none'; document.getElementById('map').style.display = 'block';document.getElementById('htmlfavwfs').style.visibility = 'visible';" />     
                
       <input type="button" value="Config Favoris WPS"
-               onclick=" document.getElementById('processes').options[0].selected = 'selected'; document.getElementById('wps').style.display = 'block'; document.getElementById('wps').style.visibility = 'visible';document.getElementById('wrapper').style.visibility = 'visible'; document.getElementById('describe').style.display = 'block'; document.getElementById('capabilities').style.display = 'block';document.getElementById('accueil').style.display = 'none'; document.getElementById('map').style.display = 'block';" />               
+               onclick="document.getElementById('reinitialiser').style.visibility = 'hidden'; document.getElementById('mapid').style.visibility = 'hidden'; document.getElementById('processes').options[0].selected = 'selected'; document.getElementById('wps').style.display = 'block'; document.getElementById('wps').style.visibility = 'visible';document.getElementById('wrapper').style.visibility = 'visible'; document.getElementById('describe').style.display = 'block'; document.getElementById('capabilities').style.display = 'block';document.getElementById('accueil').style.display = 'none'; document.getElementById('map').style.display = 'block';" />               
                
                
       </form>
 
-	<form id="map" style="display:none">
-        <input type="button" value="Retour Map"
-               onclick="initConfig(2);" />
-      </form>
           
 
-	<div id="html
-" style="visibility:hidden">
+	<div id="html" style="visibility:hidden">
 
 
 
@@ -246,20 +247,21 @@
 
 </div>
 
-
-	<div id="configmap" style="visibility:hidden">
-
+	<div id="htmlfavwms" style="visibility:hidden">
 
 
-		<input type='button' name='affichemap'  id='affichemap' value="Afficher" >
+
 </div>
+
+
+
 
 
 	<div id="wpsexe" style="visibility:hidden">
 	
 	<!--  affiche divname -->
 	
-				<input type='button' name='wpsexe'  id='wpsexe' value="Executer" >
+				<input type='button' name='wpsexe'  id='wpsexe' value="Executer" onclick="executeLaunch(); document.getElementById('retour').style.display = 'none';document.getElementById('retour').style.visibility = 'hidden'; document.getElementById('choix').style.display = 'none';" >
 </div>
 
 
@@ -390,7 +392,7 @@
   		</form>
 
 					<form id="processDescription" style="display:none">
-			 <input type="button" id="next" value="Add" onclick="initConfig(5);" />	<br />	
+			 <input type="button" id="next" value="Add" onclick="addfavwps();  " />	<br />	
 			 	<div class="wps-container" id="processDescriptionDiv" style="visibility:hidden">
 				<textarea rows="20" cols="100" id="processDescriptionText">empty</textarea>
 				
@@ -405,6 +407,9 @@
 <form name="wfsfavform" id="wfsfavform" style="display:none">
      <SELECT NAME="wfsfav" id="wfsfav" onChange='wfsFav();'>
 		<OPTION VALUE="">Choisir un favori WFS
+		<OPTION VALUE="http://geoserver.ics.perm.ru/geoserver/ows?^tasmania_state_boundaries">http://geoserver.ics.perm.ru/geoserver//ows?^topp:tasmania_state_boundaries
+		<OPTION VALUE="http://geoserver.ics.perm.ru/geoserver/ows?^topp:states">http://geoserver.ics.perm.ru/geoserver//ows?^topp:states
+		<OPTION VALUE="https://geobretagne.fr/geoserver/ows?^dreal_b:stationnement_littoral">https://geobretagne.fr/geoserver//ows?^dreal_b:stationnement_littoral
 		</SELECT>  
     </form>
 
@@ -417,11 +422,21 @@
 			<OPTION VALUE="https://portail.indigeo.fr/geoserver/LETG-BREST/wfs?^raster">https://portail.indigeo.fr/geoserver/LETG-BREST/wfs?^raster
 <!-- 		<OPTION VALUE="https://portail.indigeo.fr/geoserver/LETG-BREST/wfs?^Activites_Nautiques_encadrees_RDB">https://portail.indigeo.fr/geoserver/LETG-BREST/wfs?^Activites_Nautiques_encadrees_RDB
 		<OPTION VALUE="https://portail.indigeo.fr/geoserver/LETG-BREST/wfs?^menir281">https://portail.indigeo.fr/geoserver/LETG-BREST/wfs?^menir281 -->
-		
-		
-		
 		</SELECT>  
     </form>
+    
+    <form name="wpsfavform" id="wpsfavform" style="display:none">
+     <SELECT NAME="wpsfav" id="wpsfav" onChange='initConfig(11);'>
+		<OPTION VALUE="">Choisir un favori WPS
+		</SELECT>  
+    </form>
+    
+    
+
+	<div id="configmap" style="visibility:hidden">
+
+		<input type='button' name='affichemap'  id='affichemap' value="Afficher" onclick="initConfig(2);" >
+</div>
 
 
 	<form name="formu" id="listeWFS" style="display:none"> 
@@ -507,7 +522,7 @@
   </form>
   
 
-    <div id="mapid" style="visibility:hidden">
+    <div id="mapid" style="visibility:visible">
     </div>
     
     
@@ -521,7 +536,8 @@
 			</div>
 </form>
 
-
+    <input id="reinitialiser" type="button" style="visibility:visible" value="reinitialiser map OSM"
+           onclick="printFond();" />
 
 	   
 	   	    <!-- import du code javascript fichiers config et WSAPI-->
