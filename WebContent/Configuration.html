@@ -178,8 +178,6 @@
                </form>
 
 
-<div class="divS" id="divS" ></div>
-<div class="divSlider" id="divSlider" ></div>
 
 		<form id="slider" style="display:none">
     <div id="js-example-change-attributes">
@@ -208,7 +206,7 @@
 
 	<form id="accueil" style="display:block">
         <input type="button" value="ConfigMap"
-               onclick="document.getElementById('reinitialiser').style.visibility = 'hidden'; document.getElementById('mapid').style.visibility = 'hidden'; document.getElementById('wmsfavform').style.display = 'block'; document.getElementById('wfsfavform').style.display = 'block'; document.getElementById('accueil').style.display = 'none'; document.getElementById('map').style.display = 'block';" />
+               onclick="document.getElementById('listecouchemap').style.display = 'block'; document.getElementById('reinitialiser').style.visibility = 'hidden'; document.getElementById('mapid').style.visibility = 'hidden'; document.getElementById('wmsfavform').style.display = 'block'; document.getElementById('wfsfavform').style.display = 'block'; document.getElementById('accueil').style.display = 'none'; document.getElementById('map').style.display = 'block';" />
                
       <input type="button" value="WPS"
                onclick="document.getElementById('reinitialiser').style.visibility = 'hidden'; document.getElementById('mapid').style.visibility = 'hidden';document.getElementById('retour').style.display = 'none'; document.getElementById('wpsfavform').style.display = 'block'; document.getElementById('accueil').style.display = 'none'; document.getElementById('map').style.display = 'block'; document.getElementById('wps').style.visibility = 'visible';" />   
@@ -234,9 +232,10 @@
 <form name="wfsfavform" id="wfsfavform" style="display:none">
      <SELECT NAME="wfsfav" id="wfsfav" onChange='wfsFav();'>
 		<OPTION VALUE="">Choisir un favori WFS
-		<OPTION VALUE="http://geoserver.ics.perm.ru/geoserver/ows?^tasmania_state_boundaries">http://geoserver.ics.perm.ru/geoserver//ows?^topp:tasmania_state_boundaries
-		<OPTION VALUE="http://geoserver.ics.perm.ru/geoserver/ows?^topp:states">http://geoserver.ics.perm.ru/geoserver//ows?^topp:states
 		<OPTION VALUE="https://geobretagne.fr/geoserver/ows?^dreal_b:stationnement_littoral">https://geobretagne.fr/geoserver//ows?^dreal_b:stationnement_littoral
+		<OPTION VALUE="http://geoserver.ics.perm.ru/geoserver/ows?^topp:tasmania_state_boundaries">http://geoserver.ics.perm.ru/geoserver//ows?^topp:tasmania_state_boundaries
+			<OPTION VALUE="http://geoserver.ics.perm.ru/geoserver/ows?^topp:tasmania_roads">http://geoserver.ics.perm.ru/geoserver//ows?^topp:tasmania_roads
+		<OPTION VALUE="http://geoserver.ics.perm.ru/geoserver/ows?^topp:states">http://geoserver.ics.perm.ru/geoserver//ows?^topp:states
 		</SELECT>  
     </form>
 
@@ -258,6 +257,8 @@
 		</SELECT>  
     </form>
     
+<div class="divS" id="divS" ></div>
+<div class="divSlider" id="divSlider" ></div>
 
 
 
@@ -398,6 +399,7 @@
 			 <input type="button" id="next" value="Add" onclick="addfavwps();  " />	<br />	
 			 	<div class="wps-container" id="processDescriptionDiv" style="visibility:hidden">
 				<textarea rows="20" cols="100" id="processDescriptionText">empty</textarea>
+				
 			</div>
 			 </form>
  
@@ -418,14 +420,14 @@
 
 
 	<form name="formu" id="listeWFS" style="display:none"> 
-		Ajouter site
+		<br> Ajouter site
 		<input type='text' name='newWfsAdresse'  id='newWfsAdresse' value="https://geobretagne.fr/geoserver/dreal_b/ows?" style="width:500px;" >
 		<input type="button" id="verifaddwfs" value="Verification Adresse" onclick="verificationWFS();" />
 		    <div id="verificationRunningWfs" style="visibility:hidden">
         verification
     	</div>
     	
-    	<br>
+    	
  <SELECT NAME="wfsformat" id="wfsformat" onChange='setFormatWFS(this.value);'>
 	<OPTION VALUE="application/json">application/json
 	<OPTION VALUE="text/xml">text/xml
@@ -456,14 +458,14 @@
 	  
 	  
 	 	<form name="formuwms" id="listeWMS" style="display:none"> 
-		Ajouter site
+		<br>Ajouter site
 		<input type='text' name='newWmsAdresse'  id='newWmsAdresse' value="https://portail.indigeo.fr/geoserver/LETG-BREST/wfs?" style="width:500px;" >
 		<input type="button" id="verifaddwms" value="Verification Adresse" onclick="verificationWMS();" />
 		    <div id="verificationRunningWms" style="visibility:hidden">
         verification
     	</div>
     	
-    	<br>
+    	
 		 <SELECT NAME="wmsformat" id="wmsformat" onChange='setFormatWMS(this.value);'>
 			<OPTION VALUE="jpeg">jpeg
 			<OPTION VALUE="png">png
@@ -475,6 +477,7 @@
 			<OPTION VALUE="">Choisir un site
 			<OPTION VALUE="http://129.206.228.72/cached/osm?"> http://129.206.228.72/cached/osm?
 			<OPTION VALUE="https://geobretagne.fr/geoserver/ows?">https://geobretagne.fr/geoserver/ows?
+				<OPTION VALUE="http://inspire.cadastre.gouv.fr/scpc/29019.wms?">http://inspire.cadastre.gouv.fr/scpc/29019.wms?
 		</SELECT>
 		<br>
 
@@ -490,9 +493,8 @@
 	  
 	  
 	  
-  <form id="zone" style="display:none">
-  
-  </form>
+  <div id="listecouchemap" style="display:none">
+  </div>
 
   <form id="resultat" style="display:block">
   <!--  <input type="button" value="Execute"
@@ -515,7 +517,7 @@
 </form>
 
     <input id="reinitialiser" type="button" style="visibility:visible" value="reinitialiser map OSM"
-           onclick="printFond();" />
+           onclick="mapinit(1);" />
 
 	   
 	   	    <!-- import du code javascript fichiers config et WSAPI-->

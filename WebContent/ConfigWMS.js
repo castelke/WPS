@@ -47,7 +47,7 @@ function recuperationCoucheWms(c){
 	//innermap = document.getElementById("mapid").innerHTML;
 	
 	if((document.getElementById('wfsfavform').style.display == 'block') && (document.getElementById('wmsfavform').style.display == 'block')){
-		appelWMS();
+		//appelWMS();
 		printWMS();
 	}
 	//document.getElementById("mapid").innerHTML = "";
@@ -210,7 +210,7 @@ function addfavwms() {
 	
 	
 	
-	//alert(adressewms + "^" + couchewms);
+	alert(adressewms + "^" + couchewms);
 	
 	//alert(d.options[d.length-1].text);
 
@@ -224,6 +224,12 @@ function addfavwms() {
 
 
 function verificationWMS(){
+	
+	var d = document.formuwms.wms;
+	var newurl = document.getElementById("newWmsAdresse").value;
+	
+	if(!((d.options[d.length-1].text).includes(newurl)))
+	{
 	document.getElementById("verificationRunningWms").style.visibility = "visible";
 	    $.ajax({
 	        type: "GET",
@@ -238,6 +244,11 @@ function verificationWMS(){
 	        },
 	        async: true
 	    });
+	    
+	}
+	else{
+		alert("url identique")
+	}
 }
 
 function wmsFav(){
@@ -262,7 +273,7 @@ function wmsFav(){
 	//alert(strOut);
 	setCoucheWMS(strOut);
 
-	adressewms = adressewms.substr(0, adressewms.length-6)
+	adressewms = adressewms.substr(0, adressewms.length-4)
 	//alert(adressewfs);
 	adressewms =  adressewms + "/" + strOutNS + "/ows?";
 	setAdresseWMS(adressewms);
@@ -270,7 +281,7 @@ function wmsFav(){
 	
 	
 	if((document.getElementById('wfsfavform').style.display == 'block') && (document.getElementById('wmsfavform').style.display == 'block')){
-	appelWMS();
+	//appelWMS();
 	printWMS();
 	}
 	
@@ -308,6 +319,9 @@ function wmsFav(){
 
 function addOptionsWms()
 {
+	
+	
+	var d = document.formuwms.wms;
 	var List = document.getElementById("wms");
 	var elOption = new Array(
                     new Option(document.getElementById("newWmsAdresse").value, document.getElementById("newWmsAdresse").value, false, false)
@@ -320,7 +334,12 @@ function addOptionsWms()
 	{
 		List.options.add(elOption[i]);
 	}
+	
 	document.getElementById("verificationRunningWms").style.visibility = "hidden";
+
+	
+	document.getElementById('wms').options[d.length-1].selected = 'selected';
+
 }
 
 function addwms() {
@@ -338,7 +357,7 @@ function addwms() {
     
 	url = adressewms + 'service=WMS&request=GetCapabilities';
 	
-	
+	alert(url);
 	//alert(adressewms);
 	
 	

@@ -161,7 +161,7 @@ function telecharger() {
 	
   //  var url = adresseWFS.value + "REQUEST=getFeature&service=wfs&outputFormat=" + "shape-zip" /*formatwfs*/ + "&typename=" + coucheWFS.value;
    // var url = adressewfs + "REQUEST=getFeature&service=wfs&outputFormat=" + "shape-zip" + "&typename=" + couchewfs;
-    
+    //alert(url);
     
     window.open(url);
     //si le format est un zip j'ouvre la fenêtre qui propose le téléchargement

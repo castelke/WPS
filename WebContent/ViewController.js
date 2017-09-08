@@ -21,7 +21,9 @@
 			document.getElementById('accueil').style.display = 'block';
 			
 			//tout le reste = none ou hidden
-			document.getElementById('wrapper').style.visibility = 'hidden';
+			//document.getElementById('wrapper').style.visibility = 'hidden';
+			document.getElementById('wrapper').style.display = 'none';
+			
 			
 			document.getElementById('mapid').style.visibility = 'visible';
 			document.getElementById('map').style.display = 'none';
@@ -36,9 +38,7 @@
 			document.getElementById('wps').style.display = 'none';
 			
 			
-			document.getElementById('configmap').style.visibility = 'hidden';
-			
-			document.getElementById('wpsexe').style.visibility = 'hidden';
+			document.getElementById('wpsexe').style.display = 'none';
 			
 			document.getElementById('listeWFS').style.display = 'none';
 			document.getElementById('wfsfavform').style.display = 'none';
@@ -52,8 +52,11 @@
 			
 			document.getElementById('reinitialiser').style.visibility = 'visible';
 			
+	    	document.getElementById("listecouchemap").style.display = "none";
 			
-			
+	    	document.getElementById('wfsfav').options[0].selected = 'selected';
+	    	document.getElementById('wmsfav').options[0].selected = 'selected';
+	    	
 			
 		}
 		
@@ -61,7 +64,9 @@
 		
 		else if (a==3){
 			//document.location.href = 'ConfigWPS.html';
-			document.getElementById('wrapper').style.visibility = 'hidden';
+			//document.getElementById('wrapper').style.visibility = 'hidden';
+			document.getElementById('wrapper').style.display = 'none';
+
 			document.getElementById('divName').style.visibility = 'hidden';
 			document.getElementById('accueil').style.display = 'block';
 			document.getElementById('choix').style.display = 'none';
@@ -185,6 +190,7 @@
 	    	 }
 	    	 
 	    	 
+	    	 
 		
 	}
 		
@@ -197,7 +203,7 @@
 	    	document.getElementById("choix").style.display = "block";
 	    	document.getElementById("slider").style.display = "none";
 	    	document.getElementById('mapid').style.visibility='hidden';
-	    	document.getElementById("zone").style.display = "none";
+	    	document.getElementById("listecouchemap").style.display = "none";
 	    	document.getElementById("listeWFS").style.display = "none";
 	    	document.getElementById("info").style.display = "none";
 	    	document.getElementById("reinit").style.display = "none";
@@ -250,26 +256,22 @@
 	    	document.getElementById('mapid').style.visibility='visible';
 	    	document.getElementById("retour").style.display = "block";
 	    	document.getElementById('reinit').style.display = "block";
-	    	document.getElementById("zone").style.display = "block";
+	    	document.getElementById("listecouchemap").style.display = "none";
 	    	document.getElementById("info").style.display = "none";
 	    	document.getElementById("wfsfavform").style.display = "block";
 	    	document.getElementById('mapid').style.visibility='hidden';
 	    	
 		}
 		else if (a==10){
-	    	document.getElementById("zone").style.display = "block";
-	    	document.getElementById("zone").style.display = "block";
-	    	document.getElementById("zone").style.display = "block";
-	    	document.getElementById("zone").style.display = "block";
-	    	document.getElementById("zone").style.display = "block";
-	    	document.getElementById("zone").style.display = "block";
+	    	document.getElementById("listecouchemap").style.display = "none";
+
 		}
 		else if (a==11){
 			
 			document.getElementById("info").style.display = "none";
 	    	document.getElementById("processDescription").style.display = "none";
 	    	document.getElementById("execute").style.display = "block";
-	    	document.getElementById('wpsexe').style.visibility = 'visible';
+	    	document.getElementById('wpsexe').style.display = 'block';
 	    	document.getElementById("slider").style.display = "none";
 	    	document.getElementById('divName').style.visibility='hidden';
 	    	document.getElementById("divSlider").style.display = "block";
@@ -290,9 +292,112 @@
 	    	}
 	    	var i=0;
 	    	var listeInputs = "";
+	    	
+	    	document.getElementById('wpsfav').options[0].selected = 'selected';
+	    	
 	    	while (i<inputnbr){
-	    		listeInputs +=  idInputs[i]  +"=" + inputValue[i] +";" ;
-	    		document.getElementById("divSlider").innerHTML += idInputs[i] + "<br>" + inputValue[i] + "<br><br>";
+	    		if ($('#wfsfavform2').length > 0) { 
+	    			//complex data
+	    		var d = document.wfsfavform2.wfsfav;
+	    		//alert(d.value);
+	    		
+	    		//alert(d.options[0].selected);
+				    		if(d.options[0].selected == 'true'){
+				    			
+				    			//alert(document.getElementById("1" +i + "0"));
+				    			
+				    			
+				    			if ($('#1' +i + '0').length > 0) { 
+					    			if(document.getElementById("1" +i + "0").checked){
+					    				//alert("fixed");
+					    				
+					    			}
+					    			//if user
+					    			else {
+					    				//alert("user");
+					    				
+					    			}
+				    		}
+				    			
+				    			
+				    			
+				    			
+				    			
+				    			//si favori wps pas selectionné
+					    		listeInputs +=  idInputs[i]  +"=" + inputValue[i] +";" ;
+					    		document.getElementById("divSlider").innerHTML += idInputs[i] + "<br>" + inputValue[i] + "<br>";
+				    		}
+				    		
+				    		else{
+				    			//si pas favori wps selectionné
+				    			document.getElementById("divSlider").innerHTML += idInputs[i] + "<br>" + d.value + "<br>";
+				    			
+				    			
+				    			
+				    			
+				    			
+				    		}
+				    }
+	    		
+	    		
+	    		else{
+	    			
+	    			//if user selected
+	    			//if fixed
+	    			//alert(document.getElementById("1" +i + "0"));
+	    			
+	    			//alert("test add");
+	    			//alert("input"+i);
+	    			
+	    			if ($('#1' +i + '0').length > 0) { 
+	    				
+	    			//alert(i+"ok");
+	    				
+	    			if(document.getElementById("2" +i + "0").checked){
+	    		//	alert("2");
+			    		listeInputs +=  idInputs[i]  +"=" + inputValue[i] +";" ;
+			    		//alert(inputValue[i]);
+	    				document.getElementById("divSlider").innerHTML += idInputs[i] + "<br>" + "<textarea type='text' name='text" + i + "'  id='text" + i + "'  style='width:250px;height:15px;' value='"+inputValue[i]+"'>"+inputValue[i]+"</textarea><br>" ;
+	    				
+	    			//document.getElementById('text' + i + '').value = inputValue[i];
+	    				
+	    				//inputValue
+	    			}
+	    			else{
+	    				//alert("1");
+    					listeInputs +=  idInputs[i]  +"=" + inputValue[i] +";" ;
+    			    	document.getElementById("divSlider").innerHTML += idInputs[i] + "<br>" + inputValue[i] + "<br>";
+	    			}
+	    			
+	    			
+	    			}
+	    			//if user
+	    			else {
+	    				
+	    				if ($('#1' +i + '0').length > 0) { 
+	    					//alert("3");
+		    				listeInputs +=  idInputs[i]  +"=" + inputValue[i] +";" ;
+		    				document.getElementById("divSlider").innerHTML += idInputs[i] + "<br>" + "<textarea type='text' name='myInputs[" + i + "]'  id='myInputs[" + i + "]'  style='width:250px;height:15px;' value='"+inputValue[i]+"'></textarea><br>" ;
+		    			}
+	    				else{
+	    					//alert("4");
+	    					listeInputs +=  idInputs[i]  +"=" + inputValue[i] +";" ;
+	    			    	document.getElementById("divSlider").innerHTML += idInputs[i] + "<br>" + inputValue[i] + "<br>";
+	    					
+	    					
+	    				}
+	    				
+	    				
+	    			}
+	    			
+	    			
+	    			//alert()
+	    			
+	    			//si literal data
+		    	//	listeInputs +=  idInputs[i]  +"=" + inputValue[i] +";" ;
+		    	//	document.getElementById("divSlider").innerHTML += idInputs[i] + "<br>" + inputValue[i] + "<br>";
+	    		}
+	    		
 	    		i=i+1;
 	    	}
 		

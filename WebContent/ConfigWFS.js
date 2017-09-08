@@ -230,6 +230,62 @@ function handleJson(data) {
 	
 }
 
+
+
+
+
+function handleJson2(data) {
+	response = (new XMLSerializer()).serializeToString(data);
+	//alert(response);
+	var parser = new DOMParser();
+	var xml = parser.parseFromString(response, "text/xml");
+	wpsResponse = xmlToJson(xml) ;
+	//alert (JSON.stringify(wpsResponse));
+ /*   L.geoJson(data, {
+        onEachFeature: onEachFeature,
+        pointToLayer: function (feature, latlng) {
+            return L.circleMarker(latlng, geojsonMarkerOptions);
+            //return L.marker(latlng);
+        }
+    }).addTo(map);*/
+	//alert( adressewfs.substring(0,adressewfs.length-1));
+	
+	if((document.getElementById('wfsfavform').style.display == 'none') || (document.getElementById('wmsfavform').style.display == 'none')){
+	
+	
+	var myTextArea = document.getElementById('myInputs[00]');
+	
+	
+	//myTextArea.innerHTML = response;
+	
+	var defaultParameters = {
+		    service: 'WFS',
+		    version: '1.0.0',
+		    request: 'GetFeature',
+		    typeName: couchewfs,
+		    maxFeatures: 1,
+		    //outputFormat: 'text/javascript',
+		//	outputFormat: formatwfs,
+		//    jsonCallback: 'jsonp'
+		  //  format_options: 'callback: getJson'
+
+		};
+		var parameters = L.Util.extend(defaultParameters);
+		var wfsrequest = adressewfs.substring(0,adressewfs.length-1) + L.Util.getParamString(parameters);
+	//alert(currentIndex);
+		
+		
+	//	alert(currentIndex.substring(0,currentIndex.length-1));
+		
+	//alert(idInputs[0] + '=@xlink:href='+wfsrequest+'@method=POST@mimeType=text/xml@encoding=UTF-8@outputFormat='+ formatwfs+ ';');
+	myTextArea.innerHTML =  idInputs[0] + '=@xlink:href='+wfsrequest+'@method=POST@mimeType=text/xml@encoding=UTF-8@outputFormat='+ formatwfs+ ';';
+	
+	}
+	
+	
+}
+
+
 function addfavwfs() {
 	
 	
@@ -238,7 +294,9 @@ function addfavwfs() {
 	formatwfs =  $('#wfsformat :selected').text();
 	
 	var d=document.wfsfavform.wfsfav;
-
+	
+	
+	
 	
 	//for (i=0;i=i+1;i)
 	// alert($(xml).find("Name",9).text());
@@ -252,10 +310,25 @@ function addfavwfs() {
 		d.options[d.length-1].text = adressewfs + "^" + couchewfs;
 	}
 	
+	
+	
+	
+	
+	
+	
+	
 }
 
 
+
 function verificationWFS(){
+	
+
+	var d = document.formu.wfs;
+	var newurl = document.getElementById("newWfsAdresse").value;
+	
+	if(!((d.options[d.length-1].text).includes(newurl)))
+	{
 	document.getElementById("verificationRunningWfs").style.visibility = "visible";
 	    $.ajax({
 	        type: "GET",
@@ -270,6 +343,105 @@ function verificationWFS(){
 	        },
 	        async: true
 	    });
+	}
+	else{
+		alert("url identique")
+	}
+
+}
+
+function wfsFav2(){
+	
+//	if ($('document.wfsfavform2.wfsfav').length > 0) {
+//	alert("ok");
+	var d = document.wfsfavform2.wfsfav;
+	//}
+	
+	
+	//var d2 = document.wfsfavform2.wfsfav;
+	
+	//var d = document.divId1.wfsfavform2.wfsfav;
+	
+	adrcouche = d.value;
+	
+    //alert(adrcouche); 
+	
+	str =  adrcouche.indexOf('^');
+	
+	
+    
+    
+    
+    strOut = adrcouche.substr(str+1);
+	strOutNS = adrcouche.substr(0,str);
+
+    setCoucheWFS(strOut);
+    setAdresseWFS(strOutNS);
+    //get the index of the start of the part of the URL we want to keep
+    
+
+    
+    index  = couchewfs.indexOf(':');
+
+    //then get everything after the found index
+    strOut = couchewfs.substr(index+1);
+    strOutNS = couchewfs.substr(0,index);
+
+    
+	//alert(strOutNS.length);
+	setCoucheWFS(strOut);
+	//alert("adresse  " + adressewfs);
+	adressewfs = adressewfs.substr(0, adressewfs.length-4);
+	//alert(adressewfs);
+	adressewfs =  adressewfs + "/" + strOutNS + "/ows?";
+	
+	//alert("couche " + couchewfs);
+	setAdresseWFS(adressewfs);
+	//alert("adresse  " + adressewfs);
+	
+	if((document.getElementById('wfsfavform').style.display == 'block') && (document.getElementById('wmsfavform').style.display == 'block')){
+		appelWFS();
+		printWFS();
+	}
+	data = adressewfs + "^" +couchewfs; 
+	//handleJson2(data); 
+	
+	
+	//var myTextArea = document.getElementById('myInputs[' +'00'+   ']');
+	
+	
+		
+	//	alert(currentIndex.substring(0,currentIndex.length-1));
+	//myTextArea.innerHTML =  d.value;
+	
+	//alert(adressewfs);
+	//alert(couchewfs);
+	
+	
+    $.ajax({
+        type: "GET",
+        url: adressewfs,
+        data : {
+    	    service: 'WFS',
+    	    request: 'GetFeature',
+    	    typeName: couchewfs,
+    	    maxFeatures: 1
+        },
+        cache: false,
+	    success: function(data) {
+	    	handleJson2(data); 
+        },
+        error: function () {
+        	setTimeout(timeout, 2000);
+        },
+        async: true
+    });
+	
+	
+    if($("#checktelecharger").is(':checked')){
+        telecharger();
+    }
+    
 }
 
 function wfsFav(){
@@ -295,12 +467,12 @@ function wfsFav(){
 	setCoucheWFS(strOut);
 
 	adressewfs = adressewfs.substr(0, adressewfs.length-6)
-	//alert(adressewfs);
+	
 	adressewfs =  adressewfs + "/" + strOutNS + "/ows?";
 	setAdresseWFS(adressewfs);
-	
+	//alert(adressewfs);
 	if((document.getElementById('wfsfavform').style.display == 'block') && (document.getElementById('wmsfavform').style.display == 'block')){
-		appelWFS();
+		//appelWFS();
 		printWFS();
 	}
 	
@@ -335,6 +507,7 @@ function wfsFav(){
 
 function addOptionsWfs()
 {
+	var d = document.formu.wfs;
 	var List = document.getElementById("wfs");
 	var elOption = new Array(
                     new Option(document.getElementById("newWfsAdresse").value, document.getElementById("newWfsAdresse").value, false, false)
@@ -348,6 +521,7 @@ function addOptionsWfs()
 		List.options.add(elOption[i]);
 	}
 	document.getElementById("verificationRunningWfs").style.visibility = "hidden";
+	document.getElementById('wfs').options[d.length-1].selected = 'selected';
 }
 
 function addwfs() {

@@ -2,28 +2,52 @@
     var wmsLayer;
     var wfsLayer;
     var fond;
-
+    var currentMap;
+    var reprintmap =0;
     
-    var map = L.map('mapid',{drawControl: true}).setView([48.39975, -4.49938], 12);
-    var drawnItems = new L.FeatureGroup();
-   // map.addLayer(drawnItems);
-    var drawControl = new L.Control.Draw({
-        edit: {
-            featureGroup: drawnItems
-        }
-    });
-   //map.addControl(drawControl);
+    window.onload = mapinit(0);
+    
+   function mapinit(n){
+    	
+	   
+		if (n==0){
+		    map = L.map('mapid',{drawControl: true}).setView([48.39975, -4.49938], 12);
+		    drawnItems = new L.FeatureGroup();
+		   // map.addLayer(drawnItems);
+		    drawControl = new L.Control.Draw({
+		        edit: {
+		            featureGroup: drawnItems
+		        }
+		    });
+		   //map.addControl(drawControl);
+		    
+		    
+		    printFond();
+		
+		    //reglage de l'opacite
+		     higherOpacity = new L.Control.higherOpacity();
+		    map.addControl(higherOpacity);
+		     lowerOpacity = new L.Control.lowerOpacity();
+		    map.addControl(lowerOpacity);
+		     opacitySlider = new L.Control.opacitySlider();
+		    map.addControl(opacitySlider);
+		}
+		
+		else if(n==1){
+			map.off();
+			map.remove();
+			mapinit(0);
+			document.getElementById('listecouchemap').innerHTML ="";
+			nbcouchemap=0;
+		}
+		else{
+			map.off();
+			map.remove();
+			mapinit(0);
+		}
+    }
     
     
-    printFond();
-
-    //reglage de l'opacite
-    var higherOpacity = new L.Control.higherOpacity();
-    map.addControl(higherOpacity);
-    var lowerOpacity = new L.Control.lowerOpacity();
-    map.addControl(lowerOpacity);
-    var opacitySlider = new L.Control.opacitySlider();
-    map.addControl(opacitySlider);
 
     function printFond() {
         fond = buildMap();
@@ -55,3 +79,34 @@
             //affichage de la couche WMS
             wfsLayer.addTo(map);
         }
+        
+       
+        
+   function reprint(){
+        	
+	   var i=0;
+	   reprintmap =1;
+       mapinit(2);
+        	
+        	
+        for (i=0; i<nbcouchemap;i++){
+        		
+        	if(document.getElementById("c" + i).checked){
+        	/*alert(couchemap[i]);
+        	alert(adressemap[i]);
+        	alert(formatmap[i]);*/
+        			
+        	if (formatmap[i].indexOf("json")>=0){
+        		setCoucheWFS(couchemap[i]);
+            	setAdresseWFS(adressemap[i]);
+            	printWFS();
+        	}
+        	else{
+        		setCoucheWMS(couchemap[i]);
+            	setAdresseWMS(adressemap[i]);
+        		printWMS();
+        		}
+        	}
+        }
+       	reprintmap =0;
+   }

@@ -181,7 +181,7 @@ function executeLaunch() {
 	}
 
 	var outputGenerator = new OutputGenerator();
-	var outputTab= new Array();;				
+	var outputTab= new Array();				
 	for (var outputIndex in processDescription.processOffering.process.outputs)	{
 		var currentOutput = processDescription.processOffering.process.outputs[outputIndex];
 		
@@ -204,6 +204,14 @@ function executeLaunch() {
 		i=i+1;
 	}
 	
+	
+	//alert(identifier);
+	//alert(listeInputs);
+	// window.open(adresseWps+ "Service=WPS&Version="+ versionWps + "&Request=Execute&Identifier="+ identifier + "&Datainputs="+listeInputs);
+	 
+	 
+	 
+	 
 //	alert(listeInputs);
 	
 	    $.ajax({
@@ -221,7 +229,8 @@ function executeLaunch() {
 	        cache: false,
 	      //  success : executeCallback,
 	        success: function(data) {
-	        	executeCallback(data);
+	        	
+	        	executeCallback(data, this.url);
 	        },
 	        error: function () {
 	        	setTimeout(timeout, 2000);
@@ -246,9 +255,34 @@ var executeCallback =function(response) {
 
 }*/
 
+var Download = 
+{
+    click : function(node) {
+        var ev = document.createEvent("MouseEvents");
+        ev.initMouseEvent("click", true, false, self, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
+        return node.dispatchEvent(ev);
+    },
+    encode : function(data) {
+            return 'data:application/octet-stream;base64,' + btoa( data );
+    },
+    link : function(data, name){
+        var a = document.createElement('a');
+        a.download = name || self.location.pathname.slice(self.location.pathname.lastIndexOf('/')+1);
+        a.href = data || self.location.href;
+        return a;
+    }
+};
+Download.save = function(data, name)
+{
+    this.click(
+        this.link(
+            this.encode( data ),
+            name
+        )
+    );
+};
 
-
-function executeCallback (data) {
+function executeCallback (data, url) {
 	response = (new XMLSerializer()).serializeToString(data);
 	//alert(response);
 	var parser = new DOMParser();
@@ -262,12 +296,26 @@ function executeCallback (data) {
 	
 	
 	//if (formatwfs.indexOf("json") >= 0){
-	 document.getElementById("divSlider").innerHTML  = "<br>Output : <br><br>" +  processDescription.processOffering.process.outputs[0].title + "<br>" +JSON.stringify(wpsResponse);
+	 //document.getElementById("divSlider").innerHTML  = "<br>Output : <br><br>" +  processDescription.processOffering.process.outputs[0].title + "<br>" +JSON.stringify(wpsResponse);
 /*	}
 	if (formatwfs.indexOf("xml") >= 0){
 		document.getElementById("divSlider").innerHTML  = "<br>Output : <br><br>" +  processDescription.processOffering.process.outputs[0].title + "<br>" +xml;
 	}*/
+	// Download.save(JSON.stringify(wpsResponse),processDescription.processOffering.process.outputs[0].title + ".txt");
+	 //uriContent = "data:application/octet-stream," + encodeURIComponent(content);
+	 //newWindow = window.open(uriContent, processDescription.processOffering.process.outputs[0].title);
+	 
+	 if ($('#30').is(':checked')) {
+		 window.open(url);
+	 }
 
+
+	 if ($('#40').is(':checked')) {
+		 Download.save(JSON.stringify(wpsResponse),processDescription.processOffering.process.outputs[0].title + ".txt");
+	 }
+
+	 
+	 /*
 	 if ($('#40').is(':checked')) {
 		 
 		if (formatwfs.indexOf("json") >= 0){
@@ -279,7 +327,7 @@ function executeCallback (data) {
 		 
 		 uriContent = "data:application/octet-stream," + encodeURIComponent(content);
 		 newWindow = window.open(uriContent, processDescription.processOffering.process.outputs[0].title);
-	 }
+	 }*/
 
 	 
 	 
@@ -501,7 +549,8 @@ var wpsService = new WpsService({
 							newdiv.innerHTML += "<textarea type='text' name='myInputs[" + inputIndex + n + "]'  id='myInputs[" + inputIndex + n + "]'  style='width:250px;height:15px;' value='"+defaultValue[inputIndex]+"'></textarea>" ;
 							newdiv.innerHTML += "fixed  <input type='checkbox' checked='checked' name='1" + inputIndex + n + "' " +"' id='1" + inputIndex + n + "' onclick='checker(1" + inputIndex + n + ",2" + inputIndex + n + ");' />";
 							//newdiv.innerHTML += "<form id='2" +inputIndex + n + "' style='display:none'>";
-							
+							newdiv.innerHTML +=  "user <input type='checkbox' name='2" + inputIndex + n + "' id='2" + inputIndex + n + "' onclick='checker(2" + inputIndex + n + " ,1" + inputIndex + n + ");' />";
+	
 							
 							
 							
@@ -540,7 +589,6 @@ var wpsService = new WpsService({
 						    });
 							
 							
-							newdiv.innerHTML +=  "user <input type='checkbox' name='2" + inputIndex + n + "' id='2" + inputIndex + n + "' onclick='checker(2" + inputIndex + n + " ,1" + inputIndex + n + ");' />";
 							//newdiv.innerHTML += "</form>";
 							if (property == "literalData"){
 								
@@ -561,7 +609,7 @@ var wpsService = new WpsService({
 							}
 							else if (property == "complexData"){
 								
-							//newdiv.innerHTML += '<form name="wfsfavform" id="wfsfavform" style="display:block"> <SELECT NAME="wfsfav" id="wfsfav" onChange="wfsFav();"><OPTION VALUE="">Choisir un favori WFS<OPTION VALUE="http://geoserver.ics.perm.ru/geoserver/ows?^tasmania_state_boundaries">http://geoserver.ics.perm.ru/geoserver//ows?^topp:tasmania_state_boundaries<OPTION VALUE="http://geoserver.ics.perm.ru/geoserver/ows?^topp:states">http://geoserver.ics.perm.ru/geoserver//ows?^topp:states<OPTION VALUE="https://geobretagne.fr/geoserver/ows?^dreal_b:stationnement_littoral">https://geobretagne.fr/geoserver//ows?^dreal_b:stationnement_littoral</SELECT>  </form>';
+							newdiv.innerHTML += '<form name="wfsfavform2" id="wfsfavform2" style="display:block"> <SELECT NAME="wfsfav" id="wfsfav" onChange="wfsFav2();">		<OPTION VALUE="">Choisir un favori WFS<OPTION VALUE="https://geobretagne.fr/geoserver/ows?^dreal_b:stationnement_littoral">https://geobretagne.fr/geoserver//ows?^dreal_b:stationnement_littoral<OPTION VALUE="http://geoserver.ics.perm.ru/geoserver/ows?^topp:tasmania_state_boundaries">http://geoserver.ics.perm.ru/geoserver//ows?^topp:tasmania_state_boundaries<OPTION VALUE="http://geoserver.ics.perm.ru/geoserver/ows?^topp:tasmania_roads">http://geoserver.ics.perm.ru/geoserver//ows?^topp:tasmania_roads<OPTION VALUE="http://geoserver.ics.perm.ru/geoserver/ows?^topp:states">http://geoserver.ics.perm.ru/geoserver//ows?^topp:states</SELECT>  </form>';
 							newdiv.innerHTML += "<input type='button' value='WFS'  id='"+inputIndex+n+"' onclick='initConfig(9);setCurrentIndex(this.id);'><br>";
 							}
 						//	if (response.processOffering.process.inputs[inputIndex].minOccurs==0){
@@ -667,6 +715,9 @@ var wpsService = new WpsService({
 		{
 			d.length++; 
 			d.options[d.length-1].text = adresseWps + "^" + processDescription.processOffering.process.identifier;
+		}
+		else{
+			alert("wps déjà favori");
 		}
 		
 	}
