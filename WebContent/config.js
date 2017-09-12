@@ -9,6 +9,7 @@ var formatwms = 'jpeg';
 var formatwfs = 'json';
 var serviceError;
 var l=0;
+var maptemp=0;
 
 
 //fonction getters et setters des variables adresse et couche

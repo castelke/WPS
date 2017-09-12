@@ -37,16 +37,16 @@ function recuperationCoucheWms(c){
 	setCoucheWMS(strOut);
 	
 	
-	adressewms = adressewms.substr(0, adressewms.length-6)
-	//alert(adressewfs);
+	adressewms = adressewms.substr(0, adressewms.length-10)
+	//alert(adressewms);
 	adressewms =  adressewms + "/" + strOutNS + "/ows?";
-//	alert(adressewfs);
+	//alert(adressewms);
 	setAdresseWMS(adressewms);
 	
 	
 	//innermap = document.getElementById("mapid").innerHTML;
 	
-	if((document.getElementById('wfsfavform').style.display == 'block') && (document.getElementById('wmsfavform').style.display == 'block')){
+	if((((document.getElementById('wfsfavform').style.display == 'block') && (document.getElementById('wmsfavform').style.display == 'block')))||(document.getElementById('mapid').style.visibility == 'visible')){
 		//appelWMS();
 		printWMS();
 	}
@@ -169,7 +169,9 @@ function handleJson(data) {
     }).addTo(map);*/
 	//alert( adressewfs.substring(0,adressewfs.length-1));
 	
-	if((document.getElementById('wfsfavform').style.display == 'none') || (document.getElementById('wmsfavform').style.display == 'none')){
+	if((document.getElementById('wfsfavform').style.display == 'none') && (document.getElementById('wmsfavform').style.display == 'none')){
+		if ($("#myInputs[0]").length === 0){
+		
 	var myTextArea = document.getElementById('myInputs[' +currentIndex+   ']');
 	//myTextArea.innerHTML = response;
 	
@@ -193,6 +195,7 @@ function handleJson(data) {
 		
 	//	alert(currentIndex.substring(0,currentIndex.length-1));
 	myTextArea.innerHTML =  idInputs[currentIndex.substring(0,currentIndex.length-1)] + '=@xlink:href='+wmsrequest+'@method=POST@mimeType=text/xml@encoding=UTF-8@outputFormat='+ formatwms+ ';';
+		}
 }
 }
 function addfavwms() {
@@ -210,7 +213,7 @@ function addfavwms() {
 	
 	
 	
-	alert(adressewms + "^" + couchewms);
+	//alert(adressewms + "^" + couchewms);
 	
 	//alert(d.options[d.length-1].text);
 
@@ -247,7 +250,7 @@ function verificationWMS(){
 	    
 	}
 	else{
-		alert("url identique")
+		//alert("url identique")
 	}
 }
 
@@ -273,14 +276,16 @@ function wmsFav(){
 	//alert(strOut);
 	setCoucheWMS(strOut);
 
-	adressewms = adressewms.substr(0, adressewms.length-4)
+	adressewms = adressewms.substr(0, adressewms.length-4);
 	//alert(adressewfs);
-	adressewms =  adressewms + "/" + strOutNS + "/ows?";
+	adressewms =  adressewms + "" + strOutNS + "ows?";
 	setAdresseWMS(adressewms);
 	//alert(adressewms);
 	
 	
-	if((document.getElementById('wfsfavform').style.display == 'block') && (document.getElementById('wmsfavform').style.display == 'block')){
+	if(((document.getElementById('wfsfavform').style.display == 'block') && (document.getElementById('wmsfavform').style.display == 'block'))||document.getElementById('mapid').style.visibility == 'visible'){
+		
+		
 	//appelWMS();
 	printWMS();
 	}
@@ -357,7 +362,7 @@ function addwms() {
     
 	url = adressewms + 'service=WMS&request=GetCapabilities';
 	
-	alert(url);
+	//alert(url);
 	//alert(adressewms);
 	
 	

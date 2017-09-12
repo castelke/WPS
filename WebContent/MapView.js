@@ -46,6 +46,49 @@
 			mapinit(0);
 		}
     }
+   
+   
+   function maptempinit(n){
+   	
+	   
+		if (n==0){
+		    map2 = L.map('tempid',{drawControl: true}).setView([48.39975, -4.49938], 12);
+		    drawnItems = new L.FeatureGroup();
+		   // map.addLayer(drawnItems);
+		    drawControl = new L.Control.Draw({
+		        edit: {
+		            featureGroup: drawnItems
+		        }
+		    });
+		   //map.addControl(drawControl);
+		    
+		    
+	        fond2 = buildMap();
+	        //affichage de la map OSM
+	        fond2.addTo(map2);
+		
+		    //reglage de l'opacite
+		     higherOpacity = new L.Control.higherOpacity();
+		    map2.addControl(higherOpacity);
+		     lowerOpacity = new L.Control.lowerOpacity();
+		    map2.addControl(lowerOpacity);
+		     opacitySlider = new L.Control.opacitySlider();
+		    map2.addControl(opacitySlider);
+		}
+		
+		else if(n==1){
+			map2.off();
+			map2.remove();
+			maptempinit(0);
+			//document.getElementById('listecouchemap').innerHTML ="";
+			nbcouchemap=0;
+		}
+		else{
+			map2.off();
+			map2.remove();
+			maptempinit(0);
+		}
+   }
     
     
 
@@ -109,4 +152,13 @@
         	}
         }
        	reprintmap =0;
+   }
+   
+   
+   function reprint2(a,c){
+  if (a == "https://geobretagne.fr/geoserver/sdis29/ows?" && c == "acces_difficile_sdis29"){
+	  adressewfs = "https://geobretagne.fr/geoserver/dreal_b/ows?";
+		 couchewfs = "stationnement_littoral";
+	  
+  }
    }

@@ -153,6 +153,8 @@ function executeLaunch() {
 	var inputTab= new Array();
 	setIdentifier(processDescription.processOffering.process.identifier);
 	
+	
+	
 	for (var indexInput in processDescription.processOffering.process.inputs)	{
 		var n=0;
 
@@ -199,7 +201,40 @@ function executeLaunch() {
 	
 	var i=0;
 	
+	/*alert(inputValue[0]);
+	if (inputValue[0].indexOf(adressewfs) >= 0){
+		alert("wfs");
+		
+		
+		
+	}*/
+		
 	while (i<inputnbr){
+		
+		if (inputValue[i].indexOf(adressewfs) >= 0){
+			
+			var defaultParameters = {
+				    service: 'WFS',
+				    version: '1.0.0',
+				    request: 'GetFeature',
+				    typeName: couchewfs,
+				    maxFeatures: 1,
+				    //outputFormat: 'text/javascript',
+				//	outputFormat: formatwfs,
+				//    jsonCallback: 'jsonp'
+				  //  format_options: 'callback: getJson'
+
+				};
+				var parameters = L.Util.extend(defaultParameters);
+				var wfsrequest = adressewfs.substring(0,adressewfs.length-1) + L.Util.getParamString(parameters);
+			
+			inputValue[i] = idInputs[i] + '=@xlink:href='+wfsrequest+'@method=POST@mimeType=text/xml@encoding=UTF-8@outputFormat='+ formatwfs+ ';';	
+			//alert(inputValue[i]);
+			
+		}
+		
+		
+		//alert(idInputs[i]  +"=" + inputValue[i] +";");
 		listeInputs +=  idInputs[i]  +"=" + inputValue[i] +";" ;
 		i=i+1;
 	}

@@ -13,7 +13,7 @@ function appelWMS() {
     couchewms = getCoucheWMS();
     formatwms = getFormatWMS();
     
-    if (reprintmap==0){
+    if ((reprintmap==0)&&(maptemp==0)){
 	    couchemap[nbcouchemap] = couchewms;
 	    adressemap[nbcouchemap] = adressewms;
 	    formatmap[nbcouchemap] = formatwms;
@@ -22,7 +22,7 @@ function appelWMS() {
 	    nbcouchemap++;
     }
     
-//    alert("adresse: " + adresse + "\n" + "couche: " + couche + "\n" + "formatwms: " + formatwms);
+    //alert("adresse: " + adressewms + "\n" + "couche: " + couchewms + "\n" + "formatwms: " + formatwms);
 
     //construction de la couche WMS contenu dans wmsLayer
     wmsLayer = L.tileLayer.wms(adressewms, {
@@ -39,10 +39,9 @@ function appelWFS() {
     adressewfs = getAdresseWFS();
     couchewfs = getCoucheWFS();
     formatwfs = getFormatWFS();
-
     
     
-    if (reprintmap==0){
+    if ((reprintmap==0)&&(maptemp==0)){
 	    couchemap[nbcouchemap] = couchewfs;
 	    adressemap[nbcouchemap] = adressewfs;
 	    formatmap[nbcouchemap] = formatwfs;
@@ -54,7 +53,7 @@ function appelWFS() {
     
     
   // alert("adressewfs: " + adressewfs + "\n" + "couchewfs: " + couchewfs + "\n" + "formatwfs: " + formatwfs);
-
+   reprint2(adressewfs,couchewfs);
     //construction de l'objet WFS contenu dans boundaries
     boundaries = new L.WFS({
         url: adressewfs,

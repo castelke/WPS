@@ -1,6 +1,7 @@
 
 var innermap;
 var status;
+var wfsrequestexecute;
 
 function setInnermap(i) {
 	innermap = i;
@@ -65,15 +66,16 @@ function recuperationCouche(c){
 	adressewfs = adressewfs.substr(0, adressewfs.length-6)
 	//alert(adressewfs);
 	adressewfs =  adressewfs + "/" + strOutNS + "/ows?";
-//	alert(adressewfs);
+	//alert(adressewfs + "^" + couche);
 	setAdresseWFS(adressewfs);
 	
 	
 	//innermap = document.getElementById("mapid").innerHTML;
 	
-	if((document.getElementById('wfsfavform').style.display == 'block') && (document.getElementById('wmsfavform').style.display == 'block')){
-	appelWFS();
+	if((((document.getElementById('wfsfavform').style.display == 'block') && (document.getElementById('wmsfavform').style.display == 'block')))||(document.getElementById('mapid').style.visibility == 'visible')){
+	//appelWFS();
 	printWFS();
+	
 }
 	
 	
@@ -83,64 +85,6 @@ function recuperationCouche(c){
 	
 	
 
-	
-	
-	//alert(document.getElementById("mapid").innerHTML);
-	//var rootUrl = 'http://tomcat.capecodgis.com/geoserver/capecodgis/ows';
-
-/*	var defaultParameters = {
-	    service: 'WFS',
-	    version: '1.0.0',
-	    request: 'GetFeature',
-	    typeName: couchewfs,
-	    maxFeatures: 1,
-	    //outputFormat: 'text/javascript',
-	    jsonCallback: 'jsonp'
-	  //  format_options: 'callback: getJson'
-
-	};
-	
-	var parameters = L.Util.extend(defaultParameters);*/
-//	var wfsrequest = adressewfs.substring(0,adressewfs.length-1) + L.Util.getParamString(parameters);
-	/*
-	var DataInputs = {
-			
-			//https://geobretagne.fr/geoserver/dreal_b/ows?&service=WFS&request=GetFeature&typeName=atlaslitt_3_alea_biblio_lin&maxFeatures=1&_=1504097569937
-			,
-			var features = {
-			xlink:href:	adressewfs.substring(0,adressewfs.length-1) + L.Util.getParamString(parameters)),
-			method:	'POST',
-			mimeType: 'text/xml',
-			encoding: 'UTF-8'
-			};
-
-			
-		};*/
-	
-/*	var features = {
-			xlink: 'href:'+	adressewfs.substring(0,adressewfs.length-1) + L.Util.getParamString(parameters),
-			method:	'POST',
-			mimeType: 'text/xml',
-			encoding: 'UTF-8'
-			};
-	*/
-	
-	
-	
-	
-/*	$.ajax({
-	    url: adressewfs.substring(0,adressewfs.length-1) + L.Util.getParamString(parameters),
-	    dataType: 'jsonp',
-	   // jsonpCallback: 'getJson',
-	   
-	   
-	    success: function(data) {
-	    	alert("success");
-	    	handleJson(data);
-        }
-	
-	
-	});*/
 	
 	
     $.ajax({
@@ -223,8 +167,9 @@ function handleJson(data) {
 		
 		
 	//	alert(currentIndex.substring(0,currentIndex.length-1));
-	myTextArea.innerHTML =  idInputs[currentIndex.substring(0,currentIndex.length-1)] + '=@xlink:href='+wfsrequest+'@method=POST@mimeType=text/xml@encoding=UTF-8@outputFormat='+ formatwfs+ ';';
-	
+	myTextArea.innerHTML =  adressewfs + "^" + couchewfs;
+	wfsrequestexecute = idInputs[currentIndex.substring(0,currentIndex.length-1)] + '=@xlink:href='+wfsrequest+'@method=POST@mimeType=text/xml@encoding=UTF-8@outputFormat='+ formatwfs+ ';';
+
 	}
 	
 	
@@ -278,8 +223,11 @@ function handleJson2(data) {
 	//	alert(currentIndex.substring(0,currentIndex.length-1));
 		
 	//alert(idInputs[0] + '=@xlink:href='+wfsrequest+'@method=POST@mimeType=text/xml@encoding=UTF-8@outputFormat='+ formatwfs+ ';');
-	myTextArea.innerHTML =  idInputs[0] + '=@xlink:href='+wfsrequest+'@method=POST@mimeType=text/xml@encoding=UTF-8@outputFormat='+ formatwfs+ ';';
+	//myTextArea.innerHTML =  idInputs[0] + '=@xlink:href='+wfsrequest+'@method=POST@mimeType=text/xml@encoding=UTF-8@outputFormat='+ formatwfs+ ';';
 	
+		myTextArea.innerHTML =  adressewfs + "^" + couchewfs;
+		wfsrequestexecute = idInputs[0] + '=@xlink:href='+wfsrequest+'@method=POST@mimeType=text/xml@encoding=UTF-8@outputFormat='+ formatwfs+ ';';
+		
 	}
 	
 	
@@ -449,7 +397,7 @@ function wfsFav(){
 	
 	adrcouche =  $('#wfsfav :selected').text();
 
-	
+
 	str =  adrcouche.indexOf('^');
     //alert(str); 
     strOut = adrcouche.substr(str+1);
@@ -471,7 +419,7 @@ function wfsFav(){
 	adressewfs =  adressewfs + "/" + strOutNS + "/ows?";
 	setAdresseWFS(adressewfs);
 	//alert(adressewfs);
-	if((document.getElementById('wfsfavform').style.display == 'block') && (document.getElementById('wmsfavform').style.display == 'block')){
+	if(((document.getElementById('wfsfavform').style.display == 'block') && (document.getElementById('wmsfavform').style.display == 'block'))||document.getElementById('mapid').style.visibility == 'visible'){
 		//appelWFS();
 		printWFS();
 	}

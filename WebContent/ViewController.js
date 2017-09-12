@@ -57,6 +57,11 @@
 	    	document.getElementById('wfsfav').options[0].selected = 'selected';
 	    	document.getElementById('wmsfav').options[0].selected = 'selected';
 	    	
+	    	
+	    	document.getElementById('tempid').style.display = 'none'; 
+	    	 maptemp= 0,
+	    	reprint();
+	    	 
 			
 		}
 		
@@ -99,6 +104,8 @@
 	    	for (var indexInput in processDescription.processOffering.process.inputs)	{
 	    		var n=0;
 	    		while ((n < processDescription.processOffering.process.inputs[indexInput].maxOccurs) && document.getElementById("notused" +indexInput + n).checked){
+	    			
+	    		
 	    			inputValue[inputnbr] = document.getElementById("myInputs[" + indexInput + n+ "]").value;
 	    			idInputs[inputnbr] = processDescription.processOffering.process.inputs[indexInput].identifier;
 	    			inputnbr = inputnbr +1;
@@ -284,10 +291,23 @@
 	    	for (var indexInput in processDescription.processOffering.process.inputs)	{
 	    		var n=0;
 	    		while ((n < processDescription.processOffering.process.inputs[indexInput].maxOccurs) && document.getElementById("notused" +indexInput + n).checked){
+	    			var ok = document.getElementById("myInputs[" + indexInput + n+ "]").value;
+	    			//var fdg = document.getElementById("myInputs[" + indexInput + n+ "]").value;
 	    			inputValue[inputnbr] = document.getElementById("myInputs[" + indexInput + n+ "]").value;
 	    			idInputs[inputnbr] = processDescription.processOffering.process.inputs[indexInput].identifier;
 	    			inputnbr = inputnbr +1;
 	    			n=n+1;
+	    			//alert(inputValue[inputnbr]);
+	    			
+	    			//var fdg = document.getElementById("myInputs[" + indexInput + n+ "]").value;
+	    			//alert(ok);
+	    			
+	    			
+	    			/*if((ok.indexOf(adressewfs) >= 0)){
+	    				document.getElementById("divSlider").innerHTML += idInputs[indexInput] + "<br>" + ok+ "<br>";
+	    			}*/
+
+	    			
 	    		}
 	    	}
 	    	var i=0;
@@ -324,15 +344,50 @@
 				    			
 				    			
 				    			//si favori wps pas selectionné
+				    			
+				    			//alert("3");
 					    		listeInputs +=  idInputs[i]  +"=" + inputValue[i] +";" ;
+					    		if(!(ok.indexOf(adressewfs) >= 0)){
 					    		document.getElementById("divSlider").innerHTML += idInputs[i] + "<br>" + inputValue[i] + "<br>";
+					    		}
+					    		
 				    		}
 				    		
 				    		else{
 				    			//si pas favori wps selectionné
-				    			document.getElementById("divSlider").innerHTML += idInputs[i] + "<br>" + d.value + "<br>";
+				    		
 				    			
+				    			//alert("4");
 				    			
+				    			if ($('#1' +i + '0').length > 0){ 
+					    			if(document.getElementById("1" +i + "0").checked){
+					    				//alert("fixed");
+					    				
+						    			if(!(ok.indexOf(adressewfs) >= 0)){
+							    			document.getElementById("divSlider").innerHTML += idInputs[i] + "<br>" + d.value + "<br>";
+							    			}
+						    			else{
+						    				document.getElementById("divSlider").innerHTML += idInputs[indexInput] + "<br>" + ok+ "<br>";
+
+						    			}
+					    				
+					    				
+					    			}
+					    			//if user
+					    			else {
+					    				//alert("user");
+					    				
+						    			if((ok.indexOf(adressewfs) >= 0)){
+						    				
+						    				document.getElementById("divSlider").innerHTML += idInputs[i] + "<br>" + "<textarea type='text' name='text" + i + "'  id='text" + i + "'  style='width:250px;height:15px;' value='"+inputValue[i]+"'>"+inputValue[i]+"</textarea><br>" ;
+						    				
+							    			//document.getElementById("divSlider").innerHTML += idInputs[i] + "<br>" + d.value + "<br>";
+							    			}
+					    				
+					    			}
+				    			}
+				    			
+			    			
 				    			
 				    			
 				    			
@@ -403,7 +458,27 @@
 		
 			
 		}
+		else if(a==12){
+			
+			l=0;
+
+	    	document.getElementById("processDescription").style.display = "none";
+	    	document.getElementById("execute").style.display = "none";
+	    //	document.getElementById("slider").style.display = "block";
+	    	document.getElementById('divName').style.visibility='hidden';
+	    //	document.getElementById("divSlider").style.display = "block";
+	    	//document.getElementById("retour").style.display = "block";
+	    	document.getElementById("choix").style.display = "none";
+	    	//document.getElementById("wfsConfig").style.display = "block";
+	    	document.getElementById("listeWFS").style.display = "block";
+	    	document.getElementById("retour").style.display = "block";
+	    	document.getElementById('reinit').style.display = "block";
+	    	document.getElementById("listecouchemap").style.display = "none";
+	    	document.getElementById("info").style.display = "none";
+	    	document.getElementById("wfsfavform").style.display = "block";
+	    	
 		
+		}
 		
 		
 	}
