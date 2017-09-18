@@ -313,7 +313,7 @@
 	    	var i=0;
 	    	var listeInputs = "";
 	    	
-	    	document.getElementById('wpsfav').options[0].selected = 'selected';
+	    	//document.getElementById('wpsfav').options[0].selected = 'selected';
 	    	
 	    	while (i<inputnbr){
 	    		if ($('#wfsfavform2').length > 0) { 

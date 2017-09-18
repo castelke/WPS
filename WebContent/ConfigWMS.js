@@ -405,63 +405,18 @@ function addwms() {
 	
     
     
-    
-    
-    
- /*   $http.get(endpoint + 'request=GetCapabilities').
-
-    success(function(data, status, headers, config) {
-
-        // use the tool to parse the data
-        var response = (formatter.read(data));
-
-        // this object contains all the GetCapabilities data
-        var capability = response.capability;
-
-        // I want a list of names to use in my queries
-        for(var i = 0; i < capability.layers.length; i ++){
-            layers.push(capability.layers[i].name);
-        }
-    }).
-
-    error(function(data, status, headers, config) {
-        alert("terrible error logging..");
-    });*/
-//}
-
-
-/*
-function sleep(milliseconds) {
-	  var start = new Date().getTime();
-	  for (var i = 0; i < 1e7; i++) {
-	    if ((new Date().getTime() - start) > milliseconds){
-	      break;
-	    }
-	  }
+function supfavwms(){
+	
+	var wmsfav = ($("#wmsfav option:selected").val());
+	alert(wmsfav);
+	if (wmsfav.includes("Choisir")){
+		
+		
 	}
-
-function filltheselect(liste, choix)
-
-//document.getElementById('couche').style.visibility='visible';
-
-	{switch (liste)
-	 {
-	 case "listeurl":
-	    raz("listecouche");
-	    for (i=0; i<couche[choix].length; i++)
-	       {
-		       new_option = new Option(couche[choix][i][1],couche[choix][i][0]);
-		       document.formu.elements["listecouche"].
-		       options[document.formu.elements["listecouche"].length]=new_option;
-	       }
 	
-	 case "listecouche":
+	else{
+		$("#wmsfav option:selected").remove();
+	}
 	
-	 }
+	
 }
-
-function raz(liste)
-{l=document.formu.elements[liste].length;
-for (i=l; i>=0; i--)
- document.formu.elements[liste].options[i]=null;
-}*/

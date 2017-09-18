@@ -44,7 +44,7 @@
     
     
     <script type="text/javascript" src="js/example.js"></script>
-        <script type="text/javascript" src="ConfigWFS.js"></script>
+
 <title>wps-js example</title>
 <link rel="shortcut icon" href="favicon.ico" />
 </head>
@@ -233,8 +233,10 @@
     
     <form name="wpsfavform" id="wpsfavform" style="display:none">
      <SELECT NAME="wpsfav" id="wpsfav" onChange='initConfig(11);'>
-		<OPTION VALUE="">Choisir un favori WPS
+		<OPTION VALUE="Choisir un favori WPS">Choisir un favori WPS
 		</SELECT>  
+			<input type='button' name='wpsexe'  id='wpsexe' value="Supprimer favori WPS" onclick='supfavwps();'/> <!--         $("#wpsfav option:selected").remove();'/>-->
+	
     </form>
     
 <div class="divS" id="divS" ></div>
@@ -417,14 +419,14 @@
 	
 <br>
 <SELECT NAME="wfs" id="wfs" onChange="addwfs();">
-	<OPTION VALUE="">Choisir un site
+	<OPTION VALUE="Choisir un site">Choisir un site
 	<OPTION VALUE="http://geoserver.ics.perm.ru/geoserver/topp/ows?">http://geoserver.ics.perm.ru/geoserver/ows?
 	<OPTION VALUE="https://geobretagne.fr/geoserver/dreal_b/ows?">https://geobretagne.fr/geoserver/ows?
 </SELECT>
 <br>
 
 <SELECT NAME="wfscouche" id="wfscouche" onChange='recuperationCouche(this.value);'>
-<OPTION VALUE="">Choisir une couche
+<OPTION VALUE="Choisir une couche">Choisir une couche
 </SELECT>
 
 	 <input type="button" value="Ajouter favoris"
@@ -454,7 +456,7 @@
 			
 		<br>
 		<SELECT NAME="wms" id="wms" onChange="addwms();">
-			<OPTION VALUE="">Choisir un site
+			<OPTION VALUE="Choisir un site">Choisir un site
 			<OPTION VALUE="http://129.206.228.72/cached/osm?"> http://129.206.228.72/cached/osm?
 			<OPTION VALUE="https://geobretagne.fr/geoserver/ows?">https://geobretagne.fr/geoserver/ows?
 				<OPTION VALUE="http://inspire.cadastre.gouv.fr/scpc/29019.wms?">http://inspire.cadastre.gouv.fr/scpc/29019.wms?
@@ -462,31 +464,44 @@
 		<br>
 
 		<SELECT NAME="wmscouche" id="wmscouche" onChange='recuperationCoucheWms(this.value);'>
-		<OPTION VALUE="">Choisir une couche
+		<OPTION VALUE="Choisir une couche">Choisir une couche
 		</SELECT>
 		
 	 <input type="button" value="Ajouter favoris"
            onclick="addfavwms();" />
 	  </form>
+	
 	   
 	  <form name="wfsfavform" id="wfsfavform" style="display:none">
      <SELECT NAME="wfsfav" id="wfsfav" onChange='wfsFav();'>
-		<OPTION VALUE="">Choisir un favori WFS
-		<OPTION VALUE="https://geobretagne.fr/geoserver/ows?^dreal_b:stationnement_littoral">https://geobretagne.fr/geoserver//ows?^dreal_b:stationnement_littoral
-		<OPTION VALUE="http://geoserver.ics.perm.ru/geoserver/ows?^topp:tasmania_state_boundaries">http://geoserver.ics.perm.ru/geoserver//ows?^topp:tasmania_state_boundaries
-			<OPTION VALUE="http://geoserver.ics.perm.ru/geoserver/ows?^topp:tasmania_roads">http://geoserver.ics.perm.ru/geoserver//ows?^topp:tasmania_roads
-		<OPTION VALUE="http://geoserver.ics.perm.ru/geoserver/ows?^topp:states">http://geoserver.ics.perm.ru/geoserver//ows?^topp:states
+		<OPTION VALUE="Choisir un favori WFS">Choisir un favori WFS
+		<OPTION VALUE="https://geobretagne.fr/geoserver/ows?^dreal_b:stationnement_littoral">https://geobretagne.fr/geoserver/ows?^dreal_b:stationnement_littoral
+		<OPTION VALUE="http://geoserver.ics.perm.ru/geoserver/ows?^topp:tasmania_state_boundaries">http://geoserver.ics.perm.ru/geoserver/ows?^topp:tasmania_state_boundaries
+			<OPTION VALUE="http://geoserver.ics.perm.ru/geoserver/ows?^topp:tasmania_roads">http://geoserver.ics.perm.ru/geoserver/ows?^topp:tasmania_roads
+		<OPTION VALUE="http://geoserver.ics.perm.ru/geoserver/ows?^topp:states">http://geoserver.ics.perm.ru/geoserver/ows?^topp:states
 		</SELECT>  
+		
+		    	 <input type="button" value="Supprimer favori WFS"
+           onclick='supfavwfs();' />
+		
     </form>
+    
+
+
+	   
 
 <form name="wmsfavform" id="wmsfavform" style="display:none">
      <SELECT NAME="wmsfav" id="wmsfav" onChange='wmsFav();'>
-		<OPTION VALUE="">Choisir un favori WMS
+		<OPTION VALUE="Choisir un favori WMS">Choisir un favori WMS
 		<OPTION VALUE="https://geobretagne.fr/geoserver/ign/ows?^ign_scan">https://geobretagne.fr/geoserver/ign/ows?^ign_scan
 		<OPTION VALUE="https://portail.indigeo.fr/geoserver/LETG-BREST/wfs?^30min_Le_conquet_parcelle">https://portail.indigeo.fr/geoserver/LETG-BREST/wfs?^30min_Le_conquet_parcelle
 		<OPTION VALUE="https://portail.indigeo.fr/geoserver/LETG-BREST/wfs?^Activite_maritimes_encadrees_2009_L93">https://portail.indigeo.fr/geoserver/LETG-BREST/wfs?^Activite_maritimes_encadrees_2009_L93
 			<OPTION VALUE="https://geobretagne.fr/geoserver/photo/ows?^ortho-composite">https://geobretagne.fr/geoserver/photo/ows?^ortho-composite
 		</SELECT>  
+		
+				    	 <input type="button" value="Supprimer favori WMS"
+           onclick='supfavwms();' />
+		
     </form>
 	  
 	  
@@ -520,13 +535,16 @@
            onclick="mapinit(1);" />
 
 	   
-	   	    <!-- import du code javascript fichiers config et WSAPI-->
-	    <script type="text/javascript" src="MapView.js"></script>   	        
+	  <!-- import du code javascript -->
+	   <script type="text/javascript" src="MapView.js"></script>   	        
     <script type="text/javascript" src="WSAPI.js"></script>
     <script type="text/javascript" src="ViewController.js"></script>
     <script type="text/javascript" src="config.js"></script>
     <script type="text/javascript" src="ConfigWPS.js"></script>   
+    <script type="text/javascript" src="ConfigWFS.js"></script>
     <script type="text/javascript" src="ConfigWMS.js"></script>   
+    
+    
     <!-- 
             <script type="text/javascript" src="ConfigExecute.js"></script>
     <script type="text/javascript" src="MapView.js"></script>-->

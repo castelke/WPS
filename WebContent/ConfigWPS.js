@@ -257,14 +257,10 @@ function executeLaunch() {
 	        	Version: versionWps,
 	        	Request:"Execute",
 	        	Identifier : identifier,
-	        //	contentType: "application/json; charset=utf-8",
 	        	DataInputs : listeInputs
 	        },
-	 //       dataType: "xml",
 	        cache: false,
-	      //  success : executeCallback,
 	        success: function(data) {
-	        	
 	        	executeCallback(data, this.url);
 	        },
 	        error: function () {
@@ -735,6 +731,22 @@ var wpsService = new WpsService({
 
 	function wpsfav(){	
 		initConfig(5);
+	}
+	
+	function supfavwps(){
+		
+		var wpsfav = ($("#wpsfav option:selected").val());
+		
+		if (wpsfav.includes("Choisir")){
+			
+			
+		}
+		
+		else{
+			$("#wpsfav option:selected").remove();
+		}
+		
+		
 	}
 		
 	
