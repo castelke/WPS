@@ -408,10 +408,7 @@ function addwms() {
 function supfavwms(){
 	
 	var wmsfav = ($("#wmsfav option:selected").val());
-	alert(wmsfav);
 	if (wmsfav.includes("Choisir")){
-		
-		
 	}
 	
 	else{

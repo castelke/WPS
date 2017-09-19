@@ -277,7 +277,6 @@
 			
 			document.getElementById("info").style.display = "none";
 	    	document.getElementById("processDescription").style.display = "none";
-	    	document.getElementById("execute").style.display = "block";
 	    	document.getElementById('wpsexe').style.display = 'block';
 	    	document.getElementById("slider").style.display = "none";
 	    	document.getElementById('divName').style.visibility='hidden';
