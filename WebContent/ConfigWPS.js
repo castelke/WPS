@@ -15,8 +15,11 @@ var typeValue = new Array();
 var usedValue = new Array();
 var isFixed = new Array();
 var isLiteral = new Array();
+
 var inputValue = new Array();
+inputValue[0] = new Array();
 var idInputs =new Array();
+idInputs[0] = new Array();
 
 
 
@@ -164,17 +167,17 @@ function executeLaunch() {
 			
 			if(document.getElementById("notused" +indexInput + n).checked){
 			
-			inputValue[inputnbr] = document.getElementById("myInputs[" + indexInput + n+ "]").value;
-			idInputs[inputnbr] = processDescription.processOffering.process.inputs[indexInput].identifier;
+			inputValue[0][inputnbr] = document.getElementById("myInputs[" + indexInput + n+ "]").value;
+			idInputs[0][inputnbr] = processDescription.processOffering.process.inputs[indexInput].identifier;
 			
 			
 			inputnbr = inputnbr +1;
 			if (processDescription.processOffering.process.inputs[indexInput].literalData != null ){	
-				inputTab[indexInput] = inputGenerator.createLiteralDataInput_wps_1_0_and_2_0(idInputs[indexInput], 'undefined', 'undefined', inputValue[indexInput]);
+				inputTab[indexInput] = inputGenerator.createLiteralDataInput_wps_1_0_and_2_0(idInputs[0][indexInput], 'undefined', 'undefined', inputValue[0][indexInput]);
 			//	alert(idInputs[indexInput] + " "+ inputValue[indexInput]); 
 			}
 			else if (processDescription.processOffering.process.inputs[indexInput].complexData != null){
-				inputTab[indexInput] = inputGenerator.createComplexDataInput_wps_1_0_and_2_0(idInputs[indexInput],'undefined', 'undefined', 'undefined', false, inputValue[indexInput]);
+				inputTab[indexInput] = inputGenerator.createComplexDataInput_wps_1_0_and_2_0(idInputs[0][indexInput],'undefined', 'undefined', 'undefined', false, inputValue[0][indexInput]);
 			//	alert(idInputs[indexInput] +" " +inputValue[indexInput]); 
 			}
 			}
@@ -211,7 +214,7 @@ function executeLaunch() {
 		
 	while (i<inputnbr){
 		
-		if (inputValue[i].indexOf(adressewfs) >= 0){
+		if (inputValue[0][i].indexOf(adressewfs) >= 0){
 			
 			var defaultParameters = {
 				    service: 'WFS',
@@ -228,14 +231,14 @@ function executeLaunch() {
 				var parameters = L.Util.extend(defaultParameters);
 				var wfsrequest = adressewfs.substring(0,adressewfs.length-1) + L.Util.getParamString(parameters);
 			
-			inputValue[i] = idInputs[i] + '=@xlink:href='+wfsrequest+'@method=POST@mimeType=text/xml@encoding=UTF-8@outputFormat='+ formatwfs+ ';';	
+			inputValue[0][i] = idInputs[0][i] + '=@xlink:href='+wfsrequest+'@method=POST@mimeType=text/xml@encoding=UTF-8@outputFormat='+ formatwfs+ ';';	
 			//alert(inputValue[i]);
 			
 		}
 		
 		
 		//alert(idInputs[i]  +"=" + inputValue[i] +";");
-		listeInputs +=  idInputs[i]  +"=" + inputValue[i] +";" ;
+		listeInputs +=  idInputs[0][i]  +"=" + inputValue[0][i] +";" ;
 		i=i+1;
 	}
 	
@@ -527,7 +530,8 @@ var wpsService = new WpsService({
 			//alert("divId" +  x);
 			document.getElementById("divId" +  x).style.display = 'none';
 			
-			
+			var element = document.getElementById("divId" +  x);
+			element.parentNode.removeChild(element);
 			
 		}
 	//document.getElementById("divName").removeChild(divForm);	
@@ -646,7 +650,7 @@ var wpsService = new WpsService({
 						//	if (response.processOffering.process.inputs[inputIndex].minOccurs==0){
 							//	newdiv.innerHTML += "used: <input type='checkbox' checked='unchecked' name='notused" + inputIndex +  n +"' " +"' id='notused" + inputIndex + n +"' /> <br>";
 						//	}
-							idInputs[inputIndex] = processDescription.processOffering.process.inputs[inputIndex].identifier;
+							idInputs[0][inputIndex] = processDescription.processOffering.process.inputs[inputIndex].identifier;
 						
 						n=n+1;	
 						
@@ -764,7 +768,8 @@ var wpsService = new WpsService({
 			d.options[d.length-1].text = adresseWps + "^" + processDescription.processOffering.process.identifier;
 		}
 		else{
-			alert("wps déjà favori");
+			d.length++;
+			d.options[d.length-1].text = adresseWps + "^" + processDescription.processOffering.process.identifier + d.length;
 		}
 		
 	}

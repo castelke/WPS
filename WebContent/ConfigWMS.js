@@ -36,8 +36,8 @@ function recuperationCoucheWms(c){
 	//alert(strOut);
 	setCoucheWMS(strOut);
 	
-	
-	adressewms = adressewms.substr(0, adressewms.length-10)
+	//alert(adressewms);
+	adressewms = adressewms.substr(0, (adressewms.length)-9);
 	//alert(adressewms);
 	adressewms =  adressewms + "/" + strOutNS + "/ows?";
 	//alert(adressewms);
@@ -194,7 +194,7 @@ function handleJson(data) {
 		
 		
 	//	alert(currentIndex.substring(0,currentIndex.length-1));
-	myTextArea.innerHTML =  idInputs[currentIndex.substring(0,currentIndex.length-1)] + '=@xlink:href='+wmsrequest+'@method=POST@mimeType=text/xml@encoding=UTF-8@outputFormat='+ formatwms+ ';';
+	myTextArea.innerHTML =  idInputs[0][currentIndex.substring(0,currentIndex.length-1)] + '=@xlink:href='+wmsrequest+'@method=POST@mimeType=text/xml@encoding=UTF-8@outputFormat='+ formatwms+ ';';
 		}
 }
 }
@@ -343,7 +343,7 @@ function addOptionsWms()
 	document.getElementById("verificationRunningWms").style.visibility = "hidden";
 
 	
-	document.getElementById('wms').options[d.length-1].selected = 'selected';
+	document.getElementById('wms').options[0].selected = 'selected';
 
 }
 
@@ -390,17 +390,21 @@ function addwms() {
 
 	    	d.length=1; 
 	    	 $(xml).find('Layer').each( function(){
-	    	//	alert($(this).find('Name').text());
+	    		//alert($(this).find('Name').text());
+	    		if((($(this).find('Name').text()).length)<30){
 	    		d.length++; 
 	    		d.options[d.length-1].text = $(this).find('Name').text();
+	    	 }
 	    	});
 
         },
         error: function () {
+
         	setTimeout(timeout, 2000);
         },
         async: true
     });
+
 	}
 	
     

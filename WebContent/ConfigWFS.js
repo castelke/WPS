@@ -168,7 +168,7 @@ function handleJson(data) {
 		
 	//	alert(currentIndex.substring(0,currentIndex.length-1));
 	myTextArea.innerHTML =  adressewfs + "^" + couchewfs;
-	wfsrequestexecute = idInputs[currentIndex.substring(0,currentIndex.length-1)] + '=@xlink:href='+wfsrequest+'@method=POST@mimeType=text/xml@encoding=UTF-8@outputFormat='+ formatwfs+ ';';
+	wfsrequestexecute = idInputs[0][currentIndex.substring(0,currentIndex.length-1)] + '=@xlink:href='+wfsrequest+'@method=POST@mimeType=text/xml@encoding=UTF-8@outputFormat='+ formatwfs+ ';';
 
 	}
 	

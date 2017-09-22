@@ -101,13 +101,17 @@
 	    	// newdivS =document.createElement('divSlider');
 	    	document.getElementById("divSlider").innerHTML = "<br> Inputs: <br> <br>";
 	    		var inputnbr = 0;
+	    		
+	    		
+	    		
+
 	    	for (var indexInput in processDescription.processOffering.process.inputs)	{
 	    		var n=0;
 	    		while ((n < processDescription.processOffering.process.inputs[indexInput].maxOccurs) && document.getElementById("notused" +indexInput + n).checked){
 	    			
 	    		
-	    			inputValue[inputnbr] = document.getElementById("myInputs[" + indexInput + n+ "]").value;
-	    			idInputs[inputnbr] = processDescription.processOffering.process.inputs[indexInput].identifier;
+	    			inputValue[0][inputnbr] = document.getElementById("myInputs[" + indexInput + n+ "]").value;
+	    			idInputs[0][inputnbr] = processDescription.processOffering.process.inputs[indexInput].identifier;
 	    			inputnbr = inputnbr +1;
 	    			n=n+1;
 	    		}
@@ -115,8 +119,8 @@
 	    	var i=0;
 	    	var listeInputs = "";
 	    	while (i<inputnbr){
-	    		listeInputs +=  idInputs[i]  +"=" + inputValue[i] +";" ;
-	    		document.getElementById("divSlider").innerHTML += idInputs[i] + "<br>" + inputValue[i] + "<br><br>";
+	    		listeInputs +=  idInputs[0][i]  +"=" + inputValue[0][i] +";" ;
+	    		document.getElementById("divSlider").innerHTML += idInputs[0][i] + "<br>" + inputValue[0][i] + "<br><br>";
 	    		i=i+1;
 	    	}
 		
@@ -285,15 +289,20 @@
 	    	document.getElementById("choix").style.display = "none";
 	    	// newdivS =document.createElement('divSlider');
 	    	document.getElementById("divSlider").innerHTML = "<br> Inputs: <br> <br>";
+	    	alert(document.getElementById("myInputs[00]").value);
+	    	
 	    	
 	    		var inputnbr = 0;
 	    	for (var indexInput in processDescription.processOffering.process.inputs)	{
 	    		var n=0;
 	    		while ((n < processDescription.processOffering.process.inputs[indexInput].maxOccurs) && document.getElementById("notused" +indexInput + n).checked){
+	    			
+	    			
+	    			
 	    			var ok = document.getElementById("myInputs[" + indexInput + n+ "]").value;
 	    			//var fdg = document.getElementById("myInputs[" + indexInput + n+ "]").value;
-	    			inputValue[inputnbr] = document.getElementById("myInputs[" + indexInput + n+ "]").value;
-	    			idInputs[inputnbr] = processDescription.processOffering.process.inputs[indexInput].identifier;
+	    			inputValue[0][inputnbr] = document.getElementById("myInputs[" + indexInput + n+ "]").value;
+	    			idInputs[0][inputnbr] = processDescription.processOffering.process.inputs[indexInput].identifier;
 	    			inputnbr = inputnbr +1;
 	    			n=n+1;
 	    			//alert(inputValue[inputnbr]);
@@ -345,9 +354,9 @@
 				    			//si favori wps pas selectionné
 				    			
 				    			//alert("3");
-					    		listeInputs +=  idInputs[i]  +"=" + inputValue[i] +";" ;
+					    		listeInputs +=  idInputs[0][i]  +"=" + inputValue[0][i] +";" ;
 					    		if(!(ok.indexOf(adressewfs) >= 0)){
-					    		document.getElementById("divSlider").innerHTML += idInputs[i] + "<br>" + inputValue[i] + "<br>";
+					    		document.getElementById("divSlider").innerHTML += idInputs[0][i] + "<br>" + inputValue[0][i] + "<br>";
 					    		}
 					    		
 				    		}
@@ -356,17 +365,26 @@
 				    			//si pas favori wps selectionné
 				    		
 				    			
-				    			//alert("4");
+				    			alert("4");
 				    			
 				    			if ($('#1' +i + '0').length > 0){ 
 					    			if(document.getElementById("1" +i + "0").checked){
-					    				//alert("fixed");
+					    				
 					    				
 						    			if(!(ok.indexOf(adressewfs) >= 0)){
-							    			document.getElementById("divSlider").innerHTML += idInputs[i] + "<br>" + d.value + "<br>";
+						    				if ((d.value).length > 0 ){
+							    			document.getElementById("divSlider").innerHTML += idInputs[0][i] + "<br>" + d.value + "<br>";
+						    				}
+						    				else{
+									    		document.getElementById("divSlider").innerHTML += idInputs[0][i] + "<br>" + inputValue[0][i] + "<br>";
+						    				}
+						    				
+						    				
+							    			
+							    			
 							    			}
 						    			else{
-						    				document.getElementById("divSlider").innerHTML += idInputs[indexInput] + "<br>" + ok+ "<br>";
+						    				document.getElementById("divSlider").innerHTML += idInputs[0][indexInput] + "<br>" + ok+ "<br>";
 
 						    			}
 					    				
@@ -378,7 +396,7 @@
 					    				
 						    			if((ok.indexOf(adressewfs) >= 0)){
 						    				
-						    				document.getElementById("divSlider").innerHTML += idInputs[i] + "<br>" + "<textarea type='text' name='text" + i + "'  id='text" + i + "'  style='width:250px;height:15px;' value='"+inputValue[i]+"'>"+inputValue[i]+"</textarea><br>" ;
+						    				document.getElementById("divSlider").innerHTML += idInputs[0][i] + "<br>" + "<textarea type='text' name='text" + i + "'  id='text" + i + "'  style='width:250px;height:15px;' value='"+inputValue[i]+"'>"+inputValue[i]+"</textarea><br>" ;
 						    				
 							    			//document.getElementById("divSlider").innerHTML += idInputs[i] + "<br>" + d.value + "<br>";
 							    			}
@@ -409,9 +427,9 @@
 	    				
 	    			if(document.getElementById("2" +i + "0").checked){
 	    		//	alert("2");
-			    		listeInputs +=  idInputs[i]  +"=" + inputValue[i] +";" ;
+			    		listeInputs +=  idInputs[0][i]  +"=" + inputValue[0][i] +";" ;
 			    		//alert(inputValue[i]);
-	    				document.getElementById("divSlider").innerHTML += idInputs[i] + "<br>" + "<textarea type='text' name='text" + i + "'  id='text" + i + "'  style='width:250px;height:15px;' value='"+inputValue[i]+"'>"+inputValue[i]+"</textarea><br>" ;
+	    				document.getElementById("divSlider").innerHTML += idInputs[0][i] + "<br>" + "<textarea type='text' name='text" + i + "'  id='text" + i + "'  style='width:250px;height:15px;' value='"+inputValue[0][i]+"'>"+inputValue[0][i]+"</textarea><br>" ;
 	    				
 	    			//document.getElementById('text' + i + '').value = inputValue[i];
 	    				
@@ -419,8 +437,8 @@
 	    			}
 	    			else{
 	    				//alert("1");
-    					listeInputs +=  idInputs[i]  +"=" + inputValue[i] +";" ;
-    			    	document.getElementById("divSlider").innerHTML += idInputs[i] + "<br>" + inputValue[i] + "<br>";
+    					listeInputs +=  idInputs[0][i]  +"=" + inputValue[0][i] +";" ;
+    			    	document.getElementById("divSlider").innerHTML += idInputs[0][i] + "<br>" + inputValue[0][i] + "<br>";
 	    			}
 	    			
 	    			
@@ -430,13 +448,13 @@
 	    				
 	    				if ($('#1' +i + '0').length > 0) { 
 	    					//alert("3");
-		    				listeInputs +=  idInputs[i]  +"=" + inputValue[i] +";" ;
-		    				document.getElementById("divSlider").innerHTML += idInputs[i] + "<br>" + "<textarea type='text' name='myInputs[" + i + "]'  id='myInputs[" + i + "]'  style='width:250px;height:15px;' value='"+inputValue[i]+"'></textarea><br>" ;
+		    				listeInputs +=  idInputs[0][i]  +"=" + inputValue[0][i] +";" ;
+		    				document.getElementById("divSlider").innerHTML += idInputs[0][i] + "<br>" + "<textarea type='text' name='myInputs[" + i + "]'  id='myInputs[" + i + "]'  style='width:250px;height:15px;' value='"+inputValue[0][i]+"'></textarea><br>" ;
 		    			}
 	    				else{
 	    					//alert("4");
-	    					listeInputs +=  idInputs[i]  +"=" + inputValue[i] +";" ;
-	    			    	document.getElementById("divSlider").innerHTML += idInputs[i] + "<br>" + inputValue[i] + "<br>";
+	    					listeInputs +=  idInputs[0][i]  +"=" + inputValue[0][i] +";" ;
+	    			    	document.getElementById("divSlider").innerHTML += idInputs[0][i] + "<br>" + inputValue[0][i] + "<br>";
 	    					
 	    					
 	    				}
