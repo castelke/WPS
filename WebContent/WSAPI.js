@@ -22,7 +22,7 @@ function appelWMS() {
 	    nbcouchemap++;
     }
     
-    //alert("adresse: " + adressewms + "\n" + "couche: " + couchewms + "\n" + "formatwms: " + formatwms);
+  //  alert("adresse: " + adressewms + "\n" + "couche: " + couchewms + "\n" + "formatwms: " + formatwms);
 
     //construction de la couche WMS contenu dans wmsLayer
     wmsLayer = L.tileLayer.wms(adressewms, {

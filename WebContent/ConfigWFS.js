@@ -63,11 +63,19 @@ function recuperationCouche(c){
 	
 	//adressewfs = adressewfs.substr(4);
 	
+	
+	if((adressewfs.split("/").length - 1)==4){
 	adressewfs = adressewfs.substr(0, adressewfs.length-6)
 	//alert(adressewfs);
 	adressewfs =  adressewfs + "/" + strOutNS + "/ows?";
 	//alert(adressewfs + "^" + couche);
 	setAdresseWFS(adressewfs);
+	}
+	else{
+		adressewfs = adressewfs.substr(0, (adressewfs.length)-4);
+	}
+	
+	
 	
 	
 	//innermap = document.getElementById("mapid").innerHTML;

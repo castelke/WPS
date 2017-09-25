@@ -36,12 +36,29 @@ function recuperationCoucheWms(c){
 	//alert(strOut);
 	setCoucheWMS(strOut);
 	
-	//alert(adressewms);
-	adressewms = adressewms.substr(0, (adressewms.length)-9);
-	//alert(adressewms);
-	adressewms =  adressewms + "/" + strOutNS + "/ows?";
-	//alert(adressewms);
+	if((adressewms.split("/").length - 1)==4){
+	//	alert("4");
+		adressewms = adressewms.substr(0, (adressewms.length)-12);
+	//	alert(adressewms);
+		adressewms =  adressewms + "/" + strOutNS + "/ows?";
+	//	alert(adressewms);
+	}
+	
+	else{
+	//	alert("5");
+		adressewms = adressewms.substr(0, (adressewms.length)-4);
+	//	alert(adressewms);
+	}
+	
+	
+	
+	
 	setAdresseWMS(adressewms);
+	
+	
+	
+	//var count = (adressewms.match(//g) || []).length;
+	
 	
 	
 	//innermap = document.getElementById("mapid").innerHTML;
@@ -389,13 +406,19 @@ function addwms() {
 	    	var d=document.formuwms.wmscouche;
 
 	    	d.length=1; 
+	    	
+	    	
 	    	 $(xml).find('Layer').each( function(){
+	    		 
 	    		//alert($(this).find('Name').text());
-	    		if((($(this).find('Name').text()).length)<30){
+	    		if((($(this).find('Name').text()).length)<200){
 	    		d.length++; 
 	    		d.options[d.length-1].text = $(this).find('Name').text();
 	    	 }
+
 	    	});
+	    	 
+	    	 
 
         },
         error: function () {

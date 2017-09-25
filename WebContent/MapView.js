@@ -11,7 +11,7 @@
     	
 	   
 		if (n==0){
-		    map = L.map('mapid',{drawControl: true}).setView([48.39975, -4.49938], 12);
+		    map = L.map('mapid',{drawControl: true}).setView([48.39975, -2.49938], 8);
 		    drawnItems = new L.FeatureGroup();
 		   // map.addLayer(drawnItems);
 		    drawControl = new L.Control.Draw({

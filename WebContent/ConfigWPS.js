@@ -18,11 +18,21 @@ var isLiteral = new Array();
 
 var inputValue = new Array();
 inputValue[0] = new Array();
+
 var idInputs =new Array();
 idInputs[0] = new Array();
 
+var isFixed = new Array();
+isFixed[0] = new Array();
+
+var isWeb = new Array();
+isWeb[0] = new Array();
 
 
+var idfavwps = new Array();
+var adrfavwps = new Array();
+var nbinputfavwps = new Array();
+var nb;
 
 function setProcessDescription(p) {
 	processDescription = p;
@@ -560,7 +570,7 @@ var wpsService = new WpsService({
 		newdiv.innerHTML = "Inputs <br>";
 	//	newdiv.innerHTML += "fixed  <input type='checkbox' name='check1' id='check1' onclick='checker('check1', 'check1');' />";
 		//document.getElementById("newWpsAdresse").value
-		
+		nb=0;
 		for (var inputIndex in response.processOffering.process.inputs)	{
 			
 			for (var property in response.processOffering.process.inputs[inputIndex]) {
@@ -575,9 +585,11 @@ var wpsService = new WpsService({
 						}
 						var n=0;
 				//	for (var n in response.processOffering.process.inputs[inputIndex].maxOccurs){
-						var m=0;
 						
 						while (n < response.processOffering.process.inputs[inputIndex].maxOccurs){
+							
+							
+								
 							//alert(n + " " + response.processOffering.process.inputs[inputIndex].maxOccurs);
 							var char = "onclick='checker('check1" + inputIndex + "','check2" + inputIndex + "');";
 							newdiv.innerHTML += " <br><input type='checkbox' checked='unchecked' name='notused" + inputIndex +  n +"' " +"' id='notused" + inputIndex + n +"' /> ";
@@ -585,8 +597,8 @@ var wpsService = new WpsService({
 							newdiv.innerHTML += "fixed  <input type='checkbox' checked='checked' name='1" + inputIndex + n + "' " +"' id='1" + inputIndex + n + "' onclick='checker(1" + inputIndex + n + ",2" + inputIndex + n + ");' />";
 							//newdiv.innerHTML += "<form id='2" +inputIndex + n + "' style='display:none'>";
 							newdiv.innerHTML +=  "user <input type='checkbox' name='2" + inputIndex + n + "' id='2" + inputIndex + n + "' onclick='checker(2" + inputIndex + n + " ,1" + inputIndex + n + ");' />";
-	
-							
+						//	alert(nb);
+							nb=nb+1;
 							
 							
 						    $.ajax({
@@ -757,6 +769,24 @@ var wpsService = new WpsService({
 	function addfavwps(){	
 		//initConfig(5);
 		
+		alert(d.length-1);
+		
+		
+		
+		adrfavwps[d.length-1] = adresseWps;
+		idfavwps[d.length-1] = processDescription.processOffering.process.identifier;
+		nbinputfavwps[d.length-1] =nb;
+		
+		alert(adrfavwps[d.length-1]);
+		alert(idfavwps[d.length-1]);
+		alert(nbinputfavwps[d.length-1]);
+		
+		var i=0;
+		for (i=0;i<nb;i++){
+			
+		}
+		
+		
 		var d=document.wpsfavform.wpsfav;
 		
 		//alert(processDescription.processOffering.process.identifier);
@@ -771,6 +801,12 @@ var wpsService = new WpsService({
 			d.length++;
 			d.options[d.length-1].text = adresseWps + "^" + processDescription.processOffering.process.identifier + d.length;
 		}
+		
+		
+		
+		
+		
+		
 		
 	}
 	
