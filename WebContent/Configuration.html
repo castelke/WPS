@@ -149,21 +149,7 @@
 
 </head>
 <body>
-<!-- 
-		<form id="slider" style="display:none">
-    <div id="js-example-change-attributes">
-       <h2> </h2>
-        <input type="range" min=minAdd0 max=maxAdd0 step=stepAdd0 data-rangeslider>
-        <output></output>
-       <br><br>
-        <label><input type="number" name="min" id="min" value=minAdd0> <code>min</code></label><br>
-        <label><input type="number" name="max" id="max" value=maxAdd0> <code>max</code></label><br>
-        <label><input type="number" name="step" id="step" value=stepAdd0> <code>step</code></label>
-        <br><br>
-    </div>
-         </form>
-     -->    
-         
+
    
 	<form id="map" style="display:none">
         <input type="button" value="Retour Map"
@@ -174,7 +160,8 @@
  
 				<form id="retour" style="display:none">
         <input type="button" value="Retour process"
-               onclick="initConfig(7); document.getElementById('processDescription').style.display = 'block';document.getElementById('wpsexe').style.display = 'none';" />
+               onclick="initConfig(7); document.getElementById('retour').style.display ='none'; document.getElementById('wrapper').style.display = 'block'; document.getElementById('adresse').style.display = 'block';  document.getElementById('reinitialiser').style.visibility = 'hidden'; document.getElementById('mapid').style.visibility = 'hidden'; document.getElementById('processes').options[0].selected = 'selected'; document.getElementById('wps').style.display = 'block'; document.getElementById('wps').style.visibility = 'visible';document.getElementById('wrapper').style.visibility = 'visible'; document.getElementById('describe').style.display = 'block'; document.getElementById('capabilities').style.display = 'block';document.getElementById('accueil').style.display = 'none'; " />               
+                 
                </form>
 
 
@@ -218,7 +205,7 @@
                onclick="maptemp=1;initConfig(12); setCurrentIndex(this.id);     mapinit(2); document.getElementById('reinit').style.display = 'none'; document.getElementById('retour').style.display = 'none'; document.getElementById('accueil').style.display = 'none'; document.getElementById('map').style.display = 'block';document.getElementById('htmlfavwfs').style.visibility = 'visible';" />     
                
       <input type="button" value="Config Favoris WPS"
-               onclick="document.getElementById('wrapper').style.display = 'block'; document.getElementById('reinitialiser').style.visibility = 'hidden'; document.getElementById('mapid').style.visibility = 'hidden'; document.getElementById('processes').options[0].selected = 'selected'; document.getElementById('wps').style.display = 'block'; document.getElementById('wps').style.visibility = 'visible';document.getElementById('wrapper').style.visibility = 'visible'; document.getElementById('describe').style.display = 'block'; document.getElementById('capabilities').style.display = 'block';document.getElementById('accueil').style.display = 'none'; document.getElementById('map').style.display = 'block';" />               
+               onclick="document.getElementById('wrapper').style.display = 'block'; document.getElementById('adresse').style.display = 'block';  document.getElementById('reinitialiser').style.visibility = 'hidden'; document.getElementById('mapid').style.visibility = 'hidden'; document.getElementById('processes').options[0].selected = 'selected'; document.getElementById('wps').style.display = 'block'; document.getElementById('wps').style.visibility = 'visible';document.getElementById('wrapper').style.visibility = 'visible'; document.getElementById('describe').style.display = 'block'; document.getElementById('capabilities').style.display = 'block';document.getElementById('accueil').style.display = 'none'; document.getElementById('map').style.display = 'block';" />               
                
                
       </form>
@@ -280,14 +267,30 @@
 
 		<div>
 			<h3>
-				Capabilities
+				Configuration favoris WPS
 			</h3>
 			
 						<!--liste déroulante serveur -->
 			<div class="wps-container">
+			
+			
+			
+					Processus favoris:
+				<select id="processesfavoris">
+					<option>Select a process</option>
+					<option>http://geoprocessing.demo.52north.org:8080/wps/WebProcessingService^org.n52.wps.server.algorithm.r.AnnotationValidation</option>
+					<option>http://geoprocessing.demo.52north.org:8080/wps/WebProcessingService^org.n52.wps.server.algorithm.test.EchoProcess</option>
+					<option>https://geobretagne.fr/geoserver/ows?^vec:Centroid</option>
+				</select>
+			<br/>
+			<br/>
+			
+						<h3>
+				Liste des sites
+			</h3>
+			
 				<select id="wps">
 					<option>Select a WPS</option>
-					
 					<option>http://envision-wps.brgm-rec.fr/WPS.NET/WPService.asmx/WPS?</option>
 					<option>http://geoprocessing.demo.52north.org:8080/wps/WebProcessingService</option>
 					<option>http://localhost:8080/geoserver/ows?</option>
@@ -312,7 +315,7 @@
 		<div>
 		<form id="describe" style="display:block">
 			<h3>
-				DescribeProcess
+				Liste des processus
 			</h3>
 			<!--liste déroulante process -->
 			
@@ -335,22 +338,7 @@
 		<div class="divName" id="divName" name="divName"></div>
 					<!--liste déroulante execute process -->
                 
-                <!-- 
-                
-			<h3>Execute Process</h3>
-			<div class="wps-container">
-				<select id="processes_execute"><option>Select a Process</option></select>
-				<span id="processDescriptionLink"></span>
-				<div class="wps-execute-container" id="wps-execute-container"></div>
-			</div>
-			<p></p>
-			<div class="wps-container">
-			    <div id="auto-update-container"></div>
-				<div id="executeProcess"></div>
-				
-				
-			</div>
-			-->
+
 			
 	<form id="wfsConfig" style="display:none">
 
@@ -358,10 +346,10 @@
 				<select id="wps">
 					<option>Select a WPS</option>
 					
-					<option>http://envision-wps.brgm-rec.fr/WPS.NET/WPService.asmx/WPS?</option>
 					<option>http://geoprocessing.demo.52north.org:8080/wps/WebProcessingService</option>
+					<option>https://geobretagne.fr/geoserver/ows?</option>
+					<option>http://envision-wps.brgm-rec.fr/WPS.NET/WPService.asmx/WPS?</option>
 					<option>http://localhost:8080/geoserver/ows?</option>
-						<option>https://geobretagne.fr/geoserver/ows?</option>
 					<!-- 
 					<option>http://geostatistics.demo.52north.org/wps/WebProcessingService</option>
 					<option>http://test.indigeo.fr/wps/cgiwps.sh?</option>
@@ -517,10 +505,6 @@
   <div id="listecouchemap" style="display:none">
   </div>
 
-  <form id="resultat" style="display:block">
-  <!--  <input type="button" value="Execute"
-           onclick="reqwfs();" />-->
-  </form>
   
 
     <div id="mapid" style="visibility:visible">

@@ -341,9 +341,11 @@ var wpsService = new WpsService({
 	var describeProcessCallback = function(response) {
 		
 		document.getElementById('divName').style.visibility = 'visible';
+		document.getElementById("retour").style.display = "block";
 		initConfig(4);
 		setProcessDescription(response);
 		setIdentifier(response.processOffering.process.identifier);
+
 		
 		
 		if(($("divForm").length)>0){
@@ -355,8 +357,12 @@ var wpsService = new WpsService({
 			
 		}
 		
-	    
-
+	   // alert(identifier);
+	   // alert(document.getElementById("wpsfav").value);
+	   
+	    	
+	    	
+	    	
 		var outputOffering = '';
 		setInnermap(document.getElementById("mapid").innerHTML);
 		
@@ -390,7 +396,12 @@ var wpsService = new WpsService({
 						
 							var char = "onclick='checker('check1" + inputIndex + "','check2" + inputIndex + "');";
 							newdiv.innerHTML += " <br><input type='checkbox' checked='unchecked' name='notused" + inputIndex +  n +"' " +"' id='notused" + inputIndex + n +"' /> ";
+							
+						
+							
 							newdiv.innerHTML += "<textarea type='text' name='myInputs[" + nb + "]'  id='myInputs[" + inputIndex + n + "]'  style='width:250px;height:15px;' value='"+defaultValue[inputIndex]+"'></textarea>" ;
+
+							
 							newdiv.innerHTML += "fixed  <input type='checkbox' checked='checked' name='1" + inputIndex + n + "' " +"' id='1" + inputIndex + n + "' onclick='checker(1" + inputIndex + n + ",2" + inputIndex + n + ");' />";
 							newdiv.innerHTML +=  "user <input type='checkbox' name='2" + inputIndex + n + "' id='2" + inputIndex + n + "' onclick='checker(2" + inputIndex + n + " ,1" + inputIndex + n + ");' />";
 							var d=document.wpsfavform.wpsfav;
@@ -447,6 +458,8 @@ var wpsService = new WpsService({
 			}
 		}
 		
+
+		
 		
 		//creation formulaire outputs
 
@@ -482,19 +495,30 @@ var wpsService = new WpsService({
 				}
 			}
 			}
+		
+		
+
+		
 		newdiv.innerHTML += "<br>";	
 		newdiv.id = 'divId' + $("divForm").length;
 
 		document.getElementById("divName").appendChild(newdiv);	
 
 		$("textarea#processDescriptionText").val(outputOffering + '\n' + '\n' + inputs + outputs);
+		
+		var i =0;
+		 var doc =document.wpsfavform.wpsfav;
+		 if((doc.options[doc.length-1].text).includes(identifier)==true){
+			 
+			for (i=0;i<nb;i++){
+				document.getElementsByName("myInputs["+ i + "]")[0].value = inputValue[doc.length-2][i];
+			}
+			 
+		 }
+		
+		
 	};
-	
-	function reqwfs(){
 
-	    
-	    
-	}
 
 	function wpsfav(){	
 		initConfig(5);
@@ -518,8 +542,16 @@ var wpsService = new WpsService({
 		
 	
 	function addfavwps(){	
-		//initConfig(5);
 		var d=document.wpsfavform.wpsfav;
+		
+		
+		if(!((d.options[d.length-1].text).includes(processDescription.processOffering.process.identifier))){
+			
+		}
+			
+		else{
+			d.length--;
+		}
 
 		adrfavwps[d.length-1] = adresseWps;
 		idfavwps[d.length-1] = processDescription.processOffering.process.identifier;
@@ -527,6 +559,7 @@ var wpsService = new WpsService({
 		nboutputfavwps[d.length-1] =nbo;
 
 		var i=0;
+		
 		for (i=0;i<nb;i++){
 			inputValue[d.length-1][i] = document.getElementsByName("myInputs["+ i + "]")[0].value;
 			idInputs[d.length-1][i] = processDescription.processOffering.process.inputs[i].identifier;
@@ -548,19 +581,24 @@ var wpsService = new WpsService({
 		idInputs[d.length] = new Array();
 		isFixed[d.length] = new Array();
 		isWeb[d.length] = new Array();
+
+		d.length++;
+		d.options[d.length-1].text = adresseWps + "^" + processDescription.processOffering.process.identifier;
 		
-	
+		var d2=document.getElementById("processesfavoris");
 		
-		if(!((d.options[d.length-1].text).includes(processDescription.processOffering.process.identifier)))
-		{
-			d.length++; 
-			d.options[d.length-1].text = adresseWps + "^" + processDescription.processOffering.process.identifier;
+		//d2.length++;
+		//d2.options[d.length-1].text = adresseWps + "^" + processDescription.processOffering.process.identifier;
+		
+		/*$('#processesfavoris').append($(adresseWps + "^" + processDescription.processOffering.process.identifier, {
+		    value: 1,
+		    text: 'My option'
+		}));*/
+		
+		if(!((d2.options[d.length-1].text).includes(processDescription.processOffering.process.identifier))){
+		d2.length--;
+		$("#processesfavoris").append(new Option(adresseWps + "^" + processDescription.processOffering.process.identifier, adresseWps + "^" + processDescription.processOffering.process.identifier));
 		}
-		else{
-			d.length++;
-			d.options[d.length-1].text = adresseWps + "^" + processDescription.processOffering.process.identifier + d.length;
-		}
-		
 	}
 	
 
@@ -606,6 +644,27 @@ var wpsService = new WpsService({
 			// get selected wps (url)
 			var processId = $('#processes option:selected').text();
 			
+			// only eexecute if id != default value "Select a Process"
+			if(! processId.startsWith("Select"))
+				wps.describeProcess_GET(describeProcessCallback, processId);
+			});
+		
+		$("#processesfavoris").change(function() {
+			// get selected wps (url)
+			
+			var favprocess =  $('#processesfavoris option:selected').text();
+			
+		    var index  = favprocess.indexOf('^');
+
+		    
+		    
+		    //then get everything after the found index
+		    var wpsUrl =  favprocess.substr(0,index);
+		    var processId = favprocess.substr(index+1);
+ 
+			setAdresseWps(wpsUrl);
+			wps = new WpsService({url : wpsUrl, version : "1.0.0"});
+			setVersionWps("1.0.0");
 			// only eexecute if id != default value "Select a Process"
 			if(! processId.startsWith("Select"))
 				wps.describeProcess_GET(describeProcessCallback, processId);
