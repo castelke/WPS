@@ -209,7 +209,7 @@ function executeLaunch() {
 				    version: '1.0.0',
 				    request: 'GetFeature',
 				    typeName: couchewfs,
-				    maxFeatures: 1,
+				    //maxFeatures: 1,
 				};
 				var parameters = L.Util.extend(defaultParameters);
 				var wfsrequest = adressewfs.substring(0,adressewfs.length-1) + L.Util.getParamString(parameters);

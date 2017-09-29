@@ -28,22 +28,9 @@ function recuperationUrl(u){
 
 
 function recuperationCouche(c){
-	//alert(c);
-	//alert(adressewfs);
-	//c=c.substring(5,c.length)
+
 	setCoucheWFS(c);
-	//var map = L.map('mapid',{drawControl: true}).setView([48.39975, -4.49938], 12);
-	//buildMap();
-	//document.getElementById("map").innerHTML = "<div id='mapid' style='width: 100%; height: 100%;'></div>";
-	//buildMap();
-	
-	//map.remove();
-	//document.getElementById("mapid").innerHTML = "";
-	//document.getElementById("mapid").innerHTML = "<div id='mapid' style='visibility:hidden'> </div>";
-	
-	//buildMap();
-	/*alert(couchewfs);
-	alert(adressewfs);*/
+	document.getElementById("chargementwfs").innerHTML = "chargement";
 	
 	adressewfs =  $('#wfs :selected').text();
 	formatwfs =  $('#wfsformat :selected').text();
@@ -65,11 +52,12 @@ function recuperationCouche(c){
 	
 	
 	if((adressewfs.split("/").length - 1)==4){
-	adressewfs = adressewfs.substr(0, adressewfs.length-6)
+	adressewfs = adressewfs.substr(0, adressewfs.length-7)
 	//alert(adressewfs);
 	adressewfs =  adressewfs + "/" + strOutNS + "/ows?";
 	//alert(adressewfs + "^" + couche);
 	setAdresseWFS(adressewfs);
+//	adressewfs = adressewfs.substr(0, (adressewfs.length)-4);
 	}
 	else{
 		adressewfs = adressewfs.substr(0, (adressewfs.length)-4);
@@ -103,7 +91,7 @@ function recuperationCouche(c){
     	   // version: '1.0.0',
     	    request: 'GetFeature',
     	    typeName: couchewfs,
-    	    maxFeatures: 1
+    	  //  maxFeatures: 1
         //	contentType: "application/json; charset=utf-8",
 
         },
@@ -111,10 +99,11 @@ function recuperationCouche(c){
         cache: false,
       //  success : executeCallback,
 	    success: function(data) {
-	    	//alert("success");
+	    	document.getElementById("chargementwfs").innerHTML = "<br>";
 	    	handleJson(data);
         },
         error: function () {
+        	document.getElementById("chargementwfs").innerHTML = "erreur <br>";
         	setTimeout(timeout, 2000);
         },
         async: true
@@ -162,7 +151,7 @@ function handleJson(data) {
 		    version: '1.0.0',
 		    request: 'GetFeature',
 		    typeName: couchewfs,
-		    maxFeatures: 1,
+		//    maxFeatures: 1,
 		    //outputFormat: 'text/javascript',
 		//	outputFormat: formatwfs,
 		//    jsonCallback: 'jsonp'
@@ -216,7 +205,7 @@ function handleJson2(data) {
 		    version: '1.0.0',
 		    request: 'GetFeature',
 		    typeName: couchewfs,
-		    maxFeatures: 1,
+		 //   maxFeatures: 1,
 		    //outputFormat: 'text/javascript',
 		//	outputFormat: formatwfs,
 		//    jsonCallback: 'jsonp'
@@ -379,7 +368,7 @@ function wfsFav2(){
     	    service: 'WFS',
     	    request: 'GetFeature',
     	    typeName: couchewfs,
-    	    maxFeatures: 1
+    	//    maxFeatures: 1
         },
         cache: false,
 	    success: function(data) {
@@ -399,9 +388,11 @@ function wfsFav2(){
 }
 
 function wfsFav(){
+	adrcouche =  $('#wfsfav :selected').text();
+	
+
 
 	
-	adrcouche =  $('#wfsfav :selected').text();
 
 
 	str =  adrcouche.indexOf('^');
@@ -420,10 +411,11 @@ function wfsFav(){
 	//alert(strOut);
 	setCoucheWFS(strOut);
 
-	adressewfs = adressewfs.substr(0, adressewfs.length-6)
+	adressewfs = adressewfs.substr(0, adressewfs.length-4);
 	
-	adressewfs =  adressewfs + "/" + strOutNS + "/ows?";
+	adressewfs =  adressewfs + "" + strOutNS + "/ows?";
 	setAdresseWFS(adressewfs);
+	
 	//alert(adressewfs);
 	if(((document.getElementById('wfsfavform').style.display == 'block') && (document.getElementById('wmsfavform').style.display == 'block'))||document.getElementById('mapid').style.visibility == 'visible'){
 		//appelWFS();
@@ -437,7 +429,7 @@ function wfsFav(){
     	    service: 'WFS',
     	    request: 'GetFeature',
     	    typeName: couchewfs,
-    	    maxFeatures: 1
+    	 //   maxFeatures: 1
 
         },
         cache: false,

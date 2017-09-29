@@ -21,7 +21,8 @@ function recuperationUrl(u){
 function recuperationCoucheWms(c){
 
 	setCoucheWMS(c);
-
+	document.getElementById("chargementwms").innerHTML = "chargement <br>";
+	
 	
 	adressewms =  $('#wms :selected').text();
 	formatwms =  $('#wmsformat :selected').text();
@@ -33,6 +34,7 @@ function recuperationCoucheWms(c){
     strOut = couchewms.substr(index+1);
     strOutNS = couchewms.substr(0,index);
 	
+    
 	//alert(strOut);
 	setCoucheWMS(strOut);
 	
@@ -45,92 +47,16 @@ function recuperationCoucheWms(c){
 	}
 	
 	else{
-	//	alert("5");
 		adressewms = adressewms.substr(0, (adressewms.length)-4);
-	//	alert(adressewms);
 	}
-	
-	
-	
+
 	
 	setAdresseWMS(adressewms);
-	
-	
-	
-	//var count = (adressewms.match(//g) || []).length;
-	
-	
-	
-	//innermap = document.getElementById("mapid").innerHTML;
-	
+
 	if((((document.getElementById('wfsfavform').style.display == 'block') && (document.getElementById('wmsfavform').style.display == 'block')))||(document.getElementById('mapid').style.visibility == 'visible')){
-		//appelWMS();
 		printWMS();
 	}
-	//document.getElementById("mapid").innerHTML = "";
-	//alert(document.getElementById("mapid").innerHTML);
-	
-	
 
-	
-	
-	//alert(document.getElementById("mapid").innerHTML);
-	//var rootUrl = 'http://tomcat.capecodgis.com/geoserver/capecodgis/ows';
-
-/*	var defaultParameters = {
-	    service: 'WFS',
-	    version: '1.0.0',
-	    request: 'GetFeature',
-	    typeName: couchewfs,
-	    maxFeatures: 1,
-	    //outputFormat: 'text/javascript',
-	    jsonCallback: 'jsonp'
-	  //  format_options: 'callback: getJson'
-
-	};
-	
-	var parameters = L.Util.extend(defaultParameters);*/
-//	var wfsrequest = adressewfs.substring(0,adressewfs.length-1) + L.Util.getParamString(parameters);
-	/*
-	var DataInputs = {
-			
-			//https://geobretagne.fr/geoserver/dreal_b/ows?&service=WFS&request=GetFeature&typeName=atlaslitt_3_alea_biblio_lin&maxFeatures=1&_=1504097569937
-			,
-			var features = {
-			xlink:href:	adressewfs.substring(0,adressewfs.length-1) + L.Util.getParamString(parameters)),
-			method:	'POST',
-			mimeType: 'text/xml',
-			encoding: 'UTF-8'
-			};
-
-			
-		};*/
-	
-/*	var features = {
-			xlink: 'href:'+	adressewfs.substring(0,adressewfs.length-1) + L.Util.getParamString(parameters),
-			method:	'POST',
-			mimeType: 'text/xml',
-			encoding: 'UTF-8'
-			};
-	*/
-	
-	
-	
-	
-/*	$.ajax({
-	    url: adressewfs.substring(0,adressewfs.length-1) + L.Util.getParamString(parameters),
-	    dataType: 'jsonp',
-	   // jsonpCallback: 'getJson',
-	   
-	   
-	    success: function(data) {
-	    	alert("success");
-	    	handleJson(data);
-        }
-	
-	
-	});*/
-	
 	
     $.ajax({
         type: "GET",
@@ -140,7 +66,7 @@ function recuperationCoucheWms(c){
     	   // version: '1.0.0',
     	    request: 'GetMap',
     	    typeName: couchewms,
-    	    maxFeatures: 1
+    	  //  maxFeatures: 1
         //	contentType: "application/json; charset=utf-8",
 
         },
@@ -148,11 +74,13 @@ function recuperationCoucheWms(c){
         cache: false,
       //  success : executeCallback,
 	    success: function(data) {
-	    	//alert("success");
+	    	document.getElementById("chargementwms").innerHTML = "<br>";
 	    	handleJson(data);
         },
         error: function () {
+        	document.getElementById("chargementwms").innerHTML = "erreur <br>";
         	setTimeout(timeout, 2000);
+        //	document.getElementById("chargementwms").style.display = "none";
         },
         async: true
     });
