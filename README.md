@@ -107,3 +107,18 @@ Lorsque l'utilisateur appuie sur exécuter, il est renvoyé sur la page de la r�
 
 Ou bien s'il a choisi « File », la réponse peut être téléchargée.
 
+
+
+Architecture
+
+1 fichier HTML 
+Configration.html
+
+Fichier Javascript
+config.js
+ConfigWFS.js
+ConfigWMS.js
+ConfigWPS.js
+MapVIew.js
+ViewController.js
+
