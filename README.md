@@ -6,6 +6,9 @@ Dans le dossier WebContent :
 
 
 
+
+
+
 Manuel d'utilisation
 
 Sur la page principale, il y a la map et un bouton pour la reinitialiser/
