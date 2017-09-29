@@ -117,17 +117,12 @@ Architecture
 
 Configration.html
 
-Fichier Javascript
+Fichiers Javascript
 
 config.js
-
 ConfigWFS.js
-
 ConfigWMS.js
-
 ConfigWPS.js
-
 MapVIew.js
-
 ViewController.js
 
