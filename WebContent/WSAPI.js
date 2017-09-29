@@ -52,7 +52,7 @@ function appelWFS() {
     
     
     
-   alert("adressewfs: " + adressewfs + "\n" + "couchewfs: " + couchewfs + "\n" + "formatwfs: " + formatwfs);
+  // alert("adressewfs: " + adressewfs + "\n" + "couchewfs: " + couchewfs + "\n" + "formatwfs: " + formatwfs);
    reprint2(adressewfs,couchewfs);
     //construction de l'objet WFS contenu dans boundaries
     boundaries = new L.WFS({
