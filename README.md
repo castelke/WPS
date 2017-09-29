@@ -1,5 +1,5 @@
 
-Installation
+- Installation
 
 Dans le dossier WebContent :
 - ouvrir avec un navigateur internet le fichier Configuration.html
@@ -9,7 +9,7 @@ Dans le dossier WebContent :
 
 
 
-Manuel d'utilisation
+- Manuel d'utilisation
 
 Sur la page principale, il y a la map et un bouton pour la reinitialiser/
 Il y a cinq boutons qui correspondent à cinq fonctionnalités :
@@ -32,7 +32,7 @@ Il y a cinq boutons qui correspondent à cinq fonctionnalités :
 
 
 
-Partie WMS/WFS
+- Partie WMS/WFS
 
 Afficher un ou plusieurs favoris WFS/WMS
 
@@ -55,7 +55,7 @@ Il peut sélectionner et désaffectionner les couches
 
 
 
-Ajouter un favori WFS/WMS
+- Ajouter un favori WFS/WMS
 
 Sur les pages Config Favoris WMS et  Config Favoris WFS, l'utilisateur peut sélectionner un site puis une couche, cette couche est visualisée sur une map temporaire. S'il est satisfait du résultat, l'utilisateur appuie sur « Ajouter favoris ».
 
@@ -82,9 +82,9 @@ Sur les pages Config Favoris WMS et  Config Favoris WFS, l'utilisateur peut sél
 
 
 
-Partie WPS
+- Partie WPS
 
-Ajouter un favori WPS
+- Ajouter un favori WPS
 
 L'utilisateur sélectionne un site puis un process sur la page Config Favoris WPS
 
@@ -96,7 +96,7 @@ Le process est enregistré en favori quand l'utilisateur appuie sur Add.
 
 
 
-Exécution du process
+- Exécution du process
 
 Sur la page WPS, l'utilisateur sélectionne le process qu'il souhaite exécuter, il voit alors les données mises en paramètres et prêtes a être envoyées.
 
@@ -110,7 +110,7 @@ Ou bien s'il a choisi « File », la réponse peut être téléchargée.
 
 
 
-Architecture
+- Architecture
 
 
 1 fichier HTML 
