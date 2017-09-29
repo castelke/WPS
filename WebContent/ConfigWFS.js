@@ -38,51 +38,26 @@ function recuperationCouche(c){
     //get the index of the start of the part of the URL we want to keep
     index  = couchewfs.indexOf(':');
 
-    //then get everything after the found index
     strOut = couchewfs.substr(index+1);
     strOutNS = couchewfs.substr(0,index);
-	
-	//alert(strOut);
+
 	setCoucheWFS(strOut);
-	
-	
-	
-	
-	//adressewfs = adressewfs.substr(4);
-	
+
 	
 	if((adressewfs.split("/").length - 1)==4){
-	adressewfs = adressewfs.substr(0, adressewfs.length-7)
-	//alert(adressewfs);
-	adressewfs =  adressewfs + "/" + strOutNS + "/ows?";
-	//alert(adressewfs + "^" + couche);
-	setAdresseWFS(adressewfs);
-//	adressewfs = adressewfs.substr(0, (adressewfs.length)-4);
+		adressewfs = adressewfs.substr(0, adressewfs.length-7);
+		adressewfs =  adressewfs + "/" + strOutNS + "/ows?";
+		setAdresseWFS(adressewfs);
 	}
 	else{
 		adressewfs = adressewfs.substr(0, (adressewfs.length)-4);
 	}
-	
-	
-	
-	
-	//innermap = document.getElementById("mapid").innerHTML;
-	
+
 	if((((document.getElementById('wfsfavform').style.display == 'block') && (document.getElementById('wmsfavform').style.display == 'block')))||(document.getElementById('mapid').style.visibility == 'visible')){
-	//appelWFS();
 	printWFS();
 	
 }
-	
-	
-	
-	//document.getElementById("mapid").innerHTML = "";
-	//alert(document.getElementById("mapid").innerHTML);
-	
-	
 
-	
-	
     $.ajax({
         type: "GET",
         url: adressewfs,
@@ -294,26 +269,10 @@ function verificationWFS(){
 }
 
 function wfsFav2(){
-	
-//	if ($('document.wfsfavform2.wfsfav').length > 0) {
-//	alert("ok");
+
 	var d = document.wfsfavform2.wfsfav;
-	//}
-	
-	
-	//var d2 = document.wfsfavform2.wfsfav;
-	
-	//var d = document.divId1.wfsfavform2.wfsfav;
-	
 	adrcouche = d.value;
-	
-    //alert(adrcouche); 
-	
 	str =  adrcouche.indexOf('^');
-	
-	
-    
-    
     
     strOut = adrcouche.substr(str+1);
 	strOutNS = adrcouche.substr(0,str);
@@ -321,45 +280,20 @@ function wfsFav2(){
     setCoucheWFS(strOut);
     setAdresseWFS(strOutNS);
     //get the index of the start of the part of the URL we want to keep
-    
-
-    
     index  = couchewfs.indexOf(':');
-
-    //then get everything after the found index
     strOut = couchewfs.substr(index+1);
     strOutNS = couchewfs.substr(0,index);
-
-    
-	//alert(strOutNS.length);
 	setCoucheWFS(strOut);
-	//alert("adresse  " + adressewfs);
 	adressewfs = adressewfs.substr(0, adressewfs.length-4);
-	//alert(adressewfs);
 	adressewfs =  adressewfs + "/" + strOutNS + "/ows?";
 	
-	//alert("couche " + couchewfs);
 	setAdresseWFS(adressewfs);
-	//alert("adresse  " + adressewfs);
 	
 	if((document.getElementById('wfsfavform').style.display == 'block') && (document.getElementById('wmsfavform').style.display == 'block')){
-		appelWFS();
 		printWFS();
 	}
+	
 	data = adressewfs + "^" +couchewfs; 
-	//handleJson2(data); 
-	
-	
-	//var myTextArea = document.getElementById('myInputs[' +'00'+   ']');
-	
-	
-		
-	//	alert(currentIndex.substring(0,currentIndex.length-1));
-	//myTextArea.innerHTML =  d.value;
-	
-	//alert(adressewfs);
-	//alert(couchewfs);
-	
 	
     $.ajax({
         type: "GET",
@@ -387,13 +321,21 @@ function wfsFav2(){
     
 }
 
+function wfsFav3(i){
+	var x = $('#wfsf'+i+' :selected').index();
+	var selectedIndex = $("select[id='wpsfav'] option:selected").index();
+	
+	if (x!=0){
+		a =$('#wfsf'+i+' :selected').text();
+		$("textarea#text"+i).val(a);
+		inputValue[selectedIndex-1][i] = a;
+	}
+	
+	
+}
+
 function wfsFav(){
 	adrcouche =  $('#wfsfav :selected').text();
-	
-
-
-	
-
 
 	str =  adrcouche.indexOf('^');
     //alert(str); 

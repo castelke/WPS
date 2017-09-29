@@ -160,7 +160,7 @@
  
 				<form id="retour" style="display:none">
         <input type="button" value="Retour process"
-               onclick="initConfig(7); document.getElementById('retour').style.display ='none'; document.getElementById('wrapper').style.display = 'block'; document.getElementById('adresse').style.display = 'block';  document.getElementById('reinitialiser').style.visibility = 'hidden'; document.getElementById('mapid').style.visibility = 'hidden'; document.getElementById('processes').options[0].selected = 'selected'; document.getElementById('wps').style.display = 'block'; document.getElementById('wps').style.visibility = 'visible';document.getElementById('wrapper').style.visibility = 'visible'; document.getElementById('describe').style.display = 'block'; document.getElementById('capabilities').style.display = 'block';document.getElementById('accueil').style.display = 'none'; " />               
+               onclick="initConfig(7); document.getElementById('processesfavoris').options[0].selected = 'selected'; document.getElementById('processDescription').style.display ='form'; initConfig(2); document.getElementById('retour').style.display ='none'; document.getElementById('wrapper').style.display = 'block'; document.getElementById('adresse').style.display = 'block';  document.getElementById('reinitialiser').style.visibility = 'hidden'; document.getElementById('mapid').style.visibility = 'hidden'; document.getElementById('processes').options[0].selected = 'selected'; document.getElementById('wps').style.display = 'block'; document.getElementById('wps').style.visibility = 'visible';document.getElementById('wrapper').style.visibility = 'visible'; document.getElementById('describe').style.display = 'block'; document.getElementById('capabilities').style.display = 'block';document.getElementById('accueil').style.display = 'none'; " />               
                  
                </form>
 
@@ -188,7 +188,7 @@
 		<form id="choix" style="display:none">
 		
         <input type="button" value="Retour Map"
-               onclick="initConfig(3); document.getElementById('processDescription').style.display ='form'; initConfig(2);" />
+               onclick="initConfig(3); document.getElementById('processDescription').style.display ='form'; initConfig(2);document.getElementById('processesfavoris').options[0].selected = 'selected';" />
                </form>
 
 	<form id="accueil" style="display:block">
@@ -291,9 +291,9 @@
 			
 				<select id="wps">
 					<option>Select a WPS</option>
-					<option>http://envision-wps.brgm-rec.fr/WPS.NET/WPService.asmx/WPS?</option>
 					<option>http://geoprocessing.demo.52north.org:8080/wps/WebProcessingService</option>
 					<option>http://localhost:8080/geoserver/ows?</option>
+						<option>http://envision-wps.brgm-rec.fr/WPS.NET/WPService.asmx/WPS?</option>
 						<option>https://geobretagne.fr/geoserver/ows?</option>
 					<!-- 
 					<option>http://geostatistics.demo.52north.org/wps/WebProcessingService</option>

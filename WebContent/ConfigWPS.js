@@ -29,7 +29,7 @@ var isWeb = new Array();
 isWeb[0] = new Array();
 
 var fileName = new Array();
-
+fileName[0] = new Array();
 
 var idfavwps = new Array();
 var adrfavwps = new Array();
@@ -217,6 +217,28 @@ function executeLaunch() {
 				
 			inputValue[selectedIndex][i] = idInputs[selectedIndex][i] + '=@xlink:href='+wfsrequest+'@method=POST@mimeType=text/xml@encoding=UTF-8@outputFormat='+ formatwfs+ ';';			
 		}
+		
+	/*	if ($('#wfsf'+i).length){
+			var ind = $('#wfsf'+i+' :selected').index();
+			var d = $("select[id='wpsfav'] option:selected").index();
+			
+			if (ind != 0){
+			
+				a =$('#wfsf'+i+' :selected').text();
+				
+				var defaultParameters = {
+					    service: 'WFS',
+					    version: '1.0.0',
+					    request: 'GetFeature',
+					    typeName: couchewfs,
+					    //maxFeatures: 1,
+					};
+				var parameters = L.Util.extend(defaultParameters);
+				var wfsrequest = a.substring(0,a.length-31) + L.Util.getParamString(parameters);
+				inputValue[selectedIndex][i] = idInputs[selectedIndex][i] + '=@xlink:href='+wfsrequest+'@method=POST@mimeType=text/xml@encoding=UTF-8@outputFormat='+ formatwfs+ ';';			
+
+			}
+		}*/
 		
 		listeInputs +=  idInputs[selectedIndex][i]  +"=" + inputValue[selectedIndex][i] +";" ;
 		i=i+1;
@@ -483,7 +505,7 @@ var wpsService = new WpsService({
 					newdiv.innerHTML += response.processOffering.process.outputs[indexOutput].title + "<dd>";  //+  " <br><input type='text' name='myInputs[]'>";
 					newdiv.innerHTML += "web  <input type='checkbox' checked='checked' name='3" + indexOutput + "' " +"' id='3" + indexOutput + "' onclick='checker(3" + indexOutput + ",4" + indexOutput + ");' />" + " file <input type='checkbox' name='4" + indexOutput + "' id='4" + indexOutput + "' onclick='checker(4" + indexOutput + " ,3" + indexOutput + ");' />";
 					//newdiv.innerHTML += 'directory: <input type="text" id="directory" name="directory" style="width: 300px; height: 15px;" value="C:\" /> ';
-						newdiv.innerHTML += 'fileName: <input type="text" id="fileName" name="fileName" style="width: 100px; height: 15px;" value="' + processDescription.processOffering.process.outputs[indexOutput].title +  '" />';
+						newdiv.innerHTML += 'fileName: <input type="text" id="fileName'+ indexOutput +'" name="fileName" style="width: 100px; height: 15px;" value="' + processDescription.processOffering.process.outputs[indexOutput].title +  '" />';
 					
 					
 					//newdiv.innerHTML += "<input type='file' id='fichierEntre"+ processDescription.processOffering.process.title + inputIndex +"'/>"
@@ -505,14 +527,42 @@ var wpsService = new WpsService({
 		document.getElementById("divName").appendChild(newdiv);	
 
 		$("textarea#processDescriptionText").val(outputOffering + '\n' + '\n' + inputs + outputs);
-		
 		var i =0;
 		 var doc =document.wpsfavform.wpsfav;
 		 if((doc.options[doc.length-1].text).includes(identifier)==true){
 			 
 			for (i=0;i<nb;i++){
 				document.getElementsByName("myInputs["+ i + "]")[0].value = inputValue[doc.length-2][i];
+				
+				if (isFixed[doc.length-2][i]==true){
+					document.getElementById("1" + i + "0").checked = true;
+					document.getElementById("2" + i + "0").checked = false;
+				}
+				else{
+					document.getElementById("1" + i + "0").checked = false;
+					document.getElementById("2" + i + "0").checked = true;
+				}
+
+
 			}
+			//nbo=nbo+1;
+			
+			for (i=0;i<=nbo;i++){
+				
+				
+				if (isWeb[doc.length-2][i]==true){
+					document.getElementById("3" + i).checked = true;
+					document.getElementById("4" + i).checked = false;
+					document.getElementById("fileName" + i).value =fileName[doc.length-2][i];
+				}
+				else{
+					document.getElementById("3" + i).checked = false;
+					document.getElementById("4" + i).checked = true;
+					document.getElementById("fileName" + i).value =fileName[doc.length-2][i];
+				}
+				
+			}
+			
 			 
 		 }
 		
@@ -567,37 +617,35 @@ var wpsService = new WpsService({
 
 		}
 		i=0;
-		isWeb[d.length-1][0] = document.getElementById("30").checked;
+		//isWeb[d.length-1][0] = document.getElementById("30").checked;
 		
-		for (i=0;i<nbo;i++){
+		for (i=0;i<=nbo;i++){
 			isWeb[d.length-1][i] = document.getElementById("3"+ i).checked;
+			fileName[d.length-1][i]= document.getElementById("fileName" + i).value;
 		}
 		
-		isWeb[d.length-1][0] = document.getElementById("30").checked;
+		//isWeb[d.length-1][0] = document.getElementById("30").checked;
 		
-		fileName[d.length-1]= document.getElementById("fileName").value;
-
 		inputValue[d.length] = new Array();
 		idInputs[d.length] = new Array();
 		isFixed[d.length] = new Array();
+		fileName[d.length] = new Array();
 		isWeb[d.length] = new Array();
 
 		d.length++;
 		d.options[d.length-1].text = adresseWps + "^" + processDescription.processOffering.process.identifier;
 		
 		var d2=document.getElementById("processesfavoris");
+		var lastValue = $('#processesfavoris option:last-child').val();
 		
-		//d2.length++;
-		//d2.options[d.length-1].text = adresseWps + "^" + processDescription.processOffering.process.identifier;
 		
-		/*$('#processesfavoris').append($(adresseWps + "^" + processDescription.processOffering.process.identifier, {
-		    value: 1,
-		    text: 'My option'
-		}));*/
-		
-		if(!((d2.options[d.length-1].text).includes(processDescription.processOffering.process.identifier))){
-		d2.length--;
-		$("#processesfavoris").append(new Option(adresseWps + "^" + processDescription.processOffering.process.identifier, adresseWps + "^" + processDescription.processOffering.process.identifier));
+		if(!((lastValue).includes(processDescription.processOffering.process.identifier))){
+			
+			$("#processesfavoris").append(new Option(adresseWps + "^" + processDescription.processOffering.process.identifier, adresseWps + "^" + processDescription.processOffering.process.identifier));
+		}
+		else{
+			d2.length--;
+			$("#processesfavoris").append(new Option(adresseWps + "^" + processDescription.processOffering.process.identifier, adresseWps + "^" + processDescription.processOffering.process.identifier));
 		}
 	}
 	

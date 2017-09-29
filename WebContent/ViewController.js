@@ -348,9 +348,20 @@
 					    			if(isFixed[selectedIndex-1][i] == true){
 					    				document.getElementById("divSlider").innerHTML += idInputs[selectedIndex-1][i] + "<br>" + inputValue[selectedIndex-1][i] + "<br>";
 					    			}
+				    			
 					    			//if user
 					    			else {
+					    				var selectedIndex = $("select[id='wpsfav'] option:selected").index();
+					    				
 					    				document.getElementById("divSlider").innerHTML += idInputs[selectedIndex-1][i] + "<br>" + "<textarea type='text' name='text" + i + "'  id='text" + i + "'  style='width:250px;height:15px;' value='"+inputValue[selectedIndex-1][i]+"'>"+inputValue[selectedIndex-1][i]+"</textarea><br>" ;
+					    				
+
+					    				
+					    				if ($('#wfsfav').length > 0){ 
+					    					document.getElementById("divSlider").innerHTML += '<form name="wfsfavform2" id="wfsfavform2" style="display:block"> <SELECT NAME="wfsf'+i +'" id="wfsf'+i +'" onChange="wfsFav3('+i +');">		<OPTION VALUE="">Choisir un favori WFS<OPTION VALUE="https://geobretagne.fr/geoserver/ows?^dreal_b:stationnement_littoral">https://geobretagne.fr/geoserver//ows?^dreal_b:stationnement_littoral<OPTION VALUE="http://geoserver.ics.perm.ru/geoserver/ows?^topp:tasmania_state_boundaries">http://geoserver.ics.perm.ru/geoserver//ows?^topp:tasmania_state_boundaries<OPTION VALUE="http://geoserver.ics.perm.ru/geoserver/ows?^topp:tasmania_roads">http://geoserver.ics.perm.ru/geoserver//ows?^topp:tasmania_roads<OPTION VALUE="http://geoserver.ics.perm.ru/geoserver/ows?^topp:states">http://geoserver.ics.perm.ru/geoserver//ows?^topp:states</SELECT>  </form>';	
+					    				}
+					    				
+					    				
 					    				
 					    			}
 				    			//si favori wps pas selectionné
@@ -407,10 +418,8 @@
 					    			}
 					    			//if user
 					    			else {
-					    				//alert("user");
-					    				//alert("3");
+
 						    			if((ok.indexOf(adressewfs) >= 0)){
-						    				
 						    				document.getElementById("divSlider").innerHTML += idInputs[selectedIndex-1][i] + "<br>" + "<textarea type='text' name='text" + i + "'  id='text" + i + "'  style='width:250px;height:15px;' value='"+inputValue[selectedIndex-1][i]+"'>"+inputValue[selectedIndex-1][i]+"</textarea><br>" ;
 						    				
 							    			//document.getElementById("divSlider").innerHTML += idInputs[i] + "<br>" + d.value + "<br>";
@@ -451,7 +460,6 @@
 	  
 	    		//	alert("2");
 			    		listeInputs +=  idInputs[selectedIndex-1][i]  +"=" + inputValue[selectedIndex-1][i] +";" ;
-			    		//alert(inputValue[i]);
 	    				document.getElementById("divSlider").innerHTML += idInputs[selectedIndex-1][i] + "<br>" + "<textarea type='text' name='text" + i + "'  id='text" + i + "'  style='width:250px;height:15px;' value='"+inputValue[selectedIndex][i]+"'>"+inputValue[selectedIndex][i]+"</textarea><br>" ;
 	    				
 	    			//document.getElementById('text' + i + '').value = inputValue[i];
@@ -486,11 +494,6 @@
 	    			}
 	    			
 	    			
-	    			//alert()
-	    			
-	    			//si literal data
-		    	//	listeInputs +=  idInputs[i]  +"=" + inputValue[i] +";" ;
-		    	//	document.getElementById("divSlider").innerHTML += idInputs[i] + "<br>" + inputValue[i] + "<br>";
 	    		}
 	    		
 	    		i=i+1;
